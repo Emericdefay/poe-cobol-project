@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
 
 env:
   COB_LIBRARY_PATH: /home/runner/work/poe-cobol-project/poe-cobol-project
