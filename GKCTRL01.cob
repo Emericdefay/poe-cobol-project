@@ -114,13 +114,20 @@
                             FILEIN-DDNAME,
                             RC.
            PERFORM 1000-Main.
-           GOBACK.
+           EXIT PROGRAM.
 
        0000-OFILES.
       ******************************************************************EDEFAY
       *  This routine should open file(s).
            MOVE FILEIN-DDNAME TO FILEIN-NAME
            OPEN INPUT FILEIN-FDNAME
+
+           IF FS-FLUX-DDN
+               MOVE "1" TO RC
+           END-IF
+           IF FS-FLUX-LEN
+               MOVE "2" TO RC
+           END-IF
            .
 
        9999-CFILES.
@@ -140,26 +147,74 @@
        1000-Main.
       ******************************************************************EDEFAY
       *  This routine should follow the logic of the program purpose.
-           DISPLAY "DO SOMETHING"
+           PERFORM 1001-DEBUT
+           IF RC = 0 THEN
+               PERFORM UNTIL FS-FLUX-END
+                   PERFORM 1500-TRAITEMENT
+               END-PERFORM
+           END-IF
+           PERFORM 1999-FIN
+           EXIT PROGRAM
            .
 
        1001-DEBUT.
       ******************************************************************EDEFAY
       *  This routine should initialize vars and check if file is empty.
       *    
-           DISPLAY "DO SOMETHING"
+           PERFORM 0000-OFILES
+           IF RC = 0 THEN
+               PERFORM 0100-READ-FILEIN
+           END-IF
+           IF FS-FLUX-END THEN
+               MOVE "4" TO RC
+           END-IF
            .
 
        1500-TRAITEMENT.
       ******************************************************************EDEFAY
       *  This routine should increment WS-LUS-xx vars and price into
       *  OPER AMOUNT vars. Updating RC if needed.  
-               
-           DISPLAY "DO SOMETHING"
+           MOVE FILEIN-RECORD to F1-ENREG-00
+           EVALUATE F1-TYPE-00
+               WHEN "00"
+                   ADD 1 TO WS-LUS-00
+               WHEN "10"
+                   ADD 1 TO WS-LUS-10
+                   ADD F1-MONTANT-OPER TO WS-MT-GLOBAL
+               WHEN "99"
+                   IF F1-NB-OPERATIONS NOT = WS-LUS-10 THEN
+                       MOVE "5" TO RC
+                   END-IF
+                   IF F1-MT-GLOBAL NOT = WS-MT-GLOBAL THEN
+                       MOVE "6" TO RC
+                   END-IF
+               WHEN OTHER
+                   MOVE "3" TO RC
+           END-EVALUATE
+           PERFORM 0100-READ-FILEIN
            .
 
        1999-FIN.
       ******************************************************************EDEFAY
       *  This routine should end the program, updating RC if needed.
-           DISPLAY "DO SOMETHING"
+           IF RC NOT = 0 THEN
+      *        No header issue
+               IF WS-LUS-00 = 0 THEN
+                   MOVE "7" TO RC
+               END-IF
+      *        No footer issue
+               IF WS-LUS-99 = 0 THEN
+                   MOVE "8" TO RC
+               END-IF
+           END-IF
+      *    Check if RC = 0
+           IF RC = 0 THEN
+               DISPLAY "Good ending."
+           ELSE
+               DISPLAY " Bad ending. RC = " RC
+           END-IF
+      *    Close file
+           PERFORM 9999-CFILES
+      *    Exit program
+           EXIT PROGRAM
            .
