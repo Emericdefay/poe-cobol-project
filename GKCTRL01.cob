@@ -129,6 +129,7 @@
                MOVE '01' TO RC
                PERFORM 1999-FIN
            END-IF
+           DISPLAY FILEIN-LEN
            IF FILEIN-LEN > 80 THEN
                MOVE '02' TO RC
                PERFORM 1999-FIN
@@ -161,6 +162,7 @@
       *  This routine should initialize vars and check if file is empty.
       *    Initialize vars
            INITIALIZE WS-VARS
+           INITIALIZE FILEIN-LEN
       *    Setup file
            PERFORM 0000-OFILES
            IF RC-IS-00 THEN
