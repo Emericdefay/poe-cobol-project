@@ -3,10 +3,29 @@
       * Program name   : GKCTRL01                               
       * Original author: DEFAY E.                                
       *
-      * Description    :
-      *                ---------------------------------                
-      * Using          :
-      * Return         :
+      * Description    : This routine check the operands flow file.
+      *                  Returning RC, according to some rules.
+      * Rules handling : 
+      *             RC = 1 : DDNAME issue
+      *             RC = 2 : Length DSNAME issue
+      *             RC = 3 : Other open file issue
+      *             RC = 4 : FileIN empty issue
+      *             RC = 5 : number operands != footer expected operands
+      *             RC = 6 : F1-MONTANT-OPER != F1-MT-GLOBAL 
+      *             RC = 7 : No header issue
+      *             RC = 8 : No footer issue
+      *                ---------------------------------   
+      *
+      * Using           : 
+      *    FILEIN       :
+      *        FDNAME   : FILEIN
+      *        DDNAME   : FILEIN
+      *        DSNAME   : FILEINDUMMY
+      *
+      *    COPYBOOKS    : 
+      *        CFLUX    : Operands flow file Data structure
+      *
+      * Return          : (RC)
       *
       *                ---------------------------------                
       * Maintenance Log                                              
@@ -79,26 +98,26 @@
        PROCEDURE DIVISION
       *    USING 
       *        BY REFERENCE LK-DUMMY-REF,
-      *        BY VALUE     LK-DUMMY-VAL,
+      *        BY VALUE     LK-DUMMY-VAL
            .
-           PERFORM 000-OFILES.
-           PERFORM 100-Main.
-           PERFORM 999-CFILES.
+           PERFORM 0000-OFILES.
+           PERFORM 1000-Main.
+           PERFORM 9999-CFILES.
            GOBACK.
 
-       000-OFILES.
+       0000-OFILES.
       ******************************************************************EDEFAY
       *  This routine should open file(s)
            OPEN INPUT FILEIN
            .
 
-       100-Main.
+       1000-Main.
       ******************************************************************EDEFAY
       *  This routine should follow the logic of the program purpose
            DISPLAY "DO SOMETHING"
            .
 
-       999-CFILES.
+       9999-CFILES.
       ******************************************************************EDEFAY
       *  This routine should close file(s)
            CLOSE FILEIN
