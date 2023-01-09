@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
 
 env:
   COB_LIBRARY_PATH: /home/runner/work/poe-cobol-project/poe-cobol-project
@@ -30,11 +30,11 @@ jobs:
     - name: Compile the C code SQLITE
       run: |
         cobc -c -lsqlit3 sqlite3.c
-    - name: compil - MAIN
-      run: echo "DUMMY - cobc -m -fdebugging-line MAIN.cob -lsqlite3"
-    - name: compil - TEST-MAIN
+    - name: compil - GKCTRL01
+      run: cobc -m -fdebugging-line GKCTRL01.cob
+    - name: compil - TSTTRL01
       run: |
-        echo "DUMMY - cobc -x -o test_sum TEST-MAIN.cob sqlite3.o MAIN.so -lsqlite3"
+        cobc -x -o TSTTRL01 ./tests/TSTTRL01.cob GKCTRL01.so
     - name: Ls
       run: ls
     - name: Env
@@ -43,7 +43,7 @@ jobs:
       run: cobc --info
     - name: Run tests
       run: |
-        echo "DUMMY - ./test_sum"
+        ./TSTTRL01
         if [[ $? -eq 0 ]]; then
           echo "Tests Succeed"
           exit 0
