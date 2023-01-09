@@ -48,16 +48,16 @@
       *  PGM called for tests
 	   01  FILEIN-DDNAME PIC X(30).
       *  RC checked
-       01  RC PIC X(02) COMP-5.
-           88 RC-00-EXPECTED VALUE "00".
-           88 RC-01-EXPECTED VALUE "01".
-           88 RC-02-EXPECTED VALUE "02".
-           88 RC-03-EXPECTED VALUE "03".
-           88 RC-04-EXPECTED VALUE "04".
-           88 RC-05-EXPECTED VALUE "05".
-           88 RC-06-EXPECTED VALUE "06".
-           88 RC-07-EXPECTED VALUE "07".
-           88 RC-08-EXPECTED VALUE "08".
+       01  RC            PIC X(02) VALUE "00" COMP-5.
+           88 RC-00-EXPECTED       VALUE "00".
+           88 RC-01-EXPECTED       VALUE "01".
+           88 RC-02-EXPECTED       VALUE "02".
+           88 RC-03-EXPECTED       VALUE "03".
+           88 RC-04-EXPECTED       VALUE "04".
+           88 RC-05-EXPECTED       VALUE "05".
+           88 RC-06-EXPECTED       VALUE "06".
+           88 RC-07-EXPECTED       VALUE "07".
+           88 RC-08-EXPECTED       VALUE "08".
 
       ******************************************************************
       *  Program : Setup, run main routine and exit.
@@ -112,7 +112,8 @@
       ******************************************************************EDEFAY
       *  This routine should make RC = 00
            MOVE "tests/FLUX-00.txt" TO FILEIN-DDNAME
-           CALL "GKCTRL01" USING FILEIN-DDNAME
+           CALL "GKCTRL01" USING FILEIN-DDNAME, RC
+           DISPLAY RC
            IF RC-00-EXPECTED THEN
                DISPLAY '    TEST 00 PASSED.'
            ELSE
@@ -124,7 +125,7 @@
       ******************************************************************EDEFAY
       *  This routine should make RC = 01
            MOVE "tests/FLUX-01.txt" TO FILEIN-DDNAME
-           CALL "GKCTRL01" USING FILEIN-DDNAME
+           CALL "GKCTRL01" USING FILEIN-DDNAME, RC
            IF RC-01-EXPECTED THEN
                DISPLAY '    TEST 01 PASSED.'
            ELSE
@@ -136,7 +137,7 @@
       ******************************************************************EDEFAY
       *  This routine should make RC = 02
            MOVE "tests/FLUX-02.txt" TO FILEIN-DDNAME
-           CALL "GKCTRL01" USING FILEIN-DDNAME
+           CALL "GKCTRL01" USING FILEIN-DDNAME, RC
            IF RC-02-EXPECTED THEN
                DISPLAY '    TEST 02 PASSED.'
            ELSE
@@ -148,7 +149,7 @@
       ******************************************************************EDEFAY
       *  This routine should make RC = 03
            MOVE "tests/FLUX-03.txt" TO FILEIN-DDNAME
-           CALL "GKCTRL01" USING FILEIN-DDNAME
+           CALL "GKCTRL01" USING FILEIN-DDNAME, RC
            IF RC-03-EXPECTED THEN
                DISPLAY '    TEST 03 PASSED.'
            ELSE
@@ -160,7 +161,7 @@
       ******************************************************************EDEFAY
       *  This routine should make RC = 04
            MOVE "tests/FLUX-04.txt" TO FILEIN-DDNAME
-           CALL "GKCTRL01" USING FILEIN-DDNAME
+           CALL "GKCTRL01" USING FILEIN-DDNAME, RC
            IF RC-04-EXPECTED THEN
                DISPLAY '    TEST 04 PASSED.'
            ELSE
@@ -172,7 +173,7 @@
       ******************************************************************EDEFAY
       *  This routine should make RC = 05
            MOVE "tests/FLUX-05.txt" TO FILEIN-DDNAME
-           CALL "GKCTRL01" USING FILEIN-DDNAME
+           CALL "GKCTRL01" USING FILEIN-DDNAME, RC
            IF RC-05-EXPECTED THEN
                DISPLAY '    TEST 05 PASSED.'
            ELSE
@@ -184,7 +185,7 @@
       ******************************************************************EDEFAY
       *  This routine should make RC = 06
            MOVE "tests/FLUX-06.txt" TO FILEIN-DDNAME
-           CALL "GKCTRL01" USING FILEIN-DDNAME
+           CALL "GKCTRL01" USING FILEIN-DDNAME, RC
            IF RC-06-EXPECTED THEN
                DISPLAY '    TEST 06 PASSED.'
            ELSE
@@ -196,7 +197,7 @@
       ******************************************************************EDEFAY
       *  This routine should make RC = 07
            MOVE "tests/FLUX-07.txt" TO FILEIN-DDNAME
-           CALL "GKCTRL01" USING FILEIN-DDNAME
+           CALL "GKCTRL01" USING FILEIN-DDNAME, RC
            IF RC-07-EXPECTED THEN
                DISPLAY '    TEST 07 PASSED.'
            ELSE
@@ -208,7 +209,7 @@
       ******************************************************************EDEFAY
       *  This routine should make RC = 08
            MOVE "tests/FLUX-08.txt" TO FILEIN-DDNAME
-           CALL "GKCTRL01" USING FILEIN-DDNAME
+           CALL "GKCTRL01" USING FILEIN-DDNAME, RC
            IF RC-08-EXPECTED THEN
                DISPLAY '    TEST 08 PASSED.'
            ELSE

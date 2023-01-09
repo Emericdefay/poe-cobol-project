@@ -63,8 +63,6 @@
        01  FILEIN-NAME   PIC X(255).
        01  FS-FILEIN     PIC X(02).
            88 FS-FILEIN-END VALUE "10".
-      /  RETURN CODE
-       01 RC             PIC 99 COMP-5.
       / IMPORT SQLCA
       *    EXEC SQL INCLUDE SQLCA 
       *    END-EXEC.
@@ -75,7 +73,8 @@
       ******************************************************************
       /  DYNAMIC FILE 
        01  FILEIN-DDNAME PIC X(30).
-      *01  RC PIC 9(04).
+      /  RETURN CODE
+       01  RC            PIC X(02) COMP-5.
 
       ******************************************************************
       *  Program : Setup, run main routine and exit.
@@ -100,7 +99,9 @@
       *    - Dxxx : Displays
       *    - Cxxx : Calls
       ******************************************************************
-       PROCEDURE DIVISION USING     FILEIN-DDNAME.
+       PROCEDURE DIVISION USING 
+                            FILEIN-DDNAME,
+                            RC.
            PERFORM 0000-OFILES.
            PERFORM 1000-Main.
            PERFORM 9999-CFILES.
