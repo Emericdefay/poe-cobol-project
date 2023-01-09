@@ -54,7 +54,7 @@
       ******************************************************************
        FILE SECTION.
        FD  FILEIN-FDNAME RECORDING MODE F
-           RECORD CONTAINS 80 CHARACTERS.
+           RECORD VARYING 80 TO 81 DEPENDING ON FILEIN-LEN.
        01  FILEIN-RECORD.        
           05  FILLER      PIC X(80).
 
@@ -62,6 +62,7 @@
        WORKING-STORAGE SECTION.
       /  FILE
        01  FILEIN-NAME    PIC X(255).
+       01  FILEIN-LEN     PIC 9(03).
        01  WS-FS-FLUX     PIC X(02).
       *    STATUS OK 
            88 FS-FLUX-OK  VALUE '00'.
@@ -123,12 +124,14 @@
       *  This routine should open file(s).          
            MOVE FILEIN-DDNAME TO FILEIN-NAME
            OPEN INPUT FILEIN-FDNAME
-
+      
            IF FS-FLUX-DDN
                MOVE '01' TO RC
+               PERFORM 1999-FIN
            END-IF
-           IF FS-FLUX-LEN
+           IF FILEIN-LEN > 80 THEN
                MOVE '02' TO RC
+               PERFORM 1999-FIN
            END-IF
            .
 
