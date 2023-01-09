@@ -113,7 +113,7 @@
            ADD 1 TO NUM-ERRORS
            .
 
-       2500-CHECK-NO-ERROR    
+       2500-CHECK-NO-ERROR.    
       ******************************************************************EDEFAY
       *  This routine should exec failure if there is an error in tests
            IF NUM-ERRORS > 0 THEN
@@ -135,6 +135,7 @@
            IF RC-00-EXPECTED THEN
                DISPLAY '    TEST 00 PASSED.'
            ELSE
+               DISPLAY '    TEST 00 FAILED.'
                PERFORM 1200-INC-ERROR
            END-IF
            .
@@ -147,6 +148,7 @@
            IF RC-01-EXPECTED THEN
                DISPLAY '    TEST 01 PASSED.'
            ELSE
+               DISPLAY '    TEST 01 FAILED.'
                PERFORM 1200-INC-ERROR
            END-IF
 		   .
@@ -159,6 +161,7 @@
            IF RC-02-EXPECTED THEN
                DISPLAY '    TEST 02 PASSED.'
            ELSE
+               DISPLAY '    TEST 02 FAILED.'
                PERFORM 1200-INC-ERROR
            END-IF
 		   .
@@ -171,6 +174,7 @@
            IF RC-03-EXPECTED THEN
                DISPLAY '    TEST 03 PASSED.'
            ELSE
+               DISPLAY '    TEST 03 FAILED.'
                PERFORM 1200-INC-ERROR
            END-IF
            .
@@ -183,6 +187,7 @@
            IF RC-04-EXPECTED THEN
                DISPLAY '    TEST 04 PASSED.'
            ELSE
+               DISPLAY '    TEST 04 FAILED.'
                PERFORM 1200-INC-ERROR
            END-IF
 		   .
@@ -195,6 +200,7 @@
            IF RC-05-EXPECTED THEN
                DISPLAY '    TEST 05 PASSED.'
            ELSE
+               DISPLAY '    TEST 05 FAILED.'
                PERFORM 1200-INC-ERROR
            END-IF
 		   .
@@ -207,6 +213,7 @@
            IF RC-06-EXPECTED THEN
                DISPLAY '    TEST 06 PASSED.'
            ELSE
+               DISPLAY '    TEST 06 FAILED.'
                PERFORM 1200-INC-ERROR
            END-IF
            .
@@ -219,6 +226,7 @@
            IF RC-07-EXPECTED THEN
                DISPLAY '    TEST 07 PASSED.'
            ELSE
+               DISPLAY '    TEST 07 FAILED.'
                PERFORM 1200-INC-ERROR
            END-IF
 		   .
@@ -231,6 +239,7 @@
            IF RC-08-EXPECTED THEN
                DISPLAY '    TEST 08 PASSED.'
            ELSE
+               DISPLAY '    TEST 08 FAILED.'
                PERFORM 1200-INC-ERROR
            END-IF
 		   .
