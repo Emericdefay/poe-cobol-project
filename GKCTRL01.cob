@@ -53,8 +53,7 @@
        DATA DIVISION.
       ******************************************************************
        FILE SECTION.
-       FD  FILEIN-FDNAME RECORDING MODE F
-           RECORD VARYING 80 TO 81 DEPENDING ON FILEIN-LEN.
+       FD  FILEIN-FDNAME RECORDING MODE F.
        01  FILEIN-RECORD.        
           05  FILLER      PIC X(80).
 
@@ -62,7 +61,6 @@
        WORKING-STORAGE SECTION.
       /  FILE
        01  FILEIN-NAME    PIC X(255).
-       01  FILEIN-LEN     PIC 9(03).
        01  WS-FS-FLUX     PIC X(02).
       *    STATUS OK 
            88 FS-FLUX-OK  VALUE '00'.
@@ -129,8 +127,7 @@
                MOVE '01' TO RC
                PERFORM 1999-FIN
            END-IF
-           DISPLAY FILEIN-LEN
-           IF FILEIN-LEN > 80 THEN
+           IF FS-FLUX-LEN THEN
                MOVE '02' TO RC
                PERFORM 1999-FIN
            END-IF
@@ -162,7 +159,6 @@
       *  This routine should initialize vars and check if file is empty.
       *    Initialize vars
            INITIALIZE WS-VARS
-           INITIALIZE FILEIN-LEN
       *    Setup file
            PERFORM 0000-OFILES
            IF RC-IS-00 THEN

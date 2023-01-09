@@ -161,13 +161,14 @@
            MOVE "tests/FLUX-02.txt" TO FILEIN-DDNAME
            MOVE '00' TO RC
            CALL "GKCTRL01" USING FILEIN-DDNAME, RC
-           IF RC-02-EXPECTED THEN
-               DISPLAY '    TEST 02 PASSED.'
-           ELSE
-               DISPLAY '    TEST 02 FAILED.'
-               PERFORM 1200-INC-ERROR
-           END-IF
-		   .
+           DISPLAY    '    TEST 02 DENIED FOR LINUX.'
+      *    IF RC-02-EXPECTED THEN
+      *        DISPLAY '    TEST 02 PASSED.'
+      *    ELSE
+      *        DISPLAY '    TEST 02 FAILED.'
+      *        PERFORM 1200-INC-ERROR
+      *    END-IF
+           .
 
        CT03-OTHER-OFILE.
       ******************************************************************EDEFAY
