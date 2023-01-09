@@ -86,7 +86,7 @@
        01  FILEIN-DDNAME PIC X(30).
       /  RETURN CODE
        01  RC            PIC X(02).
-           88 RC-IS-00   VALUE "00"
+           88 RC-IS-00   VALUE "00".
 
       ******************************************************************
       *  Program : Setup, run main routine and exit.
