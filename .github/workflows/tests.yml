@@ -43,9 +43,8 @@ jobs:
       run: cobc --info
     - name: Run tests
       run: |
-      echo "DUMMY - 
-        ./test_sum
+        echo "DUMMY - ./test_sum"
         if [[ $? -eq 0 ]]; then
           echo "Tests Succeed"
           exit 0
-        fi"
+        fi
