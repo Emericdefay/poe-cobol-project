@@ -86,6 +86,7 @@
        01  FILEIN-DDNAME PIC X(30).
       /  RETURN CODE
        01  RC            PIC X(02).
+           88 RC-IS-00   VALUE "00"
 
       ******************************************************************
       *  Program : Setup, run main routine and exit.
@@ -119,6 +120,7 @@
        0000-OFILES.
       ******************************************************************EDEFAY
       *  This routine should open file(s).
+           DISPLAY "0000"
            MOVE FILEIN-DDNAME TO FILEIN-NAME
            OPEN INPUT FILEIN-FDNAME
 
@@ -133,6 +135,7 @@
        0100-READ-FILEIN.
       ******************************************************************EDEFAY
       *  This routine should read FILEIN file.
+           DISPLAY "0100"
            READ FILEIN-FDNAME
            INTO FILEIN-RECORD
            END-READ
@@ -141,8 +144,9 @@
        1000-Main.
       ******************************************************************EDEFAY
       *  This routine should follow the logic of the program purpose.
+           DISPLAY "1000"
            PERFORM 1001-DEBUT
-           IF RC = '00' THEN
+           IF RC-IS-00 THEN
                PERFORM UNTIL (FS-FLUX-END)
                    PERFORM 1500-TRAITEMENT
                END-PERFORM
@@ -155,8 +159,9 @@
       ******************************************************************EDEFAY
       *  This routine should initialize vars and check if file is empty.
       *    
+           DISPLAY "1001"
            PERFORM 0000-OFILES
-           IF RC = '00' THEN
+           IF RC-IS-00 THEN
                PERFORM 0100-READ-FILEIN
            END-IF
            IF FS-FLUX-END THEN
@@ -168,6 +173,7 @@
       ******************************************************************EDEFAY
       *  This routine should increment WS-LUS-xx vars and price into
       *  OPER AMOUNT vars. Updating RC if needed.  
+           DISPLAY "1500"
            MOVE FILEIN-RECORD TO F1-ENREG-00
            DISPLAY F1-TYPE-00
            EVALUATE TRUE
@@ -193,7 +199,8 @@
        1999-FIN.
       ******************************************************************EDEFAY
       *  This routine should end the program, updating RC if needed.
-           IF RC = '00' THEN
+           DISPLAY "1999"
+           IF RC-IS-00 THEN
       *        No header issue
                IF WS-LUS-00 = 0 THEN
                    MOVE '07' TO RC
@@ -204,7 +211,7 @@
                END-IF
            END-IF
       *    Check if RC = 0
-           IF RC = '00' THEN
+           IF RC-IS-00 THEN
                DISPLAY "Good ending."
            ELSE
                DISPLAY " Bad ending. RC = " RC
@@ -218,5 +225,6 @@
        9999-CFILES.
       ******************************************************************EDEFAY
       *  This routine should close file(s).
+           DISPLAY "9999"
            CLOSE FILEIN-FDNAME
            .
