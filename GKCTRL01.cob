@@ -31,6 +31,7 @@
       * Date      Author        Maintenance Requirement               
       * --------- ------------  --------------------------------------- 
       * 09/01/23  EDEFAY        Create a blank template        
+      * 09/01/23  EDEFAY        Making dynamic file calls
       *                                                               
       ******************************************************************
        IDENTIFICATION DIVISION.
