@@ -59,12 +59,12 @@
 
       ******************************************************************
        WORKING-STORAGE SECTION.
-      / FILES STATUS 
-       01  FILEIN-NAME PIC X(255).
-      / FILES STATUS 
-       01  FS-FILEIN PIC X(02).
+      /  FILE
+       01  FILEIN-NAME   PIC X(255).
+       01  FS-FILEIN     PIC X(02).
            88 FS-FILEIN-END VALUE "10".
-
+      /  RETURN CODE
+       01 RC             PIC 99 COMP-5.
       / IMPORT SQLCA
       *    EXEC SQL INCLUDE SQLCA 
       *    END-EXEC.
@@ -100,8 +100,7 @@
       *    - Dxxx : Displays
       *    - Cxxx : Calls
       ******************************************************************
-       PROCEDURE DIVISION USING     FILEIN-DDNAME
-                          RETURNING RC.
+       PROCEDURE DIVISION USING     FILEIN-DDNAME.
            PERFORM 0000-OFILES.
            PERFORM 1000-Main.
            PERFORM 9999-CFILES.
