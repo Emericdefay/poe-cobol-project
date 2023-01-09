@@ -168,19 +168,19 @@
       ******************************************************************EDEFAY
       *  This routine should increment WS-LUS-xx vars and price into
       *  OPER AMOUNT vars. Updating RC if needed.  
-           MOVE FILEIN-RECORD to F1-ENREG-00
-           EVALUATE F1-TYPE-00
-               WHEN "00"
+           MOVE FILEIN-RECORD TO F1-ENREG-00
+           EVALUATE TRUE
+               WHEN F1-TYPE-00 = "00"
                    ADD 1 TO WS-LUS-00
-               WHEN "10"
+               WHEN F1-TYPE-00 = "10"
                    ADD 1 TO WS-LUS-10
                    ADD F1-MONTANT-OPER TO WS-MT-GLOBAL
-               WHEN "99"
+               WHEN F1-TYPE-00 = "99"
                    ADD 1 TO WS-LUS-99
-                   IF F1-NB-OPERATIONS NOT = WS-LUS-10 THEN
+                   IF F1-NB-OPERATIONS NOT = WS-LUS-10    THEN
                        MOVE "5" TO RC
                    END-IF
-                   IF F1-MT-GLOBAL NOT = WS-MT-GLOBAL THEN
+                   IF F1-MT-GLOBAL     NOT = WS-MT-GLOBAL THEN
                        MOVE "6" TO RC
                    END-IF
                WHEN OTHER
