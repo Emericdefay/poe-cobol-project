@@ -179,9 +179,13 @@
                WHEN F1-TYPE-00 = '99'
                    ADD 1 TO WS-LUS-99
                    IF F1-NB-OPERATIONS NOT = WS-LUS-10    THEN
+                       DISPLAY "F1-NB-OPERATIONS / WS-LUS-10" 
+                       DISPLAY F1-NB-OPERATIONS " / " WS-LUS-10
                        MOVE '05' TO RC
                    END-IF
                    IF F1-MT-GLOBAL     NOT = WS-MT-GLOBAL THEN
+                       DISPLAY "F1-MT-GLOBAL / WS-MT-GLOBAL"
+                       DISPLAY F1-MT-GLOBAL " / " WS-MT-GLOBAL
                        MOVE '06' TO RC
                    END-IF
                WHEN OTHER
@@ -205,7 +209,7 @@
            END-IF
       *    Check if RC = 0
            IF RC-IS-00 THEN
-               DISPLAY "Good ending."
+               DISPLAY "Good ending. RC = " RC
            ELSE
                DISPLAY " Bad ending. RC = " RC
            END-IF
