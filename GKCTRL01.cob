@@ -100,7 +100,8 @@
       *    - Dxxx : Displays
       *    - Cxxx : Calls
       ******************************************************************
-       PROCEDURE DIVISION USING BY REFERENCE FILEIN-DDNAME.
+       PROCEDURE DIVISION USING     FILEIN-DDNAME
+                          RETURNING RC.
            PERFORM 0000-OFILES.
            PERFORM 1000-Main.
            PERFORM 9999-CFILES.
