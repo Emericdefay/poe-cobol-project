@@ -39,14 +39,14 @@
       *FILE SECTION.
       *FD  FILEIN RECORDING MODE F
       *    RECORD CONTAINS 80 CHARACTERS.
-      *01  FILEIN-STRUCT.        
+      * 01  FILEIN-STRUCT.        
       *   05  FILLER     PIC X(80).
 
       ******************************************************************
        WORKING-STORAGE SECTION.
-	  / PGM called for tests
+      * PGM called for tests
 	   01  WS-TEST-PGM PIC X(08) VALUE "GKCTRL01".
-      / FILES STATUS 
+      *  FILES STATUS 
 
       ******************************************************************
       *  Program : Setup, run main routine and exit.
