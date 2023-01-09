@@ -47,6 +47,8 @@
        WORKING-STORAGE SECTION.
       *  PGM called for tests
 	   01  FILEIN-DDNAME PIC X(30).
+      *  Errors
+       01 NUM-ERRORS     PIC 9(02) VALUE 0.
       *  RC checked
        01  RC            PIC X(02) VALUE "00" COMP-5.
            88 RC-00-EXPECTED       VALUE "00".
@@ -100,12 +102,29 @@
            PERFORM CT06-SUM-OPER-DIFF-MT-FOOTER
            PERFORM CT07-NO-HEADER
            PERFORM CT08-NO-FOOTER
+
+           DISPLAY "Ending tests."
+           PERFORM 2500-CHECK-NO-ERROR
+           .
+
+       1200-INC-ERROR.
+      ******************************************************************EDEFAY
+      *  This routine should increment number of errors saw in tests
+           ADD 1 TO NUM-ERRORS
+           .
+
+       2500-CHECK-NO-ERROR    
+      ******************************************************************EDEFAY
+      *  This routine should exec failure if there is an error in tests
+           IF NUM-ERRORS > 0 THEN
+               PERFORM 9999-MAKING-ERROR-CODE
+           END-IF
            .
 
        9999-MAKING-ERROR-CODE.
       ******************************************************************EDEFAY
-      *  This routine should follow the logic of the program purpose
-           DISPLAY "CREATING AN ERROR CODE"
+      *  This routine should generate an error, making workflow failing
+           CALL "TEST-FAILED"
            .
 
        CT00-FILE-OK.
@@ -116,7 +135,7 @@
            IF RC-00-EXPECTED THEN
                DISPLAY '    TEST 00 PASSED.'
            ELSE
-               PERFORM 9999-MAKING-ERROR-CODE
+               PERFORM 1200-INC-ERROR
            END-IF
            .
 
@@ -128,7 +147,7 @@
            IF RC-01-EXPECTED THEN
                DISPLAY '    TEST 01 PASSED.'
            ELSE
-               PERFORM 9999-MAKING-ERROR-CODE
+               PERFORM 1200-INC-ERROR
            END-IF
 		   .
 
@@ -140,7 +159,7 @@
            IF RC-02-EXPECTED THEN
                DISPLAY '    TEST 02 PASSED.'
            ELSE
-               PERFORM 9999-MAKING-ERROR-CODE
+               PERFORM 1200-INC-ERROR
            END-IF
 		   .
 
@@ -152,7 +171,7 @@
            IF RC-03-EXPECTED THEN
                DISPLAY '    TEST 03 PASSED.'
            ELSE
-               PERFORM 9999-MAKING-ERROR-CODE
+               PERFORM 1200-INC-ERROR
            END-IF
            .
 
@@ -164,7 +183,7 @@
            IF RC-04-EXPECTED THEN
                DISPLAY '    TEST 04 PASSED.'
            ELSE
-               PERFORM 9999-MAKING-ERROR-CODE
+               PERFORM 1200-INC-ERROR
            END-IF
 		   .
 
@@ -176,7 +195,7 @@
            IF RC-05-EXPECTED THEN
                DISPLAY '    TEST 05 PASSED.'
            ELSE
-               PERFORM 9999-MAKING-ERROR-CODE
+               PERFORM 1200-INC-ERROR
            END-IF
 		   .
 
@@ -188,7 +207,7 @@
            IF RC-06-EXPECTED THEN
                DISPLAY '    TEST 06 PASSED.'
            ELSE
-               PERFORM 9999-MAKING-ERROR-CODE
+               PERFORM 1200-INC-ERROR
            END-IF
            .
 
@@ -200,7 +219,7 @@
            IF RC-07-EXPECTED THEN
                DISPLAY '    TEST 07 PASSED.'
            ELSE
-               PERFORM 9999-MAKING-ERROR-CODE
+               PERFORM 1200-INC-ERROR
            END-IF
 		   .
 
@@ -212,6 +231,6 @@
            IF RC-08-EXPECTED THEN
                DISPLAY '    TEST 08 PASSED.'
            ELSE
-               PERFORM 9999-MAKING-ERROR-CODE
+               PERFORM 1200-INC-ERROR
            END-IF
 		   .
