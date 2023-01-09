@@ -59,6 +59,8 @@
       ******************************************************************
        WORKING-STORAGE SECTION.
       / FILES STATUS 
+       01  FILEIN-NAME PIC X(255).
+      / FILES STATUS 
        01  FS-FILEIN PIC X(02).
            88 FS-FILEIN-END VALUE "10".
 
@@ -70,9 +72,8 @@
       *    EXEC SQL INCLUDE DCLDUMMY  END-EXEC.
        LINKAGE SECTION.
       ******************************************************************
-      * This program will probably be a subprogram, let's prepare the 
-      * linkage section.
-      ******************************************************************
+      /  DYNAMIC FILE 
+       01  FILEIN-DDNAME PIC X(12).
       *01  RC PIC 9(04).
 
       ******************************************************************
@@ -107,8 +108,8 @@
        0000-OFILES.
       ******************************************************************EDEFAY
       *  This routine should open file(s)
-           MOVE FILEIN-DDNAME TO FILEIN-NAME.
-           OPEN INPUT FILEIN-FDNAME.
+           MOVE FILEIN-DDNAME TO FILEIN-NAME
+           OPEN INPUT FILEIN-FDNAME
            .
 
        0100-READ-FILEIN.
