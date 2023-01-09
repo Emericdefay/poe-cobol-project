@@ -165,6 +165,7 @@
            END-IF
            IF FS-FLUX-END THEN
                MOVE '04' TO RC
+               PERFORM 1999-FIN
            END-IF
            .
 
@@ -182,17 +183,16 @@
                WHEN F1-TYPE-00 = '99'
                    ADD 1 TO WS-LUS-99
                    IF F1-NB-OPERATIONS NOT = WS-LUS-10    THEN
-                       DISPLAY "F1-NB-OPERATIONS / WS-LUS-10" 
-                       DISPLAY F1-NB-OPERATIONS " / " WS-LUS-10
                        MOVE '05' TO RC
+                       PERFORM 1999-FIN
                    END-IF
                    IF F1-MT-GLOBAL     NOT = WS-MT-GLOBAL THEN
-                       DISPLAY "F1-MT-GLOBAL / WS-MT-GLOBAL"
-                       DISPLAY F1-MT-GLOBAL " / " WS-MT-GLOBAL
                        MOVE '06' TO RC
+                       PERFORM 1999-FIN
                    END-IF
                WHEN OTHER
                    MOVE '03' TO RC
+                   PERFORM 1999-FIN
            END-EVALUATE
            PERFORM 0100-READ-FILEIN
            .
@@ -206,7 +206,8 @@
                    MOVE '07' TO RC
                END-IF
       *        No footer issue
-               IF WS-LUS-99 = 0 THEN
+               IF WS-LUS-99     = 0
+              AND WS-LUS-00 NOT = 0 THEN
                    MOVE '08' TO RC
                END-IF
            END-IF
