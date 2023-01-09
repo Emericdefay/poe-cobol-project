@@ -113,21 +113,25 @@
        PROCEDURE DIVISION USING 
                             FILEIN-DDNAME,
                             RC.
-           PERFORM 0000-OFILES.
            PERFORM 1000-Main.
-           PERFORM 9999-CFILES.
            GOBACK.
 
        0000-OFILES.
       ******************************************************************EDEFAY
-      *  This routine should open file(s)
+      *  This routine should open file(s).
            MOVE FILEIN-DDNAME TO FILEIN-NAME
            OPEN INPUT FILEIN-FDNAME
            .
 
+       9999-CFILES.
+      ******************************************************************EDEFAY
+      *  This routine should close file(s).
+           CLOSE FILEIN-FDNAME
+           .
+
        0100-READ-FILEIN.
       ******************************************************************EDEFAY
-      *  This routine should read FILEIN file
+      *  This routine should read FILEIN file.
            READ FILEIN-FDNAME
            INTO FILEIN-RECORD
            END-READ
@@ -135,12 +139,27 @@
 
        1000-Main.
       ******************************************************************EDEFAY
-      *  This routine should follow the logic of the program purpose
+      *  This routine should follow the logic of the program purpose.
            DISPLAY "DO SOMETHING"
            .
 
-       9999-CFILES.
+       1001-DEBUT.
       ******************************************************************EDEFAY
-      *  This routine should close file(s)
-           CLOSE FILEIN-FDNAME
+      *  This routine should initialize vars and check if file is empty.
+      *    
+           DISPLAY "DO SOMETHING"
+           .
+
+       1500-TRAITEMENT.
+      ******************************************************************EDEFAY
+      *  This routine should increment WS-LUS-xx vars and price into
+      *  OPER AMOUNT vars. Updating RC if needed.  
+               
+           DISPLAY "DO SOMETHING"
+           .
+
+       1999-FIN.
+      ******************************************************************EDEFAY
+      *  This routine should end the program, updating RC if needed.
+           DISPLAY "DO SOMETHING"
            .
