@@ -113,7 +113,6 @@
       *  This routine should make RC = 00
            MOVE "tests/FLUX-00.txt" TO FILEIN-DDNAME
            CALL "GKCTRL01" USING FILEIN-DDNAME, RC
-           DISPLAY RC
            IF RC-00-EXPECTED THEN
                DISPLAY '    TEST 00 PASSED.'
            ELSE
