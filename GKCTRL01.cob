@@ -130,12 +130,6 @@
            END-IF
            .
 
-       9999-CFILES.
-      ******************************************************************EDEFAY
-      *  This routine should close file(s).
-           CLOSE FILEIN-FDNAME
-           .
-
        0100-READ-FILEIN.
       ******************************************************************EDEFAY
       *  This routine should read FILEIN file.
@@ -182,6 +176,7 @@
                    ADD 1 TO WS-LUS-10
                    ADD F1-MONTANT-OPER TO WS-MT-GLOBAL
                WHEN "99"
+                   ADD 1 TO WS-LUS-99
                    IF F1-NB-OPERATIONS NOT = WS-LUS-10 THEN
                        MOVE "5" TO RC
                    END-IF
@@ -217,4 +212,10 @@
            PERFORM 9999-CFILES
       *    Exit program
            EXIT PROGRAM
+           .
+
+       9999-CFILES.
+      ******************************************************************EDEFAY
+      *  This routine should close file(s).
+           CLOSE FILEIN-FDNAME
            .
