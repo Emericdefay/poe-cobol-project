@@ -63,7 +63,14 @@
       /  FILE
        01  FILEIN-NAME    PIC X(255).
        01  WS-FS-FLUX     PIC X(02).
+      *    STATUS OK 
+           88 FS-FLUX-OK  VALUE "00".
+      *    STATUS END FILE 
            88 FS-FLUX-END VALUE "10".
+      *    STATUS DDNAME not found 
+           88 FS-FLUX-DDN VALUE "35".
+      *    STATUS LENGHT or TYPE different 
+           88 FS-FLUX-LEN VALUE "39".
       /  Counters
        01  WS-LUS-00      PIC 9(06).
        01  WS-LUS-10      PIC 9(06).
