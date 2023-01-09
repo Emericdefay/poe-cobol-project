@@ -119,9 +119,7 @@
 
        0000-OFILES.
       ******************************************************************EDEFAY
-      *  This routine should open file(s).
-           DISPLAY "0000"
-           
+      *  This routine should open file(s).          
            MOVE FILEIN-DDNAME TO FILEIN-NAME
            OPEN INPUT FILEIN-FDNAME
 
@@ -136,7 +134,6 @@
        0100-READ-FILEIN.
       ******************************************************************EDEFAY
       *  This routine should read FILEIN file.
-           DISPLAY "0100"
            READ FILEIN-FDNAME
            INTO FILEIN-RECORD
            END-READ
@@ -145,7 +142,6 @@
        1000-Main.
       ******************************************************************EDEFAY
       *  This routine should follow the logic of the program purpose.
-           DISPLAY "1000"
            PERFORM 1001-DEBUT
            IF RC-IS-00 THEN
                PERFORM UNTIL (FS-FLUX-END)
@@ -160,7 +156,6 @@
       ******************************************************************EDEFAY
       *  This routine should initialize vars and check if file is empty.
       *    
-           DISPLAY "1001"
            PERFORM 0000-OFILES
            IF RC-IS-00 THEN
                PERFORM 0100-READ-FILEIN
@@ -174,9 +169,7 @@
       ******************************************************************EDEFAY
       *  This routine should increment WS-LUS-xx vars and price into
       *  OPER AMOUNT vars. Updating RC if needed.  
-           DISPLAY "1500"
            MOVE FILEIN-RECORD TO F1-ENREG-00
-           DISPLAY F1-TYPE-00
            EVALUATE TRUE
                WHEN F1-TYPE-00 = '00'
                    ADD 1 TO WS-LUS-00
@@ -200,7 +193,6 @@
        1999-FIN.
       ******************************************************************EDEFAY
       *  This routine should end the program, updating RC if needed.
-           DISPLAY "1999"
            IF RC-IS-00 THEN
       *        No header issue
                IF WS-LUS-00 = 0 THEN
@@ -226,6 +218,5 @@
        9999-CFILES.
       ******************************************************************EDEFAY
       *  This routine should close file(s).
-           DISPLAY "9999"
            CLOSE FILEIN-FDNAME
            .
