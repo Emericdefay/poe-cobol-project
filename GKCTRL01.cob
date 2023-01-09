@@ -212,12 +212,6 @@
                    MOVE '08' TO RC
                END-IF
            END-IF
-      *    Check if RC = 0
-           IF RC-IS-00 THEN
-               DISPLAY "Good ending. RC = " RC
-           ELSE
-               DISPLAY " Bad ending. RC = " RC
-           END-IF
       *    Close file
            PERFORM 9999-CFILES
       *    Exit program
