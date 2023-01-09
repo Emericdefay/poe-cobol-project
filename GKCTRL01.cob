@@ -64,13 +64,13 @@
        01  FILEIN-NAME    PIC X(255).
        01  WS-FS-FLUX     PIC X(02).
       *    STATUS OK 
-           88 FS-FLUX-OK  VALUE "00".
+           88 FS-FLUX-OK  VALUE '00'.
       *    STATUS END FILE 
-           88 FS-FLUX-END VALUE "10".
+           88 FS-FLUX-END VALUE '10'.
       *    STATUS DDNAME not found 
-           88 FS-FLUX-DDN VALUE "35".
+           88 FS-FLUX-DDN VALUE '35'.
       *    STATUS LENGHT or TYPE different 
-           88 FS-FLUX-LEN VALUE "39".
+           88 FS-FLUX-LEN VALUE '39'.
       /  Counters
        01  WS-LUS-00      PIC 9(06).
        01  WS-LUS-10      PIC 9(06).
@@ -78,7 +78,7 @@
       /  Operations
        01  WS-MT-GLOBAL   PIC 9(11)V99.
       /  Copybook
-       COPY "CFLUX.cpy".
+       COPY 'CFLUX.cpy'.
 
       ******************************************************************
        LINKAGE SECTION.
@@ -123,10 +123,10 @@
            OPEN INPUT FILEIN-FDNAME
 
            IF FS-FLUX-DDN
-               MOVE "1" TO RC
+               MOVE '1' TO RC
            END-IF
            IF FS-FLUX-LEN
-               MOVE "2" TO RC
+               MOVE '2' TO RC
            END-IF
            .
 
@@ -143,7 +143,7 @@
       *  This routine should follow the logic of the program purpose.
            PERFORM 1001-DEBUT
            IF RC = 0 THEN
-               PERFORM UNTIL FS-FLUX-END
+               PERFORM UNTIL (FS-FLUX-END)
                    PERFORM 1500-TRAITEMENT
                END-PERFORM
            END-IF
@@ -160,7 +160,7 @@
                PERFORM 0100-READ-FILEIN
            END-IF
            IF FS-FLUX-END THEN
-               MOVE "4" TO RC
+               MOVE '4' TO RC
            END-IF
            .
 
@@ -169,22 +169,23 @@
       *  This routine should increment WS-LUS-xx vars and price into
       *  OPER AMOUNT vars. Updating RC if needed.  
            MOVE FILEIN-RECORD TO F1-ENREG-00
+           DISPLAY F1-TYPE-00
            EVALUATE TRUE
-               WHEN F1-TYPE-00 = "00"
+               WHEN F1-TYPE-00 = '00'
                    ADD 1 TO WS-LUS-00
-               WHEN F1-TYPE-00 = "10"
+               WHEN F1-TYPE-00 = '10'
                    ADD 1 TO WS-LUS-10
                    ADD F1-MONTANT-OPER TO WS-MT-GLOBAL
-               WHEN F1-TYPE-00 = "99"
+               WHEN F1-TYPE-00 = '99'
                    ADD 1 TO WS-LUS-99
                    IF F1-NB-OPERATIONS NOT = WS-LUS-10    THEN
-                       MOVE "5" TO RC
+                       MOVE '5' TO RC
                    END-IF
                    IF F1-MT-GLOBAL     NOT = WS-MT-GLOBAL THEN
-                       MOVE "6" TO RC
+                       MOVE '6' TO RC
                    END-IF
                WHEN OTHER
-                   MOVE "3" TO RC
+                   MOVE '3' TO RC
            END-EVALUATE
            PERFORM 0100-READ-FILEIN
            .
@@ -192,14 +193,14 @@
        1999-FIN.
       ******************************************************************EDEFAY
       *  This routine should end the program, updating RC if needed.
-           IF RC NOT = 0 THEN
+           IF RC = 0 THEN
       *        No header issue
                IF WS-LUS-00 = 0 THEN
-                   MOVE "7" TO RC
+                   MOVE '7' TO RC
                END-IF
       *        No footer issue
                IF WS-LUS-99 = 0 THEN
-                   MOVE "8" TO RC
+                   MOVE '8' TO RC
                END-IF
            END-IF
       *    Check if RC = 0
