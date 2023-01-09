@@ -63,12 +63,14 @@
        01  FILEIN-NAME   PIC X(255).
        01  FS-FILEIN     PIC X(02).
            88 FS-FILEIN-END VALUE "10".
+       COPY "CFLUX.cpy".
       / IMPORT SQLCA
       *    EXEC SQL INCLUDE SQLCA 
       *    END-EXEC.
 
       / DECLARATIONS DCLGEN
       *    EXEC SQL INCLUDE DCLDUMMY  END-EXEC.
+
        LINKAGE SECTION.
       ******************************************************************
       /  DYNAMIC FILE 
