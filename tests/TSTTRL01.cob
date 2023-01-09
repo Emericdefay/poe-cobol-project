@@ -50,16 +50,16 @@
       *  Errors
        01 NUM-ERRORS     PIC 9(02) VALUE 0.
       *  RC checked
-       01  RC            PIC X(02) VALUE "0" COMP-5.
-           88 RC-00-EXPECTED       VALUE "0".
-           88 RC-01-EXPECTED       VALUE "1".
-           88 RC-02-EXPECTED       VALUE "2".
-           88 RC-03-EXPECTED       VALUE "3".
-           88 RC-04-EXPECTED       VALUE "4".
-           88 RC-05-EXPECTED       VALUE "5".
-           88 RC-06-EXPECTED       VALUE "6".
-           88 RC-07-EXPECTED       VALUE "7".
-           88 RC-08-EXPECTED       VALUE "8".
+       01  RC            PIC X(02) VALUE '00'.
+           88 RC-00-EXPECTED       VALUE '00'.
+           88 RC-01-EXPECTED       VALUE '01'.
+           88 RC-02-EXPECTED       VALUE '02'.
+           88 RC-03-EXPECTED       VALUE '03'.
+           88 RC-04-EXPECTED       VALUE '04'.
+           88 RC-05-EXPECTED       VALUE '05'.
+           88 RC-06-EXPECTED       VALUE '06'.
+           88 RC-07-EXPECTED       VALUE '07'.
+           88 RC-08-EXPECTED       VALUE '08'.
 
       ******************************************************************
       *  Program : Setup, run main routine and exit.

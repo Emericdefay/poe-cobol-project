@@ -85,7 +85,7 @@
       /  DYNAMIC FILE 
        01  FILEIN-DDNAME PIC X(30).
       /  RETURN CODE
-       01  RC            PIC X(02) COMP-5.
+       01  RC            PIC X(02).
 
       ******************************************************************
       *  Program : Setup, run main routine and exit.
@@ -123,10 +123,10 @@
            OPEN INPUT FILEIN-FDNAME
 
            IF FS-FLUX-DDN
-               MOVE '1' TO RC
+               MOVE '01' TO RC
            END-IF
            IF FS-FLUX-LEN
-               MOVE '2' TO RC
+               MOVE '02' TO RC
            END-IF
            .
 
@@ -142,7 +142,7 @@
       ******************************************************************EDEFAY
       *  This routine should follow the logic of the program purpose.
            PERFORM 1001-DEBUT
-           IF RC = 0 THEN
+           IF RC = '00' THEN
                PERFORM UNTIL (FS-FLUX-END)
                    PERFORM 1500-TRAITEMENT
                END-PERFORM
@@ -156,11 +156,11 @@
       *  This routine should initialize vars and check if file is empty.
       *    
            PERFORM 0000-OFILES
-           IF RC = 0 THEN
+           IF RC = '00' THEN
                PERFORM 0100-READ-FILEIN
            END-IF
            IF FS-FLUX-END THEN
-               MOVE '4' TO RC
+               MOVE '04' TO RC
            END-IF
            .
 
@@ -179,13 +179,13 @@
                WHEN F1-TYPE-00 = '99'
                    ADD 1 TO WS-LUS-99
                    IF F1-NB-OPERATIONS NOT = WS-LUS-10    THEN
-                       MOVE '5' TO RC
+                       MOVE '05' TO RC
                    END-IF
                    IF F1-MT-GLOBAL     NOT = WS-MT-GLOBAL THEN
-                       MOVE '6' TO RC
+                       MOVE '06' TO RC
                    END-IF
                WHEN OTHER
-                   MOVE '3' TO RC
+                   MOVE '03' TO RC
            END-EVALUATE
            PERFORM 0100-READ-FILEIN
            .
@@ -193,18 +193,18 @@
        1999-FIN.
       ******************************************************************EDEFAY
       *  This routine should end the program, updating RC if needed.
-           IF RC = 0 THEN
+           IF RC = '00' THEN
       *        No header issue
                IF WS-LUS-00 = 0 THEN
-                   MOVE '7' TO RC
+                   MOVE '07' TO RC
                END-IF
       *        No footer issue
                IF WS-LUS-99 = 0 THEN
-                   MOVE '8' TO RC
+                   MOVE '08' TO RC
                END-IF
            END-IF
       *    Check if RC = 0
-           IF RC = 0 THEN
+           IF RC = '00' THEN
                DISPLAY "Good ending."
            ELSE
                DISPLAY " Bad ending. RC = " RC
