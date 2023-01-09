@@ -84,24 +84,22 @@
       *    - xTnn : Tests with "nn" RC expected
       ******************************************************************
        PROCEDURE DIVISION.
-      *    USING 
-      *        BY REFERENCE LK-DUMMY-REF,
-      *        BY VALUE     LK-DUMMY-VAL
-      *    .
            PERFORM 1000-Main.
            GOBACK.
-
-       0000-OFILES.
-      ******************************************************************EDEFAY
-      *  This routine should open file(s)
-      *    OPEN INPUT FILEIN
-		   DISPLAY "DO SOMETHING"
-           .
 
        1000-Main.
       ******************************************************************EDEFAY
       *  This routine should follow the logic of the program purpose
-           DISPLAY "DO SOMETHING"
+           DISPLAY "Executing tests :"
+           PERFORM CT00-FILE-OK
+           PERFORM CT01-DDNAME
+           PERFORM CT02-DSNAME-LEN
+           PERFORM CT03-OTHER-OFILE
+           PERFORM CT04-EMPTY-FILEIN
+           PERFORM CT05-OPE-DIFF-FOOTER-SAID
+           PERFORM CT06-SUM-OPER-DIFF-MT-FOOTER
+           PERFORM CT07-NO-HEADER
+           PERFORM CT08-NO-FOOTER
            .
 
        9999-MAKING-ERROR-CODE.
@@ -116,7 +114,7 @@
            MOVE "FLUX-00.txt" TO FILEIN-DDNAME
            CALL "GKCTRL01" USING FILEIN-DDNAME
            IF RC-00-EXPECTED THEN
-               DISPLAY 'TEST 00 PASSED.'
+               DISPLAY '    TEST 00 PASSED.'
            ELSE
                PERFORM 9999-MAKING-ERROR-CODE
            END-IF
@@ -128,7 +126,7 @@
            MOVE "FLUX-01.txt" TO FILEIN-DDNAME
            CALL "GKCTRL01" USING FILEIN-DDNAME
            IF RC-01-EXPECTED THEN
-               DISPLAY 'TEST 01 PASSED.'
+               DISPLAY '    TEST 01 PASSED.'
            ELSE
                PERFORM 9999-MAKING-ERROR-CODE
            END-IF
@@ -140,7 +138,7 @@
            MOVE "FLUX-02.txt" TO FILEIN-DDNAME
            CALL "GKCTRL01" USING FILEIN-DDNAME
            IF RC-02-EXPECTED THEN
-               DISPLAY 'TEST 02 PASSED.'
+               DISPLAY '    TEST 02 PASSED.'
            ELSE
                PERFORM 9999-MAKING-ERROR-CODE
            END-IF
@@ -152,7 +150,7 @@
            MOVE "FLUX-03.txt" TO FILEIN-DDNAME
            CALL "GKCTRL01" USING FILEIN-DDNAME
            IF RC-03-EXPECTED THEN
-               DISPLAY 'TEST 03 PASSED.'
+               DISPLAY '    TEST 03 PASSED.'
            ELSE
                PERFORM 9999-MAKING-ERROR-CODE
            END-IF
@@ -164,7 +162,7 @@
            MOVE "FLUX-04.txt" TO FILEIN-DDNAME
            CALL "GKCTRL01" USING FILEIN-DDNAME
            IF RC-04-EXPECTED THEN
-               DISPLAY 'TEST 04 PASSED.'
+               DISPLAY '    TEST 04 PASSED.'
            ELSE
                PERFORM 9999-MAKING-ERROR-CODE
            END-IF
@@ -176,7 +174,7 @@
            MOVE "FLUX-05.txt" TO FILEIN-DDNAME
            CALL "GKCTRL01" USING FILEIN-DDNAME
            IF RC-05-EXPECTED THEN
-               DISPLAY 'TEST 05 PASSED.'
+               DISPLAY '    TEST 05 PASSED.'
            ELSE
                PERFORM 9999-MAKING-ERROR-CODE
            END-IF
@@ -188,7 +186,7 @@
            MOVE "FLUX-06.txt" TO FILEIN-DDNAME
            CALL "GKCTRL01" USING FILEIN-DDNAME
            IF RC-06-EXPECTED THEN
-               DISPLAY 'TEST 06 PASSED.'
+               DISPLAY '    TEST 06 PASSED.'
            ELSE
                PERFORM 9999-MAKING-ERROR-CODE
            END-IF
@@ -200,7 +198,7 @@
            MOVE "FLUX-07.txt" TO FILEIN-DDNAME
            CALL "GKCTRL01" USING FILEIN-DDNAME
            IF RC-07-EXPECTED THEN
-               DISPLAY 'TEST 07 PASSED.'
+               DISPLAY '    TEST 07 PASSED.'
            ELSE
                PERFORM 9999-MAKING-ERROR-CODE
            END-IF
@@ -212,7 +210,7 @@
            MOVE "FLUX-08.txt" TO FILEIN-DDNAME
            CALL "GKCTRL01" USING FILEIN-DDNAME
            IF RC-08-EXPECTED THEN
-               DISPLAY 'TEST 08 PASSED.'
+               DISPLAY '    TEST 08 PASSED.'
            ELSE
                PERFORM 9999-MAKING-ERROR-CODE
            END-IF
