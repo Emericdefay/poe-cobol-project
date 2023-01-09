@@ -46,7 +46,7 @@
       ******************************************************************
        WORKING-STORAGE SECTION.
       *  PGM called for tests
-	   01  FILEIN-DDNAME PIC X(12).
+	   01  FILEIN-DDNAME PIC X(30).
       *  RC checked
        01  RC PIC X(02) COMP-5.
            88 RC-00-EXPECTED VALUE "00".
