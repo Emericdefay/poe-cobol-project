@@ -107,7 +107,7 @@
        9999-MAKING-ERROR-CODE.
       ******************************************************************EDEFAY
       *  This routine should follow the logic of the program purpose
-           ADD "1" TO 0
+           DISPLAY "CREATING AN ERROR CODE"
            .
 
        CT00-FILE-OK.
