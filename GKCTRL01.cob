@@ -20,7 +20,6 @@
       *    FILEIN       :
       *        FDNAME   : FILEIN
       *        DDNAME   : FILEIN
-      *        DSNAME   : FILEINDUMMY
       *
       *    COPYBOOKS    : 
       *        CFLUX    : Operands flow file Data structure
@@ -45,20 +44,23 @@
        ENVIRONMENT DIVISION. 
        INPUT-OUTPUT SECTION. 
        FILE-CONTROL. 
-           SELECT FILEIN ASSIGN TO FILEIN
-           FILE STATUS IS FS-FILEIN.
+           SELECT FILEIN-FDNAME
+           ASSIGN TO DYNAMIC FILEIN-NAME
+           ORGANIZATION IS LINE SEQUENTIAL.
       ******************************************************************
        DATA DIVISION.
       ******************************************************************
-      *FILE SECTION.
-      *FD  FILEINDUMMY RECORDING MODE F
-      *    RECORD CONTAINS 80 CHARACTERS.
-      *01  FILEINDUMMY-STRUCT.        
-      *   05  FILLER     PIC X(80).            
+       FILE SECTION.
+       FD  FILEIN-FDNAME RECORDING MODE F
+           RECORD CONTAINS 80 CHARACTERS.
+       01  FILEIN-RECORD.        
+          05  FILLER     PIC X(80).
 
       ******************************************************************
        WORKING-STORAGE SECTION.
       / FILES STATUS 
+       01  FS-FILEIN PIC X(02).
+           88 FS-FILEIN-END VALUE "10".
 
       / IMPORT SQLCA
       *    EXEC SQL INCLUDE SQLCA 
@@ -71,6 +73,7 @@
       * This program will probably be a subprogram, let's prepare the 
       * linkage section.
       ******************************************************************
+      *01  RC PIC 9(04).
 
       ******************************************************************
       *  Program : Setup, run main routine and exit.
@@ -95,11 +98,7 @@
       *    - Dxxx : Displays
       *    - Cxxx : Calls
       ******************************************************************
-       PROCEDURE DIVISION
-      *    USING 
-      *        BY REFERENCE LK-DUMMY-REF,
-      *        BY VALUE     LK-DUMMY-VAL
-           .
+       PROCEDURE DIVISION USING BY REFERENCE FILEIN-DDNAME.
            PERFORM 0000-OFILES.
            PERFORM 1000-Main.
            PERFORM 9999-CFILES.
@@ -108,7 +107,16 @@
        0000-OFILES.
       ******************************************************************EDEFAY
       *  This routine should open file(s)
-           OPEN INPUT FILEIN
+           MOVE FILEIN-DDNAME TO FILEIN-NAME.
+           OPEN INPUT FILEIN-FDNAME.
+           .
+
+       0100-READ-FILEIN.
+      ******************************************************************EDEFAY
+      *  This routine should read FILEIN file
+           READ FILEIN-FDNAME
+           INTO FILEIN-RECORD
+           END-READ
            .
 
        1000-Main.
@@ -120,5 +128,5 @@
        9999-CFILES.
       ******************************************************************EDEFAY
       *  This routine should close file(s)
-           CLOSE FILEIN
+           CLOSE FILEIN-FDNAME
            .
