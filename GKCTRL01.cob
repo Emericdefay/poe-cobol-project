@@ -47,6 +47,7 @@
        FILE-CONTROL. 
            SELECT FILEIN-FDNAME
            ASSIGN TO DYNAMIC FILEIN-NAME
+           FILE STATUS IS WS-FS-FLUX
            ORGANIZATION IS LINE SEQUENTIAL.
       ******************************************************************
        DATA DIVISION.
@@ -55,24 +56,25 @@
        FD  FILEIN-FDNAME RECORDING MODE F
            RECORD CONTAINS 80 CHARACTERS.
        01  FILEIN-RECORD.        
-          05  FILLER     PIC X(80).
+          05  FILLER      PIC X(80).
 
       ******************************************************************
        WORKING-STORAGE SECTION.
       /  FILE
-       01  FILEIN-NAME   PIC X(255).
-       01  FS-FILEIN     PIC X(02).
-           88 FS-FILEIN-END VALUE "10".
+       01  FILEIN-NAME    PIC X(255).
+       01  WS-FS-FLUX     PIC X(02).
+           88 FS-FLUX-END VALUE "10".
+      /  Counters
+       01  WS-LUS-00      PIC 9(06).
+       01  WS-LUS-10      PIC 9(06).
+       01  WS-LUS-99      PIC 9(06).
+      /  Operations
+       01  WS-MT-GLOBAL   PIC 9(11)V99.
+      /  Copybook
        COPY "CFLUX.cpy".
-      / IMPORT SQLCA
-      *    EXEC SQL INCLUDE SQLCA 
-      *    END-EXEC.
 
-      / DECLARATIONS DCLGEN
-      *    EXEC SQL INCLUDE DCLDUMMY  END-EXEC.
-
-       LINKAGE SECTION.
       ******************************************************************
+       LINKAGE SECTION.
       /  DYNAMIC FILE 
        01  FILEIN-DDNAME PIC X(30).
       /  RETURN CODE
