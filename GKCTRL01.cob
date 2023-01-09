@@ -71,12 +71,13 @@
            88 FS-FLUX-DDN VALUE '35'.
       *    STATUS LENGHT or TYPE different 
            88 FS-FLUX-LEN VALUE '39'.
+       01  WS-VARS.
       /  Counters
-       01  WS-LUS-00      PIC 9(06).
-       01  WS-LUS-10      PIC 9(06).
-       01  WS-LUS-99      PIC 9(06).
+           05  WS-LUS-00      PIC 9(06).
+           05  WS-LUS-10      PIC 9(06).
+           05  WS-LUS-99      PIC 9(06).
       /  Operations
-       01  WS-MT-GLOBAL   PIC 9(11)V99.
+           05  WS-MT-GLOBAL   PIC 9(11)V99.
       /  Copybook
        COPY 'CFLUX.cpy'.
 
@@ -155,7 +156,9 @@
        1001-DEBUT.
       ******************************************************************EDEFAY
       *  This routine should initialize vars and check if file is empty.
-      *    
+      *    Initialize vars
+           INITIALIZE WS-VARS
+      *    Setup file
            PERFORM 0000-OFILES
            IF RC-IS-00 THEN
                PERFORM 0100-READ-FILEIN
