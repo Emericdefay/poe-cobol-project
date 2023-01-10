@@ -167,6 +167,7 @@
       ******************************************************************EDEFAY 
       *  Update AUTH-QUERY, since Query type is unauthorized
            MOVE 1 TO AUTH-QUERY
+           DISPLAY AUTH-QUERY
            EXIT PROGRAM
            .
 

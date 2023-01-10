@@ -136,6 +136,7 @@
            INITIALIZE ZCMA
            MOVE "SEL" TO FONCTION
            CALL "MACPT" USING FILEIN-DDNAME, AUTH-QUERY
+           DISPLAY AUTH-QUERY
            IF SHOULD-NOT-BE-AUTH THEN
                DISPLAY '    TEST CPT-01 PASSED.'
            ELSE
