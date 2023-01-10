@@ -24,14 +24,14 @@
        DATA DIVISION.
        WORKING-STORAGE SECTION.
        01 AUTHORIZATION-QUERIES-TYPE.
-           10 SELECT-XXX PIC X   VALUE "O".
-                 88 SELECT-AUTH  VALUE "O".
-           10 INSERT-XXX PIC X   VALUE "O".
-                 88 INSERT-AUTH  VALUE "O".
-           10 UPDATE-XXX PIC X   VALUE "O".
-                 88 UPDATE-AUTH  VALUE "O".
-           10 DELETE-XXX PIC X   VALUE "O".
-                 88 DELETE-AUTH  VALUE "O".
+           10 SELECT-CPT  PIC X  VALUE "O".
+           10 SELECT-AUTH PIC X     VALUE "O".
+           10 INSERT-CPT  PIC X  VALUE "O".
+           10 INSERT-AUTH PIC X     VALUE "O".
+           10 UPDATE-CPT  PIC X  VALUE "O".
+           10 UPDATE-AUTH PIC X     VALUE "O".
+           10 DELETE-CPT  PIC X  VALUE "O".
+           10 DELETE-AUTH PIC X     VALUE "O".
        01  SQLCODE       PIC S9(3) VALUE 0.
 
        LINKAGE SECTION.

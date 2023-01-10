@@ -94,13 +94,9 @@
        2500-ROOTER.
       ******************************************************************EDEFAY 
       * Perform the different operations based on the value of FONCTION
-           DISPLAY ZACPT-FONCTION
-           DISPLAY SELECT-CPT
-           DISPLAY SELECT-AUTH
            EVALUATE TRUE
                WHEN ZACPT-FONCTION = 'SEL'
                    IF SELECT-CPT = SELECT-AUTH THEN
-                       DISPLAY "x"
                        PERFORM 8100-SELECT
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
@@ -108,7 +104,6 @@
                    END-IF
                WHEN ZACPT-FONCTION = 'INS'
                    IF INSERT-CPT = INSERT-AUTH THEN
-                       DISPLAY "o"
                        PERFORM 8400-INSERT
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
@@ -116,7 +111,6 @@
                    END-IF
                WHEN ZACPT-FONCTION = 'UPD'
                    IF UPDATE-CPT = UPDATE-AUTH THEN
-                       DISPLAY "o"
                        PERFORM 8700-UPDATE
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
@@ -124,7 +118,6 @@
                    END-IF
                WHEN ZACPT-FONCTION = 'DEL'
                    IF DELETE-CPT = DELETE-AUTH THEN
-                       DISPLAY "o"
                        PERFORM 8800-DELETE
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE

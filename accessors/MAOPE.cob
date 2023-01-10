@@ -29,14 +29,14 @@
        DATA DIVISION.
        WORKING-STORAGE SECTION.
        01 AUTHORIZATION-QUERIES-TYPE.
-           10 SELECT-OPE PIC X   VALUE "O".
-                 88 SELECT-AUTH  VALUE "O".
-           10 INSERT-OPE PIC X   VALUE "X".
-                 88 INSERT-AUTH  VALUE "O".
-           10 UPDATE-OPE PIC X   VALUE "X".
-                 88 UPDATE-AUTH  VALUE "O".
-           10 DELETE-OPE PIC X   VALUE "X".
-                 88 DELETE-AUTH  VALUE "O".
+           10 SELECT-CPT  PIC X  VALUE "O".
+           10 SELECT-AUTH PIC X     VALUE "O".
+           10 INSERT-CPT  PIC X  VALUE "X".
+           10 INSERT-AUTH PIC X     VALUE "O".
+           10 UPDATE-CPT  PIC X  VALUE "X".
+           10 UPDATE-AUTH PIC X     VALUE "O".
+           10 DELETE-CPT  PIC X  VALUE "X".
+           10 DELETE-AUTH PIC X     VALUE "O".
        01  SQLCODE       PIC S9(3) VALUE 0.
            
        LINKAGE SECTION.
@@ -96,28 +96,28 @@
       * Perform the different operations based on the value of FONCTION
            EVALUATE TRUE
                WHEN ZAOPE-FONCTION = 'SEL'
-                   IF SELECT-AUTH THEN
+                   IF SELECT-CPT = SELECT-AUTH THEN
                        PERFORM 8100-SELECT
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
                        PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
                    END-IF
                WHEN ZAOPE-FONCTION = 'INS'
-                   IF INSERT-AUTH THEN
+                   IF INSERT-CPT = INSERT-AUTH THEN
                        PERFORM 8400-INSERT
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
                        PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
                    END-IF
                WHEN ZAOPE-FONCTION = 'UPD'
-                   IF UPDATE-AUTH THEN
+                   IF UPDATE-CPT = UPDATE-AUTH THEN
                        PERFORM 8700-UPDATE
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
                        PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
                    END-IF
                WHEN ZAOPE-FONCTION = 'DEL'
-                   IF DELETE-AUTH THEN
+                   IF DELETE-CPT = DELETE-AUTH THEN
                        PERFORM 8800-DELETE
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
