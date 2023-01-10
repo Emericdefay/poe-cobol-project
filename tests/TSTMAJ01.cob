@@ -30,7 +30,7 @@
       *  Errors
        01  NUM-ERRORS          PIC 9(02) VALUE 0.
       *  Accessors auth
-       01 AUTH-QUERY           PIC 9(02).
+       01 AUTH-QUERY           PIC 9(02) VALUE 0.
       *  Accessors struct
        01 ZCMA.
            05 FONCTION         PIC X(03).
@@ -150,6 +150,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MACPT is unauthorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "SEL" TO FONCTION
            CALL "MACPT" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY > 0 THEN
@@ -164,6 +165,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MACPT is authorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "INS" TO FONCTION
            CALL "MACPT" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY = 0 THEN
@@ -178,6 +180,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MACPT is authorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "UPD" TO FONCTION
            CALL "MACPT" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY = 0 THEN
@@ -192,6 +195,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MACPT is authorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "DEL" TO FONCTION
            CALL "MACPT" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY = 0 THEN
@@ -206,6 +210,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MACPT is unauthorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "UNK" TO FONCTION
            CALL "MACPT" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY > 0 THEN
@@ -224,6 +229,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MAHIS is unauthorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "SEL" TO FONCTION
            CALL "MAHIS" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY > 0 THEN
@@ -238,6 +244,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MAHIS is authorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "INS" TO FONCTION
            CALL "MAHIS" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY = 0 THEN
@@ -252,6 +259,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MAHIS is unauthorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "UPD" TO FONCTION
            CALL "MAHIS" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY > 0 THEN
@@ -266,6 +274,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MAHIS is unauthorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "DEL" TO FONCTION
            CALL "MAHIS" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY > 0 THEN
@@ -280,6 +289,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MAHIS is unauthorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "UNK" TO FONCTION
            CALL "MAHIS" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY > 0 THEN
@@ -299,6 +309,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MADEV is unauthorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "SEL" TO FONCTION
            CALL "MADEV" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY > 0 THEN
@@ -313,6 +324,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MADEV is authorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "INS" TO FONCTION
            CALL "MADEV" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY = 0 THEN
@@ -327,6 +339,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MADEV is authorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "UPD" TO FONCTION
            CALL "MADEV" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY = 0 THEN
@@ -341,6 +354,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MADEV is authorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "DEL" TO FONCTION
            CALL "MADEV" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY = 0 THEN
@@ -355,6 +369,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MADEV is unauthorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "UNK" TO FONCTION
            CALL "MADEV" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY > 0 THEN
@@ -373,6 +388,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MAOPE is authorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "SEL" TO FONCTION
            CALL "MAOPE" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY = 0 THEN
@@ -387,6 +403,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MAOPE is unauthorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "INS" TO FONCTION
            CALL "MAOPE" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY > 0 THEN
@@ -401,6 +418,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MAOPE is unauthorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "UPD" TO FONCTION
            CALL "MAOPE" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY > 0 THEN
@@ -415,6 +433,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MAOPE is unauthorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "DEL" TO FONCTION
            CALL "MAOPE" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY > 0 THEN
@@ -429,6 +448,7 @@
       ******************************************************************EDEFAY
       *  This routine should test if MAOPE is unauthorized to use func
            INITIALIZE ZCMA
+           INITIALIZE AUTH-QUERY
            MOVE "UNK" TO FONCTION
            CALL "MAOPE" USING ZCMA, AUTH-QUERY
            IF AUTH-QUERY > 0 THEN
