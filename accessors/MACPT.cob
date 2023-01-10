@@ -87,7 +87,8 @@
        0000-INITIALIZATIONS.
       ******************************************************************EDEFAY 
       *  Initialize values
-           INITIALIZE AUTHORIZATION-QUERIES-TYPE.
+      *    INITIALIZE AUTHORIZATION-QUERIES-TYPE
+      *    DISPLAY AUTHORIZATION-QUERIES-TYPE
            .
 
        2500-ROOTER.
