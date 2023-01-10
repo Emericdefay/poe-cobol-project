@@ -3,13 +3,18 @@
       * Program name   : MADEV                               
       * Original author: DEFAY E.                                
       *
-      * Description    : This routine test RC returned by a PGM
+      * Description    : This routine is an accessor allowed to :
+      *                    - [X] SELECT
+      *                    - [O] INSERT
+      *                    - [X] UPDATE
+      *                    - [X] DELETE
       *
+      *                  It uses ZCMA copy replacing () by ZADEV.
       *                ---------------------------------                
       * Maintenance Log                                              
       * Date      Author        Maintenance Requirement               
       * --------- ------------  --------------------------------------- 
-      * 10/01/23  EDEFAY        RC 00 to 08           
+      * 10/01/23  EDEFAY        Created from MAXXX         
       *                                                               
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -24,14 +29,14 @@
        DATA DIVISION.
        WORKING-STORAGE.
        01 AUTHORIZATION-QUERIES-TYPE.
-           10 SELECT-DEV PIC X   VALUE "O"
-                 88 SELECT-AUTH  VALUE "O"
-           10 INSERT-DEV PIC X   VALUE "O"
-                 88 INSERT-AUTH  VALUE "O"
-           10 UPDATE-DEV PIC X   VALUE "O"
-                 88 UPDATE-AUTH  VALUE "O"
-           10 DELETE-DEV PIC X   VALUE "O"
-                 88 DELETE-AUTH  VALUE "O"
+           10 SELECT-DEV PIC X   VALUE "X".
+                 88 SELECT-AUTH  VALUE "O".
+           10 INSERT-DEV PIC X   VALUE "O".
+                 88 INSERT-AUTH  VALUE "O".
+           10 UPDATE-DEV PIC X   VALUE "X".
+                 88 UPDATE-AUTH  VALUE "O".
+           10 DELETE-DEV PIC X   VALUE "X".
+                 88 DELETE-AUTH  VALUE "O".
            
        LINKAGE SECTION.
        01 AUTH-QUERY PIC 9(2).

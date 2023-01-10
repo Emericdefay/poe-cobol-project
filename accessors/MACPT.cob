@@ -3,13 +3,18 @@
       * Program name   : MACPT                               
       * Original author: DEFAY E.                                
       *
-      * Description    : This routine test RC returned by a PGM
+      * Description    : This routine is an accessor allowed to :
+      *                    - [X] SELECT
+      *                    - [O] INSERT
+      *                    - [O] UPDATE
+      *                    - [O] DELETE
       *
+      *                  It uses ZCMA copy replacing () by ZACPT.
       *                ---------------------------------                
       * Maintenance Log                                              
       * Date      Author        Maintenance Requirement               
       * --------- ------------  --------------------------------------- 
-      * 10/01/23  EDEFAY        RC 00 to 08           
+      * 10/01/23  EDEFAY        Created from MAXXX         
       *                                                               
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -24,14 +29,14 @@
        DATA DIVISION.
        WORKING-STORAGE.
        01 AUTHORIZATION-QUERIES-TYPE.
-           10 SELECT-CPT PIC X   VALUE "O"
-                 88 SELECT-AUTH  VALUE "O"
-           10 INSERT-CPT PIC X   VALUE "O"
-                 88 INSERT-AUTH  VALUE "O"
-           10 UPDATE-CPT PIC X   VALUE "O"
-                 88 UPDATE-AUTH  VALUE "O"
-           10 DELETE-CPT PIC X   VALUE "O"
-                 88 DELETE-AUTH  VALUE "O"
+           10 SELECT-CPT PIC X   VALUE "X".
+                 88 SELECT-AUTH  VALUE "O".
+           10 INSERT-CPT PIC X   VALUE "O".
+                 88 INSERT-AUTH  VALUE "O".
+           10 UPDATE-CPT PIC X   VALUE "O".
+                 88 UPDATE-AUTH  VALUE "O".
+           10 DELETE-CPT PIC X   VALUE "O".
+                 88 DELETE-AUTH  VALUE "O".
            
        LINKAGE SECTION.
        01 AUTH-QUERY PIC 9(2).

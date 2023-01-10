@@ -3,13 +3,18 @@
       * Program name   : MAOPE                               
       * Original author: DEFAY E.                                
       *
-      * Description    : This routine 
+      * Description    : This routine is an accessor allowed to :
+      *                    - [O] SELECT
+      *                    - [X] INSERT
+      *                    - [X] UPDATE
+      *                    - [X] DELETE
       *
+      *                  It uses ZCMA copy replacing () by ZAOPE.
       *                ---------------------------------                
       * Maintenance Log                                              
       * Date      Author        Maintenance Requirement               
       * --------- ------------  --------------------------------------- 
-      * 10/01/23  EDEFAY        creating from MAXXX          
+      * 10/01/23  EDEFAY        Created from MAXXX          
       *                                                               
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -24,14 +29,14 @@
        DATA DIVISION.
        WORKING-STORAGE.
        01 AUTHORIZATION-QUERIES-TYPE.
-           10 SELECT-OPE PIC X   VALUE "O"
-                 88 SELECT-AUTH  VALUE "O"
-           10 INSERT-OPE PIC X   VALUE "X"
-                 88 INSERT-AUTH  VALUE "O"
-           10 UPDATE-OPE PIC X   VALUE "X"
-                 88 UPDATE-AUTH  VALUE "O"
-           10 DELETE-OPE PIC X   VALUE "X"
-                 88 DELETE-AUTH  VALUE "O"
+           10 SELECT-OPE PIC X   VALUE "O".
+                 88 SELECT-AUTH  VALUE "O".
+           10 INSERT-OPE PIC X   VALUE "X".
+                 88 INSERT-AUTH  VALUE "O".
+           10 UPDATE-OPE PIC X   VALUE "X".
+                 88 UPDATE-AUTH  VALUE "O".
+           10 DELETE-OPE PIC X   VALUE "X".
+                 88 DELETE-AUTH  VALUE "O".
            
        LINKAGE SECTION.
        01 AUTH-QUERY PIC 9(2).

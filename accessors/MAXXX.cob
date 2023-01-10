@@ -3,13 +3,13 @@
       * Program name   : MAXXX                               
       * Original author: DEFAY E.                                
       *
-      * Description    : This routine test RC returned by a PGM
+      * Description    : Template MAXXX of CPT, HIS, DEV & OPE
       *
       *                ---------------------------------                
       * Maintenance Log                                              
       * Date      Author        Maintenance Requirement               
       * --------- ------------  --------------------------------------- 
-      * 10/01/23  EDEFAY        RC 00 to 08           
+      * 10/01/23  EDEFAY        Template created          
       *                                                               
       ******************************************************************
        IDENTIFICATION DIVISION.
