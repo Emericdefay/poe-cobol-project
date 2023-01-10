@@ -95,28 +95,28 @@
       ******************************************************************EDEFAY 
       * Perform the different operations based on the value of FONCTION
            EVALUATE TRUE
-               WHEN ZACPT-FONCTION = 'SEL'
+               WHEN ZAOPE-FONCTION = 'SEL'
                    IF SELECT-AUTH THEN
                        PERFORM 8100-SELECT
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
                        PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
                    END-IF
-               WHEN ZACPT-FONCTION = 'INS'
+               WHEN ZAOPE-FONCTION = 'INS'
                    IF INSERT-AUTH THEN
                        PERFORM 8400-INSERT
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
                        PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
                    END-IF
-               WHEN ZACPT-FONCTION = 'UPD'
+               WHEN ZAOPE-FONCTION = 'UPD'
                    IF UPDATE-AUTH THEN
                        PERFORM 8700-UPDATE
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
                        PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
                    END-IF
-               WHEN ZACPT-FONCTION = 'DEL'
+               WHEN ZAOPE-FONCTION = 'DEL'
                    IF DELETE-AUTH THEN
                        PERFORM 8800-DELETE
                        PERFORM 2501-CHECK-SQLCODE
