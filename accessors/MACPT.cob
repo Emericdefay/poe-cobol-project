@@ -95,7 +95,6 @@
        2500-ROOTER.
       ******************************************************************EDEFAY 
       * Perform the different operations based on the value of FONCTION
-           DISPLAY SELECT-AUTH INSERT-AUTH UPDATE-AUTH DELETE-AUTH
            EVALUATE TRUE
                WHEN ZACPT-FONCTION = 'SEL'
                    IF SELECT-AUTH THEN
