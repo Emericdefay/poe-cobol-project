@@ -126,6 +126,7 @@
                WHEN OTHER
                    MOVE -1 TO SQLCODE
                    PERFORM 2501-CHECK-SQLCODE
+                   PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
            END-EVALUATE
            .
 
@@ -168,7 +169,6 @@
       ******************************************************************EDEFAY 
       *  Update AUTH-QUERY, since Query type is unauthorized
            ADD 1 TO AUTH-QUERY
-           EXIT PROGRAM
            .
 
        8100-SELECT.

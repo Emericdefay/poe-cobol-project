@@ -31,8 +31,6 @@
        01  NUM-ERRORS          PIC 9(02) VALUE 0.
       *  Accessors auth
        01 AUTH-QUERY           PIC 9(02).
-           88 SHOULD-BE-AUTH     VALUE 0.
-           88 SHOULD-NOT-BE-AUTH VALUE 1.
       *  Accessors struct
        01 ZCMA.
            05 FONCTION         PIC X(03).
@@ -154,7 +152,7 @@
            INITIALIZE ZCMA
            MOVE "SEL" TO FONCTION
            CALL "MACPT" USING ZCMA, AUTH-QUERY
-           IF SHOULD-NOT-BE-AUTH THEN
+           IF AUTH-QUERY > 0 THEN
                DISPLAY '    TEST CPT-01 PASSED.'
            ELSE
                DISPLAY '    TEST CPT-01 FAILED.'
@@ -168,7 +166,7 @@
            INITIALIZE ZCMA
            MOVE "INS" TO FONCTION
            CALL "MACPT" USING ZCMA, AUTH-QUERY
-           IF SHOULD-BE-AUTH THEN
+           IF AUTH-QUERY = 0 THEN
                DISPLAY '    TEST CPT-02 PASSED.'
            ELSE
                DISPLAY '    TEST CPT-02 FAILED.'
@@ -182,7 +180,7 @@
            INITIALIZE ZCMA
            MOVE "UPD" TO FONCTION
            CALL "MACPT" USING ZCMA, AUTH-QUERY
-           IF SHOULD-BE-AUTH THEN
+           IF AUTH-QUERY = 0 THEN
                DISPLAY '    TEST CPT-03 PASSED.'
            ELSE
                DISPLAY '    TEST CPT-03 FAILED.'
@@ -196,7 +194,7 @@
            INITIALIZE ZCMA
            MOVE "DEL" TO FONCTION
            CALL "MACPT" USING ZCMA, AUTH-QUERY
-           IF SHOULD-BE-AUTH THEN
+           IF AUTH-QUERY = 0 THEN
                DISPLAY '    TEST CPT-04 PASSED.'
            ELSE
                DISPLAY '    TEST CPT-04 FAILED.'
@@ -210,7 +208,7 @@
            INITIALIZE ZCMA
            MOVE "UNK" TO FONCTION
            CALL "MACPT" USING ZCMA, AUTH-QUERY
-           IF SHOULD-NOT-BE-AUTH THEN
+           IF AUTH-QUERY > 0 THEN
                DISPLAY '    TEST CPT-05 PASSED.'
            ELSE
                DISPLAY '    TEST CPT-05 FAILED.'
@@ -228,7 +226,7 @@
            INITIALIZE ZCMA
            MOVE "SEL" TO FONCTION
            CALL "MAHIS" USING ZCMA, AUTH-QUERY
-           IF SHOULD-NOT-BE-AUTH THEN
+           IF AUTH-QUERY > 0 THEN
                DISPLAY '    TEST HIS-01 PASSED.'
            ELSE
                DISPLAY '    TEST HIS-01 FAILED.'
@@ -242,7 +240,7 @@
            INITIALIZE ZCMA
            MOVE "INS" TO FONCTION
            CALL "MAHIS" USING ZCMA, AUTH-QUERY
-           IF SHOULD-BE-AUTH THEN
+           IF AUTH-QUERY = 0 THEN
                DISPLAY '    TEST HIS-02 PASSED.'
            ELSE
                DISPLAY '    TEST HIS-02 FAILED.'
@@ -256,7 +254,7 @@
            INITIALIZE ZCMA
            MOVE "UPD" TO FONCTION
            CALL "MAHIS" USING ZCMA, AUTH-QUERY
-           IF SHOULD-NOT-BE-AUTH THEN
+           IF AUTH-QUERY > 0 THEN
                DISPLAY '    TEST HIS-03 PASSED.'
            ELSE
                DISPLAY '    TEST HIS-03 FAILED.'
@@ -270,7 +268,7 @@
            INITIALIZE ZCMA
            MOVE "DEL" TO FONCTION
            CALL "MAHIS" USING ZCMA, AUTH-QUERY
-           IF SHOULD-NOT-BE-AUTH THEN
+           IF AUTH-QUERY > 0 THEN
                DISPLAY '    TEST HIS-04 PASSED.'
            ELSE
                DISPLAY '    TEST HIS-04 FAILED.'
@@ -284,7 +282,7 @@
            INITIALIZE ZCMA
            MOVE "UNK" TO FONCTION
            CALL "MAHIS" USING ZCMA, AUTH-QUERY
-           IF SHOULD-NOT-BE-AUTH THEN
+           IF AUTH-QUERY > 0 THEN
                DISPLAY '    TEST HIS-05 PASSED.'
            ELSE
                DISPLAY '    TEST HIS-05 FAILED.'
@@ -303,7 +301,7 @@
            INITIALIZE ZCMA
            MOVE "SEL" TO FONCTION
            CALL "MADEV" USING ZCMA, AUTH-QUERY
-           IF SHOULD-NOT-BE-AUTH THEN
+           IF AUTH-QUERY > 0 THEN
                DISPLAY '    TEST DEV-01 PASSED.'
            ELSE
                DISPLAY '    TEST DEV-01 FAILED.'
@@ -317,7 +315,7 @@
            INITIALIZE ZCMA
            MOVE "INS" TO FONCTION
            CALL "MADEV" USING ZCMA, AUTH-QUERY
-           IF SHOULD-BE-AUTH THEN
+           IF AUTH-QUERY = 0 THEN
                DISPLAY '    TEST DEV-02 PASSED.'
            ELSE
                DISPLAY '    TEST DEV-02 FAILED.'
@@ -331,7 +329,7 @@
            INITIALIZE ZCMA
            MOVE "UPD" TO FONCTION
            CALL "MADEV" USING ZCMA, AUTH-QUERY
-           IF SHOULD-BE-AUTH THEN
+           IF AUTH-QUERY = 0 THEN
                DISPLAY '    TEST DEV-03 PASSED.'
            ELSE
                DISPLAY '    TEST DEV-03 FAILED.'
@@ -345,7 +343,7 @@
            INITIALIZE ZCMA
            MOVE "DEL" TO FONCTION
            CALL "MADEV" USING ZCMA, AUTH-QUERY
-           IF SHOULD-BE-AUTH THEN
+           IF AUTH-QUERY = 0 THEN
                DISPLAY '    TEST DEV-04 PASSED.'
            ELSE
                DISPLAY '    TEST DEV-04 FAILED.'
@@ -359,7 +357,7 @@
            INITIALIZE ZCMA
            MOVE "UNK" TO FONCTION
            CALL "MADEV" USING ZCMA, AUTH-QUERY
-           IF SHOULD-NOT-BE-AUTH THEN
+           IF AUTH-QUERY > 0 THEN
                DISPLAY '    TEST DEV-05 PASSED.'
            ELSE
                DISPLAY '    TEST DEV-05 FAILED.'
@@ -377,7 +375,7 @@
            INITIALIZE ZCMA
            MOVE "SEL" TO FONCTION
            CALL "MAOPE" USING ZCMA, AUTH-QUERY
-           IF SHOULD-BE-AUTH THEN
+           IF AUTH-QUERY = 0 THEN
                DISPLAY '    TEST OPE-01 PASSED.'
            ELSE
                DISPLAY '    TEST OPE-01 FAILED.'
@@ -391,7 +389,7 @@
            INITIALIZE ZCMA
            MOVE "INS" TO FONCTION
            CALL "MAOPE" USING ZCMA, AUTH-QUERY
-           IF SHOULD-NOT-BE-AUTH THEN
+           IF AUTH-QUERY > 0 THEN
                DISPLAY '    TEST OPE-02 PASSED.'
            ELSE
                DISPLAY '    TEST OPE-02 FAILED.'
@@ -405,7 +403,7 @@
            INITIALIZE ZCMA
            MOVE "UPD" TO FONCTION
            CALL "MAOPE" USING ZCMA, AUTH-QUERY
-           IF SHOULD-NOT-BE-AUTH THEN
+           IF AUTH-QUERY > 0 THEN
                DISPLAY '    TEST OPE-03 PASSED.'
            ELSE
                DISPLAY '    TEST OPE-03 FAILED.'
@@ -419,7 +417,7 @@
            INITIALIZE ZCMA
            MOVE "DEL" TO FONCTION
            CALL "MAOPE" USING ZCMA, AUTH-QUERY
-           IF SHOULD-NOT-BE-AUTH THEN
+           IF AUTH-QUERY > 0 THEN
                DISPLAY '    TEST OPE-04 PASSED.'
            ELSE
                DISPLAY '    TEST OPE-04 FAILED.'
@@ -433,7 +431,7 @@
            INITIALIZE ZCMA
            MOVE "UNK" TO FONCTION
            CALL "MAOPE" USING ZCMA, AUTH-QUERY
-           IF SHOULD-NOT-BE-AUTH THEN
+           IF AUTH-QUERY > 0 THEN
                DISPLAY '    TEST OPE-05 PASSED.'
            ELSE
                DISPLAY '    TEST OPE-05 FAILED.'

@@ -38,7 +38,7 @@
            10 DELETE-CPT PIC X   VALUE "O".
                  88 DELETE-AUTH  VALUE "O".
        01  SQLCODE       PIC S9(3) VALUE 0.
-           
+
        LINKAGE SECTION.
        01 AUTH-QUERY PIC 9(2).
        01 ZACPT-ZCMA.
@@ -127,6 +127,7 @@
                WHEN OTHER
                    MOVE -1 TO SQLCODE
                    PERFORM 2501-CHECK-SQLCODE
+                   PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
            END-EVALUATE
            .
 
@@ -169,8 +170,6 @@
       ******************************************************************EDEFAY 
       *  Update AUTH-QUERY, since Query type is unauthorized
            ADD 1 TO AUTH-QUERY
-           DISPLAY "7777 > " AUTH-QUERY
-           EXIT PROGRAM
            .
 
        8100-SELECT.
