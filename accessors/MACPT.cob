@@ -79,8 +79,7 @@
       *    - DCPT : Displays
       *    - CCPT : Calls
       ******************************************************************
-       PROCEDURE DIVISION USING ZACPT-ZCMA, AUTH-QUERY 
-                          RETURNING         AUTH-QUERY.
+       PROCEDURE DIVISION USING ZACPT-ZCMA, AUTH-QUERY.
            PERFORM 0000-INITIALIZATIONS
            PERFORM 2500-ROOTER
            GOBACK.
@@ -89,12 +88,12 @@
       ******************************************************************EDEFAY 
       *  Initialize values
            INITIALIZE AUTHORIZATION-QUERIES-TYPE.
-           SET AUTH-QUERY TO 0
            .
 
        2500-ROOTER.
       ******************************************************************EDEFAY 
       * Perform the different operations based on the value of FONCTION
+           DISPLAY ZACPT-FONCTION
            EVALUATE TRUE
                WHEN ZACPT-FONCTION = 'SEL'
                    IF SELECT-AUTH THEN
