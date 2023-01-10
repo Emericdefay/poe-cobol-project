@@ -97,6 +97,7 @@
            EVALUATE TRUE
                WHEN ZACPT-FONCTION = 'SEL'
                    IF SELECT-AUTH THEN
+                       DISPLAY "x"
                        PERFORM 8100-SELECT
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
@@ -104,6 +105,7 @@
                    END-IF
                WHEN ZACPT-FONCTION = 'INS'
                    IF INSERT-AUTH THEN
+                       DISPLAY "o"
                        PERFORM 8400-INSERT
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
@@ -111,6 +113,7 @@
                    END-IF
                WHEN ZACPT-FONCTION = 'UPD'
                    IF UPDATE-AUTH THEN
+                       DISPLAY "o"
                        PERFORM 8700-UPDATE
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
@@ -118,6 +121,7 @@
                    END-IF
                WHEN ZACPT-FONCTION = 'DEL'
                    IF DELETE-AUTH THEN
+                       DISPLAY "o"
                        PERFORM 8800-DELETE
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
