@@ -18,23 +18,27 @@ jobs:
     - name: Install COBOL compiler
       run: |
         sudo apt-get update
-        sudo apt-get install -y gnucobol libsqlite3-dev
+        sudo apt-get install -y gnucobol
+        echo "sudo apt-get install -y libsqlite3-dev"
     - name: Get amalgamation source code SQLITE
       run: |
-        mkdir sqlite_folder
-        tar -xvf ./sqlite/sqlite-snapshot.tar.gz -C sqlite_folder --strip-components 1
-        cp ./sqlite_folder/sqlite3.c ./sqlite3.c
+        echo "mkdir sqlite_folder"
+        echo "tar -xvf ./sqlite/sqlite-snapshot.tar.gz -C sqlite_folder --strip-components 1"
+        echo "cp ./sqlite_folder/sqlite3.c ./sqlite3.c"
     - name: Initialize database from .tests/SQL.txt
       run: |
-        echo "DUMMY - Initialize DB..."
-    - name: Compile the C code SQLITE
-      run: |
-        cobc -c -lsqlit3 sqlite3.c
+        echo "sqlite3 DBMAJCPT.db < ./SQL/SQL-GEN.sql"
     - name: compil - GKCTRL01
       run: cobc -m -fdebugging-line GKCTRL01.cob
     - name: compil - TSTTRL01
       run: |
         cobc -x -o TSTTRL01 ./tests/TSTTRL01.cob GKCTRL01.so
+    - name: Compile the C code SQLITE
+      run: |
+        echo "cobc -c -lsqlit3 sqlite3.c"
+    - name: compil - PGM
+      run: |
+        echo "cobc -x -o PGM ./tests/PGM.cob GKCTRL01.so -lsqlite3"
     - name: Ls
       run: ls
     - name: Env
