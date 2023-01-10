@@ -186,10 +186,10 @@
                  MNTMIN ,
                  MNTMAX 
              INTO
-                :HX-COPE   ,
-                :HX-LOPE   ,
-                :HX-MNTMIN ,
-                :HX-MNTMAX 
+                :HO-COPE   ,
+                :HO-LOPE   ,
+                :HO-MNTMIN ,
+                :HO-MNTMAX 
              FROM TBOPE
              WHERE COPE=:HO-COPE
            END-EXEC

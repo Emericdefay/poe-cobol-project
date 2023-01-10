@@ -194,7 +194,7 @@
                     :HC-SOLDE   ,
                     :HC-DDMVT   ,
                     :HC-DDMAJ   ,
-                     HC-HDMAJ   )
+                    :HC-HDMAJ   )
                END-EXEC
            .
 
