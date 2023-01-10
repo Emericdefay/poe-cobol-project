@@ -24,15 +24,16 @@
        DATA DIVISION.
        WORKING-STORAGE SECTION.
        01 AUTHORIZATION-QUERIES-TYPE.
-           10 SELECT-XXX PIC X   VALUE "O"
-                 88 SELECT-AUTH  VALUE "O"
-           10 INSERT-XXX PIC X   VALUE "O"
-                 88 INSERT-AUTH  VALUE "O"
-           10 UPDATE-XXX PIC X   VALUE "O"
-                 88 UPDATE-AUTH  VALUE "O"
-           10 DELETE-XXX PIC X   VALUE "O"
-                 88 DELETE-AUTH  VALUE "O"
-           
+           10 SELECT-XXX PIC X   VALUE "O".
+                 88 SELECT-AUTH  VALUE "O".
+           10 INSERT-XXX PIC X   VALUE "O".
+                 88 INSERT-AUTH  VALUE "O".
+           10 UPDATE-XXX PIC X   VALUE "O".
+                 88 UPDATE-AUTH  VALUE "O".
+           10 DELETE-XXX PIC X   VALUE "O".
+                 88 DELETE-AUTH  VALUE "O".
+       01  SQLCODE       PIC S9(3) VALUE 0.
+
        LINKAGE SECTION.
        01 AUTH-QUERY PIC 9(2).
        01 ZAXXX-ZCMA.
@@ -89,28 +90,28 @@
       * Perform the different operations based on the value of FONCTION
            EVALUATE ZAXXX-FONCTION
                WHEN 'SEL'
-                   IF -AUTH THEN
+                   IF SELECT-AUTH THEN
                        PERFORM 8100-SELECT
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
                        PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
                    END-IF
                WHEN 'INS'
-                   IF -AUTH THEN
+                   IF INSERT-AUTH THEN
                        PERFORM 8400-INSERT
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
                        PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
                    END-IF
                WHEN 'UPD'
-                   IF -AUTH THEN
+                   IF UPDATE-AUTH THEN
                        PERFORM 8700-UPDATE
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
                        PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
                    END-IF
                WHEN 'DEL'
-                   IF -AUTH THEN
+                   IF DELETE-AUTH THEN
                        PERFORM 8800-DELETE
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
@@ -119,7 +120,8 @@
                WHEN OTHER
                    MOVE -1 TO SQLCODE
                    PERFORM 2501-CHECK-SQLCODE
-           END-EVALUATE.
+           END-EVALUATE
+           .
 
        2501-CHECK-SQLCODE.
       ******************************************************************EDEFAY 
@@ -154,6 +156,7 @@
                    MOVE "SQL ERROR UNHANDLED" TO ZAXXX-LIBRET
                    MOVE SQLCODE TO ZAXXX-SQLCODE
            END-EVALUATE
+           .
 
        7777-UNAUTHORIZED-QUERY-TYPE.
       ******************************************************************EDEFAY 
