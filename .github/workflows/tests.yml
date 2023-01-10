@@ -12,7 +12,14 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        include:
+          - operating-system: ubuntu-latest
+            python-version: '3.6'
+            label: linux-64-py-3-6
+            prefix: /usr/share/miniconda3/envs/my-env
     steps:
     - uses: actions/checkout@v2
     - name: Install COBOL compiler
@@ -39,6 +46,14 @@ jobs:
     - name: compil - PGM
       run: |
         echo "cobc -x -o PGM ./tests/PGM.cob GKCTRL01.so -lsqlite3"
+    - name: precompilation MAXXXs - ignoring SQL CALLS
+      run: |
+        python ./workflows/precompiler.py ./accessors/MAXXX.cob PC-MAXXX.cob
+        echo "python ./workflows/precompiler.py ./accessors/MAXXX.cob PC-MAXXX.cob"
+        echo "python ./workflows/precompiler.py ./accessors/MAXXX.cob PC-MAXXX.cob"
+        echo "python ./workflows/precompiler.py ./accessors/MAXXX.cob PC-MAXXX.cob"
+    - name: See precompile effects
+      run: echo "$(cat PC-MAXXX.cob)"
     - name: Ls
       run: ls
     - name: Env
