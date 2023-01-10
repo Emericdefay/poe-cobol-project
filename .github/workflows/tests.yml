@@ -53,7 +53,7 @@ jobs:
         python ./workflows/precompiler.py ./accessors/MADEV.cob MADEV.cob
         python ./workflows/precompiler.py ./accessors/MAOPE.cob MAOPE.cob
     - name: See precompile code
-      run: echo "$(cat PC-MACPT.cob)"
+      run: echo "$(cat MACPT.cob)"
     - name: compil - MAXXXs
       run: |
         cobc -m -fdebugging-line MACPT.cob
