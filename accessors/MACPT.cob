@@ -46,7 +46,7 @@
        01 DCLTBCPT PIC X(255).
       * DECLARATION DU DCLGEN DE LA TABLE TBCPT
            EXEC SQL 
-               INCLUDE DCCPT 
+               INCLUDE DCLTBCPT 
            END-EXEC.
 
        LINKAGE SECTION.
@@ -59,7 +59,7 @@
                10 ZACPT-SOLDE        PIC S9(13)V9(2) USAGE COMP-3.
                10 ZACPT-DDMVT        PIC X(10).
                10 ZACPT-DDMAJ        PIC X(10).
-               10 ZACPT-HDMAJ        PIC X(8).
+               10 ZACPT-HDMAJ        PIC X(08).
            05 ZACPT-RETOUR.
                10 ZACPT-CODRET       PIC X(02).
                10 ZACPT-SQLCODE      PIC S9(3).
@@ -204,14 +204,13 @@
            MOVE ZACPT-DONNEES TO DCLTBCPT
            EXEC SQL
                 UPDATE TBCPT
-           SET   HC-COMPTE =:ZACPT-COMPTE ,
-                 HC-NOM    =:ZACPT-NOM    ,
-                 HC-SOLDE  =:ZACPT-SOLDE  ,
-                 HC-DDMVT  =:ZACPT-DDMVT  ,
-                 HC-DDMAJ  =:ZACPT-DDMAJ  ,
-                 HC-HDMAJ  =:ZACPT-HDMAJ  ,
-      *  > WHERE HC-COMPTE=:ZACPT-COMPTE
-           WHERE HC-COMPTE =:ZACPT-COMPTE
+           SET   COMPTE =:HC-COMPTE ,
+                 NOM    =:HC-NOM    ,
+                 SOLDE  =:HC-SOLDE  ,
+                 DDMVT  =:HC-DDMVT  ,
+                 DDMAJ  =:HC-DDMAJ  ,
+                 HDMAJ  =:HC-HDMAJ  ,
+           WHERE COMPTE =:HC-COMPTE
            END-EXEC
            .
 
@@ -221,7 +220,6 @@
            MOVE ZACPT-DONNEES TO DCLTBCPT
            EXEC SQL
              DELETE FROM TBCPT
-      *  > WHERE HC-COMPTE =:ZACPT-COMPTE
-           WHERE HC-COMPTE =:ZACPT-COMPTE
+           WHERE COMPTE=:HC-COMPTE
            END-EXEC
            .

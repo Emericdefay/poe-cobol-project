@@ -39,17 +39,27 @@
            10 DELETE-AUTH PIC X     VALUE "O".
        01  SQLCODE       PIC S9(3) VALUE 0.
            
+           EXEC SQL 
+               INCLUDE SQLCA 
+           END-EXEC.
+      *  DCLTBHIS init for avoid workflow errors
+       01  DCLTBHIS PIC X(255).
+      *  DECLARATION DU DCLGEN DE LA TABLE TBHIS
+           EXEC SQL 
+               INCLUDE DCLTBHIS 
+           END-EXEC.
+
        LINKAGE SECTION.
        01 AUTH-QUERY PIC 9(2).
        01 ZAHIS-ZCMA.
            05 ZAHIS-FONCTION         PIC X(03).
            05 ZAHIS-DONNEES.
                10 ZAHIS-COMPTE       PIC X(11).
-               10 ZAHIS-NOM          PIC X(20).
-               10 ZAHIS-SOLDE        PIC S9(13)V9(2) USAGE COMP-3.
-               10 ZAHIS-DDMVT        PIC X(10).
-               10 ZAHIS-DDMAJ        PIC X(10).
-               10 ZAHIS-HDMAJ        PIC X(8).
+               10 ZAHIS-REFOPE       PIC X(10).
+               10 ZAHIS-CODOPE       PIC X(03).
+               10 ZAHIS-LIBOPE       PIC X(20).
+               10 ZAHIS-DTOPER       PIC X(10).
+               10 ZAHIS-MNTOPE       PIC S9(13)V9(2) USAGE COMP-3.
            05 ZAHIS-RETOUR.
                10 ZAHIS-CODRET       PIC X(02).
                10 ZAHIS-SQLCODE      PIC S9(3).
@@ -133,34 +143,30 @@
        2501-CHECK-SQLCODE.
       ******************************************************************EDEFAY 
       *  Verify SQLCODE, returning Error code and message if SQLCODE<>0
-           EVALUATE SQLCODE
-               WHEN 0
-                   MOVE SQLCODE TO ZAHIS-CODRET
-                   MOVE "SPACE" TO ZAHIS-LIBRET
-                   MOVE SQLCODE TO ZAHIS-SQLCODE
-               WHEN 20
-                   MOVE SQLCODE TO ZAHIS-CODRET
+           MOVE 0 TO ZAHIS-CODRET
+           MOVE "SPACE" TO ZAHIS-LIBRET
+           MOVE 0 TO ZAHIS-SQLCODE
+
+           EVALUATE SQLCODE ALSO ZAHIS-FONCTION
+               WHEN -803    ALSO 'INS'
+                   MOVE 20 TO ZAHIS-CODRET
                    MOVE "LIGNE EN DOUBLE" TO ZAHIS-LIBRET
                    MOVE SQLCODE TO ZAHIS-SQLCODE
-               WHEN 30
-                   MOVE SQLCODE TO ZAHIS-CODRET
+               WHEN +100    ALSO 'SEL'
+                   MOVE 30 TO ZAHIS-CODRET
                    MOVE "HIS" TO ZAHIS-LIBRET
                    MOVE SQLCODE TO ZAHIS-SQLCODE
-               WHEN 40
-                   MOVE SQLCODE TO ZAHIS-CODRET
+               WHEN +100    ALSO 'UPD'
+                   MOVE 40 TO ZAHIS-CODRET
                    MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZAHIS-LIBRET
                    MOVE SQLCODE TO ZAHIS-SQLCODE
-               WHEN 50
-                   MOVE SQLCODE TO ZAHIS-CODRET
+               WHEN +100    ALSO 'DEL'
+                   MOVE 50 TO ZAHIS-CODRET
                    MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZAHIS-LIBRET
                    MOVE SQLCODE TO ZAHIS-SQLCODE
-               WHEN 90
-                   MOVE SQLCODE TO ZAHIS-CODRET
-                   MOVE "SQLCA" TO ZAHIS-LIBRET
-                   MOVE SQLCODE TO ZAHIS-SQLCODE
                WHEN OTHER
-                   MOVE SQLCODE TO ZAHIS-CODRET
-                   MOVE "SQL ERROR UNHANDLED" TO ZAHIS-LIBRET
+                   MOVE 90 TO ZAHIS-CODRET
+                   MOVE "SQLCA" TO ZAHIS-LIBRET
                    MOVE SQLCODE TO ZAHIS-SQLCODE
            END-EVALUATE
            .
@@ -174,38 +180,32 @@
        8100-SELECT.
       ******************************************************************EDEFAY 
       *Code for SELECT operation
-                  EXEC SQL
-                      SELECT ...
-                      INTO ...
-                      FROM ...
-                      WHERE ...
-                  END-EXEC
+           DISPLAY "SELECT NOT ALLOWED"
            .
 
        8400-INSERT.
       ******************************************************************EDEFAY 
       *Code for INSERT operation
-                   EXEC SQL
-                       INSERT INTO ...
-                       VALUES ...
-                   END-EXEC
+               MOVE ZAHIS-DONNEES TO DCLTBHIS
+               EXEC SQL
+                    INSERT INTO TBHIS VALUES
+                   (:HH-COMPTE  ,
+                    :HH-REFOPE  ,
+                    :HH-CODOPE  ,
+                    :HH-LIBOPE  ,
+                    :HH-DTOPER  ,
+                    :HH-MNTOPE  )
+               END-EXEC
            .
 
        8700-UPDATE.
       ******************************************************************EDEFAY 
       *Code for UPDATE operation
-                   EXEC SQL
-                       UPDATE ...
-                       SET ...
-                       WHERE ...
-                   END-EXEC
+           DISPLAY "UPDATE NOT ALLOWED"
            .
 
        8800-DELETE.
       ******************************************************************EDEFAY 
       *Code for DELETE operation
-                  EXEC SQL
-                      DELETE FROM ...
-                      WHERE ...
-                  END-EXEC
+           DISPLAY "DELETE NOT ALLOWED"
            .

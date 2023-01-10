@@ -38,18 +38,26 @@
            10 DELETE-CPT  PIC X  VALUE "X".
            10 DELETE-AUTH PIC X     VALUE "O".
        01  SQLCODE       PIC S9(3) VALUE 0.
-           
+
+           EXEC SQL 
+               INCLUDE SQLCA 
+           END-EXEC.
+      *  DCLTBOPE init for avoid workflow errors
+       01  DCLTBOPE PIC X(255).
+      *  DECLARATION DU DCLGEN DE LA TABLE TBOPE
+           EXEC SQL 
+               INCLUDE DCLTBOPE 
+           END-EXEC.
+
        LINKAGE SECTION.
        01 AUTH-QUERY PIC 9(2).
        01 ZAOPE-ZCMA.
            05 ZAOPE-FONCTION         PIC X(03).
            05 ZAOPE-DONNEES.
-               10 ZAOPE-COMPTE       PIC X(11).
-               10 ZAOPE-NOM          PIC X(20).
-               10 ZAOPE-SOLDE        PIC S9(13)V9(2) USAGE COMP-3.
-               10 ZAOPE-DDMVT        PIC X(10).
-               10 ZAOPE-DDMAJ        PIC X(10).
-               10 ZAOPE-HDMAJ        PIC X(8).
+               10 ZAOPE-COPE         PIC X(03).
+               10 ZAOPE-LOPE         PIC X(03).
+               10 ZAOPE-MNTMIN       PIC S9(9)V9(2) USAGE COMP-3.
+               10 ZAOPE-MNTMAX       PIC S9(9)V9(2) USAGE COMP-3.
            05 ZAOPE-RETOUR.
                10 ZAOPE-CODRET       PIC X(02).
                10 ZAOPE-SQLCODE      PIC S9(3).
@@ -133,34 +141,30 @@
        2501-CHECK-SQLCODE.
       ******************************************************************EDEFAY 
       *  Verify SQLCODE, returning Error code and message if SQLCODE<>0
-           EVALUATE SQLCODE
-               WHEN 0
-                   MOVE SQLCODE TO ZAOPE-CODRET
-                   MOVE "SPACE" TO ZAOPE-LIBRET
-                   MOVE SQLCODE TO ZAOPE-SQLCODE
-               WHEN 20
-                   MOVE SQLCODE TO ZAOPE-CODRET
+           MOVE 0 TO ZAOPE-CODRET
+           MOVE "SPACE" TO ZAOPE-LIBRET
+           MOVE 0 TO ZAOPE-SQLCODE
+
+           EVALUATE SQLCODE ALSO ZAOPE-FONCTION
+               WHEN -803    ALSO 'INS'
+                   MOVE 20 TO ZAOPE-CODRET
                    MOVE "LIGNE EN DOUBLE" TO ZAOPE-LIBRET
                    MOVE SQLCODE TO ZAOPE-SQLCODE
-               WHEN 30
-                   MOVE SQLCODE TO ZAOPE-CODRET
+               WHEN +100    ALSO 'SEL'
+                   MOVE 30 TO ZAOPE-CODRET
                    MOVE "OPE" TO ZAOPE-LIBRET
                    MOVE SQLCODE TO ZAOPE-SQLCODE
-               WHEN 40
-                   MOVE SQLCODE TO ZAOPE-CODRET
+               WHEN +100    ALSO 'UPD'
+                   MOVE 40 TO ZAOPE-CODRET
                    MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZAOPE-LIBRET
                    MOVE SQLCODE TO ZAOPE-SQLCODE
-               WHEN 50
-                   MOVE SQLCODE TO ZAOPE-CODRET
+               WHEN +100    ALSO 'DEL'
+                   MOVE 50 TO ZAOPE-CODRET
                    MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZAOPE-LIBRET
                    MOVE SQLCODE TO ZAOPE-SQLCODE
-               WHEN 90
-                   MOVE SQLCODE TO ZAOPE-CODRET
-                   MOVE "SQLCA" TO ZAOPE-LIBRET
-                   MOVE SQLCODE TO ZAOPE-SQLCODE
                WHEN OTHER
-                   MOVE SQLCODE TO ZAOPE-CODRET
-                   MOVE "SQL ERROR UNHANDLED" TO ZAOPE-LIBRET
+                   MOVE 90 TO ZAOPE-CODRET
+                   MOVE "SQLCA" TO ZAOPE-LIBRET
                    MOVE SQLCODE TO ZAOPE-SQLCODE
            END-EVALUATE
            .
@@ -174,38 +178,40 @@
        8100-SELECT.
       ******************************************************************EDEFAY 
       *Code for SELECT operation
-                  EXEC SQL
-                      SELECT ...
-                      INTO ...
-                      FROM ...
-                      WHERE ...
-                  END-EXEC
+           MOVE ZAOPE-DONNEES TO DCLTBOPE
+           EXEC SQL
+             SELECT
+                 COPE   ,
+                 LOPE   ,
+                 MNTMIN ,
+                 MNTMAX 
+             INTO
+                :HX-COPE   ,
+                :HX-LOPE   ,
+                :HX-MNTMIN ,
+                :HX-MNTMAX 
+             FROM TBOPE
+             WHERE COPE=:HO-COPE
+           END-EXEC
+           IF SQLCODE = ZERO
+              MOVE DCLTBOPE TO ZAOPE-DONNEES
+           END-IF
            .
 
        8400-INSERT.
       ******************************************************************EDEFAY 
       *Code for INSERT operation
-                   EXEC SQL
-                       INSERT INTO ...
-                       VALUES ...
-                   END-EXEC
+           DISPLAY "INSERT NOT ALLOWED"
            .
 
        8700-UPDATE.
       ******************************************************************EDEFAY 
       *Code for UPDATE operation
-                   EXEC SQL
-                       UPDATE ...
-                       SET ...
-                       WHERE ...
-                   END-EXEC
+           DISPLAY "UPDATE NOT ALLOWED"
            .
 
        8800-DELETE.
       ******************************************************************EDEFAY 
       *Code for DELETE operation
-                  EXEC SQL
-                      DELETE FROM ...
-                      WHERE ...
-                  END-EXEC
+           DISPLAY "DELETE NOT ALLOWED"
            .

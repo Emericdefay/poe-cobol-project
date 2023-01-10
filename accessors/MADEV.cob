@@ -39,17 +39,25 @@
            10 DELETE-AUTH PIC X     VALUE "O".
        01  SQLCODE       PIC S9(3) VALUE 0.
 
+           EXEC SQL 
+               INCLUDE SQLCA 
+           END-EXEC.
+      *  DCLTBDEV init for avoid workflow errors
+       01  DCLTBDEV PIC X(255).
+      * DECLARATION DU DCLGEN DE LA TABLE TBDEV
+           EXEC SQL 
+               INCLUDE DCLTBDEV 
+           END-EXEC.
+
        LINKAGE SECTION.
        01 AUTH-QUERY PIC 9(2).
        01 ZADEV-ZCMA.
            05 ZADEV-FONCTION         PIC X(03).
            05 ZADEV-DONNEES.
-               10 ZADEV-COMPTE       PIC X(11).
-               10 ZADEV-NOM          PIC X(20).
-               10 ZADEV-SOLDE        PIC S9(13)V9(2) USAGE COMP-3.
-               10 ZADEV-DDMVT        PIC X(10).
-               10 ZADEV-DDMAJ        PIC X(10).
-               10 ZADEV-HDMAJ        PIC X(8).
+               10 ZADEV-CDEV         PIC X(03).
+               10 ZADEV-CPAYS        PIC X(03).
+               10 ZADEV-ACHAT        PIC S9(6)V9(3) USAGE COMP-3.
+               10 ZADEV-VENTE        PIC S9(6)V9(3) USAGE COMP-3.
            05 ZADEV-RETOUR.
                10 ZADEV-CODRET       PIC X(02).
                10 ZADEV-SQLCODE      PIC S9(3).
@@ -133,34 +141,30 @@
        2501-CHECK-SQLCODE.
       ******************************************************************EDEFAY 
       *  Verify SQLCODE, returning Error code and message if SQLCODE<>0
-           EVALUATE SQLCODE
-               WHEN 0
-                   MOVE SQLCODE TO ZADEV-CODRET
-                   MOVE "SPACE" TO ZADEV-LIBRET
-                   MOVE SQLCODE TO ZADEV-SQLCODE
-               WHEN 20
-                   MOVE SQLCODE TO ZADEV-CODRET
+           MOVE 0 TO ZADEV-CODRET
+           MOVE "SPACE" TO ZADEV-LIBRET
+           MOVE 0 TO ZADEV-SQLCODE
+
+           EVALUATE SQLCODE ALSO ZADEV-FONCTION
+               WHEN -803    ALSO 'INS'
+                   MOVE 20 TO ZADEV-CODRET
                    MOVE "LIGNE EN DOUBLE" TO ZADEV-LIBRET
                    MOVE SQLCODE TO ZADEV-SQLCODE
-               WHEN 30
-                   MOVE SQLCODE TO ZADEV-CODRET
+               WHEN +100    ALSO 'SEL'
+                   MOVE 30 TO ZADEV-CODRET
                    MOVE "DEV" TO ZADEV-LIBRET
                    MOVE SQLCODE TO ZADEV-SQLCODE
-               WHEN 40
-                   MOVE SQLCODE TO ZADEV-CODRET
+               WHEN +100    ALSO 'UPD'
+                   MOVE 40 TO ZADEV-CODRET
                    MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZADEV-LIBRET
                    MOVE SQLCODE TO ZADEV-SQLCODE
-               WHEN 50
-                   MOVE SQLCODE TO ZADEV-CODRET
+               WHEN +100    ALSO 'DEL'
+                   MOVE 50 TO ZADEV-CODRET
                    MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZADEV-LIBRET
                    MOVE SQLCODE TO ZADEV-SQLCODE
-               WHEN 90
-                   MOVE SQLCODE TO ZADEV-CODRET
-                   MOVE "SQLCA" TO ZADEV-LIBRET
-                   MOVE SQLCODE TO ZADEV-SQLCODE
                WHEN OTHER
-                   MOVE SQLCODE TO ZADEV-CODRET
-                   MOVE "SQL ERROR UNHANDLED" TO ZADEV-LIBRET
+                   MOVE 90 TO ZADEV-CODRET
+                   MOVE "SQLCA" TO ZADEV-LIBRET
                    MOVE SQLCODE TO ZADEV-SQLCODE
            END-EVALUATE
            .
@@ -174,38 +178,42 @@
        8100-SELECT.
       ******************************************************************EDEFAY 
       *Code for SELECT operation
-                  EXEC SQL
-                      SELECT ...
-                      INTO ...
-                      FROM ...
-                      WHERE ...
-                  END-EXEC
+           DISPLAY "SELECT NOT ALLOWED"
            .
 
        8400-INSERT.
       ******************************************************************EDEFAY 
       *Code for INSERT operation
-                   EXEC SQL
-                       INSERT INTO ...
-                       VALUES ...
-                   END-EXEC
+           MOVE ZADEV-DONNEES TO DCLTBDEV
+           EXEC SQL
+                INSERT INTO TBDEV VALUES
+               (:HD-CDEV   ,
+                :HD-CPAYS  ,
+                :HD-ACHAT  ,
+                :HD-VENTE )
+           END-EXEC
            .
 
        8700-UPDATE.
       ******************************************************************EDEFAY 
       *Code for UPDATE operation
-                   EXEC SQL
-                       UPDATE ...
-                       SET ...
-                       WHERE ...
-                   END-EXEC
+           MOVE ZADEV-DONNEES TO DCLTBDEV
+           EXEC SQL
+                UPDATE TBDEV
+           SET   CDEV  =:HD-CDEV  ,
+                 CPAYS =:HD-CPAYS ,
+                 ACHAT =:HD-ACHAT ,
+                 VENTE =:HD-VENTE ,
+           WHERE CDEV  =:HD-CDEV
+           END-EXEC
            .
 
        8800-DELETE.
       ******************************************************************EDEFAY 
       *Code for DELETE operation
-                  EXEC SQL
-                      DELETE FROM ...
-                      WHERE ...
-                  END-EXEC
+           MOVE ZADEV-DONNEES TO DCLTBDEV
+           EXEC SQL
+             DELETE FROM TBDEV
+           WHERE CDEV  =:HD-CDEV
+           END-EXEC
            .
