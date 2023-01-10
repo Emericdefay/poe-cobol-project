@@ -27,8 +27,6 @@
 
       ******************************************************************
        WORKING-STORAGE SECTION.
-      *  PGM called for tests
-	   01  FILEIN-DDNAME       PIC X(30).
       *  Errors
        01  NUM-ERRORS          PIC 9(02) VALUE 0.
       *  Accessors auth
@@ -135,7 +133,7 @@
       *  This routine should test if MACPT is unauthorized to use func
            INITIALIZE ZCMA
            MOVE "SEL" TO FONCTION
-           CALL "MACPT" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MACPT" USING ZCMA, AUTH-QUERY
            DISPLAY "TST > " AUTH-QUERY
            IF SHOULD-NOT-BE-AUTH THEN
                DISPLAY '    TEST CPT-01 PASSED.'
@@ -150,7 +148,7 @@
       *  This routine should test if MACPT is authorized to use func
            INITIALIZE ZCMA
            MOVE "INS" TO FONCTION
-           CALL "MACPT" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MACPT" USING ZCMA, AUTH-QUERY
            IF SHOULD-BE-AUTH THEN
                DISPLAY '    TEST CPT-02 PASSED.'
            ELSE
@@ -164,7 +162,7 @@
       *  This routine should test if MACPT is authorized to use func
            INITIALIZE ZCMA
            MOVE "UPD" TO FONCTION
-           CALL "MACPT" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MACPT" USING ZCMA, AUTH-QUERY
            IF SHOULD-BE-AUTH THEN
                DISPLAY '    TEST CPT-03 PASSED.'
            ELSE
@@ -178,7 +176,7 @@
       *  This routine should test if MACPT is authorized to use func
            INITIALIZE ZCMA
            MOVE "DEL" TO FONCTION
-           CALL "MACPT" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MACPT" USING ZCMA, AUTH-QUERY
            IF SHOULD-BE-AUTH THEN
                DISPLAY '    TEST CPT-04 PASSED.'
            ELSE
@@ -192,7 +190,7 @@
       *  This routine should test if MACPT is unauthorized to use func
            INITIALIZE ZCMA
            MOVE "UNK" TO FONCTION
-           CALL "MACPT" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MACPT" USING ZCMA, AUTH-QUERY
            IF SHOULD-NOT-BE-AUTH THEN
                DISPLAY '    TEST CPT-05 PASSED.'
            ELSE
@@ -210,7 +208,7 @@
       *  This routine should test if MAHIS is unauthorized to use func
            INITIALIZE ZCMA
            MOVE "SEL" TO FONCTION
-           CALL "MAHIS" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MAHIS" USING ZCMA, AUTH-QUERY
            IF SHOULD-NOT-BE-AUTH THEN
                DISPLAY '    TEST HIS-01 PASSED.'
            ELSE
@@ -224,7 +222,7 @@
       *  This routine should test if MAHIS is authorized to use func
            INITIALIZE ZCMA
            MOVE "INS" TO FONCTION
-           CALL "MAHIS" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MAHIS" USING ZCMA, AUTH-QUERY
            IF SHOULD-BE-AUTH THEN
                DISPLAY '    TEST HIS-02 PASSED.'
            ELSE
@@ -238,7 +236,7 @@
       *  This routine should test if MAHIS is unauthorized to use func
            INITIALIZE ZCMA
            MOVE "UPD" TO FONCTION
-           CALL "MAHIS" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MAHIS" USING ZCMA, AUTH-QUERY
            IF SHOULD-NOT-BE-AUTH THEN
                DISPLAY '    TEST HIS-03 PASSED.'
            ELSE
@@ -252,7 +250,7 @@
       *  This routine should test if MAHIS is unauthorized to use func
            INITIALIZE ZCMA
            MOVE "DEL" TO FONCTION
-           CALL "MAHIS" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MAHIS" USING ZCMA, AUTH-QUERY
            IF SHOULD-NOT-BE-AUTH THEN
                DISPLAY '    TEST HIS-04 PASSED.'
            ELSE
@@ -266,7 +264,7 @@
       *  This routine should test if MAHIS is unauthorized to use func
            INITIALIZE ZCMA
            MOVE "UNK" TO FONCTION
-           CALL "MAHIS" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MAHIS" USING ZCMA, AUTH-QUERY
            IF SHOULD-NOT-BE-AUTH THEN
                DISPLAY '    TEST HIS-05 PASSED.'
            ELSE
@@ -285,7 +283,7 @@
       *  This routine should test if MADEV is unauthorized to use func
            INITIALIZE ZCMA
            MOVE "SEL" TO FONCTION
-           CALL "MADEV" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MADEV" USING ZCMA, AUTH-QUERY
            IF SHOULD-NOT-BE-AUTH THEN
                DISPLAY '    TEST DEV-01 PASSED.'
            ELSE
@@ -299,7 +297,7 @@
       *  This routine should test if MADEV is authorized to use func
            INITIALIZE ZCMA
            MOVE "INS" TO FONCTION
-           CALL "MADEV" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MADEV" USING ZCMA, AUTH-QUERY
            IF SHOULD-BE-AUTH THEN
                DISPLAY '    TEST DEV-02 PASSED.'
            ELSE
@@ -313,7 +311,7 @@
       *  This routine should test if MADEV is authorized to use func
            INITIALIZE ZCMA
            MOVE "UPD" TO FONCTION
-           CALL "MADEV" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MADEV" USING ZCMA, AUTH-QUERY
            IF SHOULD-BE-AUTH THEN
                DISPLAY '    TEST DEV-03 PASSED.'
            ELSE
@@ -327,7 +325,7 @@
       *  This routine should test if MADEV is authorized to use func
            INITIALIZE ZCMA
            MOVE "DEL" TO FONCTION
-           CALL "MADEV" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MADEV" USING ZCMA, AUTH-QUERY
            IF SHOULD-BE-AUTH THEN
                DISPLAY '    TEST DEV-04 PASSED.'
            ELSE
@@ -341,7 +339,7 @@
       *  This routine should test if MADEV is unauthorized to use func
            INITIALIZE ZCMA
            MOVE "UNK" TO FONCTION
-           CALL "MADEV" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MADEV" USING ZCMA, AUTH-QUERY
            IF SHOULD-NOT-BE-AUTH THEN
                DISPLAY '    TEST DEV-05 PASSED.'
            ELSE
@@ -359,7 +357,7 @@
       *  This routine should test if MAOPE is authorized to use func
            INITIALIZE ZCMA
            MOVE "SEL" TO FONCTION
-           CALL "MAOPE" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MAOPE" USING ZCMA, AUTH-QUERY
            IF SHOULD-BE-AUTH THEN
                DISPLAY '    TEST OPE-01 PASSED.'
            ELSE
@@ -373,7 +371,7 @@
       *  This routine should test if MAOPE is unauthorized to use func
            INITIALIZE ZCMA
            MOVE "INS" TO FONCTION
-           CALL "MAOPE" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MAOPE" USING ZCMA, AUTH-QUERY
            IF SHOULD-NOT-BE-AUTH THEN
                DISPLAY '    TEST OPE-02 PASSED.'
            ELSE
@@ -387,7 +385,7 @@
       *  This routine should test if MAOPE is unauthorized to use func
            INITIALIZE ZCMA
            MOVE "UPD" TO FONCTION
-           CALL "MAOPE" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MAOPE" USING ZCMA, AUTH-QUERY
            IF SHOULD-NOT-BE-AUTH THEN
                DISPLAY '    TEST OPE-03 PASSED.'
            ELSE
@@ -401,7 +399,7 @@
       *  This routine should test if MAOPE is unauthorized to use func
            INITIALIZE ZCMA
            MOVE "DEL" TO FONCTION
-           CALL "MAOPE" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MAOPE" USING ZCMA, AUTH-QUERY
            IF SHOULD-NOT-BE-AUTH THEN
                DISPLAY '    TEST OPE-04 PASSED.'
            ELSE
@@ -415,7 +413,7 @@
       *  This routine should test if MAOPE is unauthorized to use func
            INITIALIZE ZCMA
            MOVE "UNK" TO FONCTION
-           CALL "MAOPE" USING FILEIN-DDNAME, AUTH-QUERY
+           CALL "MAOPE" USING ZCMA, AUTH-QUERY
            IF SHOULD-NOT-BE-AUTH THEN
                DISPLAY '    TEST OPE-05 PASSED.'
            ELSE
