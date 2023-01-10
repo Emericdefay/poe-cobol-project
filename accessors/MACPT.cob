@@ -39,6 +39,16 @@
            10 DELETE-AUTH PIC X     VALUE "O".
        01  SQLCODE        PIC S9(3) VALUE 0.
 
+           EXEC SQL 
+               INCLUDE SQLCA 
+           END-EXEC.
+      *  DCLTBCPT init for avoid workflow errors
+       01 DCLTBCPT PIC X(255).
+      * DECLARATION DU DCLGEN DE LA TABLE TBCPT
+           EXEC SQL 
+               INCLUDE DCCPT 
+           END-EXEC.
+
        LINKAGE SECTION.
        01 AUTH-QUERY PIC 9(2).
        01 ZACPT-ZCMA.
@@ -133,34 +143,30 @@
        2501-CHECK-SQLCODE.
       ******************************************************************EDEFAY 
       *  Verify SQLCODE, returning Error code and message if SQLCODE<>0
-           EVALUATE SQLCODE
-               WHEN 0
-                   MOVE SQLCODE TO ZACPT-CODRET
-                   MOVE "SPACE" TO ZACPT-LIBRET
-                   MOVE SQLCODE TO ZACPT-SQLCODE
-               WHEN 20
-                   MOVE SQLCODE TO ZACPT-CODRET
+           MOVE 0 TO ZACPT-CODRET
+           MOVE "SPACE" TO ZACPT-LIBRET
+           MOVE 0 TO ZACPT-SQLCODE
+
+           EVALUATE SQLCODE ALSO ZACPT-FONCTION
+               WHEN -803    ALSO 'INS'
+                   MOVE 20 TO ZACPT-CODRET
                    MOVE "LIGNE EN DOUBLE" TO ZACPT-LIBRET
                    MOVE SQLCODE TO ZACPT-SQLCODE
-               WHEN 30
-                   MOVE SQLCODE TO ZACPT-CODRET
+               WHEN +100    ALSO 'SEL'
+                   MOVE 30 TO ZACPT-CODRET
                    MOVE "CPT" TO ZACPT-LIBRET
                    MOVE SQLCODE TO ZACPT-SQLCODE
-               WHEN 40
-                   MOVE SQLCODE TO ZACPT-CODRET
+               WHEN +100    ALSO 'UPD'
+                   MOVE 40 TO ZACPT-CODRET
                    MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZACPT-LIBRET
                    MOVE SQLCODE TO ZACPT-SQLCODE
-               WHEN 50
-                   MOVE SQLCODE TO ZACPT-CODRET
+               WHEN +100    ALSO 'DEL'
+                   MOVE 50 TO ZACPT-CODRET
                    MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZACPT-LIBRET
                    MOVE SQLCODE TO ZACPT-SQLCODE
-               WHEN 90
-                   MOVE SQLCODE TO ZACPT-CODRET
-                   MOVE "SQLCA" TO ZACPT-LIBRET
-                   MOVE SQLCODE TO ZACPT-SQLCODE
                WHEN OTHER
-                   MOVE SQLCODE TO ZACPT-CODRET
-                   MOVE "SQL ERROR UNHANDLED" TO ZACPT-LIBRET
+                   MOVE 90 TO ZACPT-CODRET
+                   MOVE "SQLCA" TO ZACPT-LIBRET
                    MOVE SQLCODE TO ZACPT-SQLCODE
            END-EVALUATE
            .
@@ -173,39 +179,49 @@
 
        8100-SELECT.
       ******************************************************************EDEFAY 
-      *Code for SELECT operation
-                  EXEC SQL
-                      SELECT ...
-                      INTO ...
-                      FROM ...
-                      WHERE ...
-                  END-EXEC
+      *  Code for SELECT operation
+           DISPLAY "SELECT NOT ALLOWED."
            .
 
        8400-INSERT.
       ******************************************************************EDEFAY 
-      *Code for INSERT operation
-                   EXEC SQL
-                       INSERT INTO ...
-                       VALUES ...
-                   END-EXEC
+      *  Code for INSERT operation
+               MOVE ZACPT-DONNEES TO DCLTBCPT
+               EXEC SQL
+                    INSERT INTO TBCPT VALUES
+                   (:HC-COMPTE  ,
+                    :HC-NOM     ,
+                    :HC-SOLDE   ,
+                    :HC-DDMVT   ,
+                    :HC-DDMAJ   ,
+                     HC-HDMAJ   )
+               END-EXEC
            .
 
        8700-UPDATE.
       ******************************************************************EDEFAY 
-      *Code for UPDATE operation
-                   EXEC SQL
-                       UPDATE ...
-                       SET ...
-                       WHERE ...
-                   END-EXEC
+      *  Code for UPDATE operation
+           MOVE ZACPT-DONNEES TO DCLTBCPT
+           EXEC SQL
+                UPDATE TBCPT
+           SET   HC-COMPTE =:ZACPT-COMPTE ,
+                 HC-NOM    =:ZACPT-NOM    ,
+                 HC-SOLDE  =:ZACPT-SOLDE  ,
+                 HC-DDMVT  =:ZACPT-DDMVT  ,
+                 HC-DDMAJ  =:ZACPT-DDMAJ  ,
+                 HC-HDMAJ  =:ZACPT-HDMAJ  ,
+      *  > WHERE HC-COMPTE=:ZACPT-COMPTE
+           WHERE HC-COMPTE =:ZACPT-COMPTE
+           END-EXEC
            .
 
        8800-DELETE.
       ******************************************************************EDEFAY 
-      *Code for DELETE operation
-                  EXEC SQL
-                      DELETE FROM ...
-                      WHERE ...
-                  END-EXEC
+      *  Code for DELETE operation
+           MOVE ZACPT-DONNEES TO DCLTBCPT
+           EXEC SQL
+             DELETE FROM TBCPT
+      *  > WHERE HC-COMPTE =:ZACPT-COMPTE
+           WHERE HC-COMPTE =:ZACPT-COMPTE
+           END-EXEC
            .
