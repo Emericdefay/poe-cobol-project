@@ -168,7 +168,7 @@
        7777-UNAUTHORIZED-QUERY-TYPE.
       ******************************************************************EDEFAY 
       *  Update AUTH-QUERY, since Query type is unauthorized
-           MOVE 1 TO AUTH-QUERY
+           ADD 1 TO AUTH-QUERY
            DISPLAY "7777 > " AUTH-QUERY
            EXIT PROGRAM
            .
