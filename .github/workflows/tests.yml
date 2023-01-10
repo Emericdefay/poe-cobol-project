@@ -48,21 +48,21 @@ jobs:
         echo "cobc -x -o PGM ./tests/PGM.cob GKCTRL01.so -lsqlite3"
     - name: precompilation MAXXXs - ignoring SQL CALLS
       run: |
-        python ./workflows/precompiler.py ./accessors/MACPT.cob PC-MACPT.cob
-        python ./workflows/precompiler.py ./accessors/MAHIS.cob PC-MAHIS.cob
-        python ./workflows/precompiler.py ./accessors/MADEV.cob PC-MADEV.cob
-        python ./workflows/precompiler.py ./accessors/MAOPE.cob PC-MAOPE.cob
+        python ./workflows/precompiler.py ./accessors/MACPT.cob MACPT.cob
+        python ./workflows/precompiler.py ./accessors/MAHIS.cob MAHIS.cob
+        python ./workflows/precompiler.py ./accessors/MADEV.cob MADEV.cob
+        python ./workflows/precompiler.py ./accessors/MAOPE.cob MAOPE.cob
     - name: See precompile code
       run: echo "$(cat PC-MACPT.cob)"
     - name: compil - MAXXXs
       run: |
-        cobc -m -fdebugging-line PC-MACPT.cob
-        cobc -m -fdebugging-line PC-MAHIS.cob
-        cobc -m -fdebugging-line PC-MADEV.cob
-        cobc -m -fdebugging-line PC-MAOPE.cob
+        cobc -m -fdebugging-line MACPT.cob
+        cobc -m -fdebugging-line MAHIS.cob
+        cobc -m -fdebugging-line MADEV.cob
+        cobc -m -fdebugging-line MAOPE.cob
     - name: compile - TSTMAJ01
       run: |
-        cobc -x -o TSTMAJ01 ./tests/TSTMAJ01.cob PC-MACPT.so PC-MAHIS.so PC-MADEV.so PC-MAOPE.so
+        cobc -x -o TSTMAJ01 ./tests/TSTMAJ01.cob MACPT.so MAHIS.so MADEV.so MAOPE.so
     - name: Ls
       run: ls
     - name: Env
