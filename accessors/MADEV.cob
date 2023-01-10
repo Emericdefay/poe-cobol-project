@@ -79,7 +79,8 @@
       *    - DDEV : Displays
       *    - CDEV : Calls
       ******************************************************************
-       PROCEDURE DIVISION USING ZADEV-ZCMA, AUTH-QUERY.
+       PROCEDURE DIVISION USING ZADEV-ZCMA, AUTH-QUERY
+                          RETURNING         AUTH-QUERY.
            PERFORM 0000-INITIALIZATIONS
            PERFORM 2500-ROOTER
            GOBACK.

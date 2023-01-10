@@ -74,7 +74,8 @@
       *    - Dxxx : Displays
       *    - Cxxx : Calls
       ******************************************************************
-       PROCEDURE DIVISION USING ZAXXX-ZCMA, AUTH-QUERY.
+       PROCEDURE DIVISION USING ZAXXX-ZCMA, AUTH-QUERY
+                          RETURNING         AUTH-QUERY.
            PERFORM 0000-INITIALIZATIONS
            PERFORM 2500-ROOTER
            GOBACK.

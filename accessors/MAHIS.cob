@@ -79,7 +79,8 @@
       *    - DHIS : Displays
       *    - CHIS : Calls
       ******************************************************************
-       PROCEDURE DIVISION USING ZAHIS-ZCMA, AUTH-QUERY.
+       PROCEDURE DIVISION USING ZAHIS-ZCMA, AUTH-QUERY
+                          RETURNING         AUTH-QUERY.
            PERFORM 0000-INITIALIZATIONS
            PERFORM 2500-ROOTER
            GOBACK.
