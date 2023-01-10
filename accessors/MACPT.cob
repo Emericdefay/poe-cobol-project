@@ -88,35 +88,36 @@
        0000-INITIALIZATIONS.
       ******************************************************************EDEFAY 
       *  Initialize values
+           INITIALIZE AUTHORIZATION-QUERIES-TYPE.
            SET AUTH-QUERY TO 0
            .
 
        2500-ROOTER.
       ******************************************************************EDEFAY 
       * Perform the different operations based on the value of FONCTION
-           EVALUATE ZACPT-FONCTION
-               WHEN 'SEL'
+           EVALUATE TRUE
+               WHEN ZACPT-FONCTION = 'SEL'
                    IF SELECT-AUTH THEN
                        PERFORM 8100-SELECT
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
                        PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
                    END-IF
-               WHEN 'INS'
+               WHEN ZACPT-FONCTION = 'INS'
                    IF INSERT-AUTH THEN
                        PERFORM 8400-INSERT
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
                        PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
                    END-IF
-               WHEN 'UPD'
+               WHEN ZACPT-FONCTION = 'UPD'
                    IF UPDATE-AUTH THEN
                        PERFORM 8700-UPDATE
                        PERFORM 2501-CHECK-SQLCODE
                    ELSE
                        PERFORM 7777-UNAUTHORIZED-QUERY-TYPE
                    END-IF
-               WHEN 'DEL'
+               WHEN ZACPT-FONCTION = 'DEL'
                    IF DELETE-AUTH THEN
                        PERFORM 8800-DELETE
                        PERFORM 2501-CHECK-SQLCODE
