@@ -79,7 +79,8 @@
       *    - DCPT : Displays
       *    - CCPT : Calls
       ******************************************************************
-       PROCEDURE DIVISION USING ZACPT-ZCMA, AUTH-QUERY.
+       PROCEDURE DIVISION USING ZACPT-ZCMA, AUTH-QUERY 
+                          RETURNING         AUTH-QUERY.
            PERFORM 0000-INITIALIZATIONS
            PERFORM 2500-ROOTER
            GOBACK.
@@ -167,7 +168,7 @@
       ******************************************************************EDEFAY 
       *  Update AUTH-QUERY, since Query type is unauthorized
            MOVE 1 TO AUTH-QUERY
-           DISPLAY AUTH-QUERY
+           DISPLAY "7777 > " AUTH-QUERY
            EXIT PROGRAM
            .
 
