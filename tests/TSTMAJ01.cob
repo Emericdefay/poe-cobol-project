@@ -77,47 +77,30 @@
       ******************************************************************EDEFAY
       *  This routine should follow the logic of the program purpose
            DISPLAY "Executing tests :"
+           DISPLAY "  CPT:"
            PERFORM CT01-MACPT-SELECT
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT02-MACPT-INSERT
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT03-MACPT-UPDATE
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT04-MACPT-DELETE
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT05-MACPT-UNKNOWN
-           DISPLAY "TST > " AUTH-QUERY
+           DISPLAY "  HIS:"
            PERFORM CT01-MAHIS-SELECT
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT02-MAHIS-INSERT
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT03-MAHIS-UPDATE
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT04-MAHIS-DELETE
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT05-MAHIS-UNKNOWN
-           DISPLAY "TST > " AUTH-QUERY
+           DISPLAY "  DEV:"
            PERFORM CT01-MADEV-SELECT
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT02-MADEV-INSERT
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT03-MADEV-UPDATE
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT04-MADEV-DELETE
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT05-MADEV-UNKNOWN
-           DISPLAY "TST > " AUTH-QUERY
+           DISPLAY "  OPE:"
            PERFORM CT01-MAOPE-SELECT
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT02-MAOPE-INSERT
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT03-MAOPE-UPDATE
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT04-MAOPE-DELETE
-           DISPLAY "TST > " AUTH-QUERY
            PERFORM CT05-MAOPE-UNKNOWN
-           DISPLAY "TST > " AUTH-QUERY
-
            DISPLAY "Ending tests."
            PERFORM 2500-CHECK-NO-ERROR
            .
