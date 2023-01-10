@@ -16,24 +16,41 @@
 
 ---
 
-<p align="center"> ...
+<p align="center"> Atomic transactions of FLUX file orders
     <br> 
 </p>
 
-## 📝 Table of Contents
+<h2> 📝 Table of Contents </h2>
 
-- [📝 Table of Contents](#-table-of-contents)
 - [🧐 About ](#-about-)
-- [🎈 Usage ](#-usage-)
+- [🎈 Explanations ](#-explanations-)
+  - [1. GKCTRL01](#1-gkctrl01)
+  - [1t. TSTTRL01](#1t-tsttrl01)
 - [✍️ Authors ](#️-authors-)
 
 ## 🧐 About <a name = "about"></a>
 
-The purpose of this repository is ...
+The purpose of this project is to apply FLUX changes if FLUX file is not corrupted.
 
-## 🎈 Usage <a name="usage"></a>
+## 🎈 Explanations <a name="Explanations"></a>
 
-...
+### 1. GKCTRL01
+
+The purpose of GKCTRL01 is to check the FLUX file. If this file is corrupted or not. If FLUX is clean and ready to be used, GKCTRL01 do not manipulate RETURNCODE (RC=00)  
+Otherwise it gives :
+- RC = 1 : DDNAME issue
+- RC = 2 : Length DSNAME issue
+- RC = 3 : Other open file issue
+- RC = 4 : FileIN empty issue
+- RC = 5 : number operands != footer expected operands
+- RC = 6 : F1-MONTANT-OPER != F1-MT-GLOBAL 
+- RC = 7 : No header issue
+- RC = 8 : No footer issue
+
+### 1t. TSTTRL01
+
+Its purpose is to test all cases of GKCTRL01, to be sure that at any stage
+of the project, GKCTRL01 will assure its goal.
 
 ## ✍️ Authors <a name = "authors"></a>
 
