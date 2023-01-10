@@ -1,5 +1,6 @@
 import sys
 
+
 def precompile(input_file, output_file):
     with open(input_file, "r") as f:
         lines = f.readlines()
@@ -18,6 +19,7 @@ def precompile(input_file, output_file):
             output_lines.append(line)
     with open(output_file, "w") as f:
         f.writelines(output_lines)
+
 
 if __name__ == "__main__":
     input_file = sys.argv[1]
