@@ -22,7 +22,7 @@
       ******************************************************************
        ENVIRONMENT DIVISION.
        DATA DIVISION.
-       WORKING-STORAGE.
+       WORKING-STORAGE SECTION.
        01 AUTHORIZATION-QUERIES-TYPE.
            10 SELECT-XXX PIC X   VALUE "O"
                  88 SELECT-AUTH  VALUE "O"
