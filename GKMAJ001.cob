@@ -25,11 +25,11 @@
        FILE-CONTROL. 
       *    FLUX     
            SELECT FLUX-FILE
-           ASSIGN TO 'FLUX.txt'
+           ASSIGN TO './FLUX.txt'
            ORGANIZATION IS LINE SEQUENTIAL.
       *    REJECT     
            SELECT REJETS-FILE
-           ASSIGN TO 'REJETS.txt'
+           ASSIGN TO './REJETS.txt'
            ORGANIZATION IS LINE SEQUENTIAL.
       ******************************************************************
        DATA DIVISION.
@@ -46,7 +46,10 @@
                05 R-SQLCODE   PIC S9(3) COMP-3.
       ******************************************************************
        WORKING-STORAGE SECTION.
-       COPY ZFMAJCPT.
+      *   Status file
+       01 WS-EOF PIC X(1) VALUE 'N'.
+      *   Copybooks
+       COPY "./Copybooks/ZFMAJCPT.cpy".
       ******************************************************************
        LINKAGE SECTION.
 
