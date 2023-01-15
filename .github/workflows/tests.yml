@@ -67,12 +67,12 @@ jobs:
       run: ls
     - name: compile - MFMAJCPT
       run: |
-        cobc -m MFMAJCPT.cob MACPT.so MAHIS.so MADEV.so MAOPE.so
+        cobc -m -fdebugging-line MFMAJCPT.cob
     - name: Ls
       run: ls
     - name: compile - GKMAJ001
       run: |
-        cobc -x -o GKMAJ001 GKMAJ001.cob MFMAJCPT.so
+        cobc -x -o GKMAJ001 GKMAJ001.cob MFMAJCPT.so MACPT.so MAHIS.so MADEV.so MAOPE.so
     - name: Env
       run: cobcrun --runtime-config
     - name: Compiler info
