@@ -79,7 +79,7 @@
       *                   USING 
       *                         BY REFERENCE ZF-CODRET.
            PERFORM 1000-Main.
-           EXIT PROGRAM MFMAJCPT.
+           GOBACK.
 
        1000-Main.
       ******************************************************************EDEFAY
