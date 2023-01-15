@@ -12,7 +12,14 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        include:
+          - operating-system: ubuntu-latest
+            python-version: '3.6'
+            label: linux-64-py-3-6
+            prefix: /usr/share/miniconda3/envs/my-env
     steps:
     - uses: actions/checkout@v2
     - name: Install COBOL compiler
@@ -39,15 +46,47 @@ jobs:
     - name: compil - PGM
       run: |
         echo "cobc -x -o PGM ./tests/PGM.cob GKCTRL01.so -lsqlite3"
+    - name: precompilation MAXXXs - ignoring SQL CALLS
+      run: |
+        python ./workflows/precompiler.py ./accessors/MACPT.cob MACPT.cob
+        python ./workflows/precompiler.py ./accessors/MAHIS.cob MAHIS.cob
+        python ./workflows/precompiler.py ./accessors/MADEV.cob MADEV.cob
+        python ./workflows/precompiler.py ./accessors/MAOPE.cob MAOPE.cob
+    - name: See precompile code
+      run: echo "$(cat MACPT.cob)"
+    - name: compil - MAXXXs
+      run: |
+        cobc -m -fdebugging-line MACPT.cob
+        cobc -m -fdebugging-line MAHIS.cob
+        cobc -m -fdebugging-line MADEV.cob
+        cobc -m -fdebugging-line MAOPE.cob
+    - name: compile - TSTMAJ01
+      run: |
+        cobc -x -o TSTMAJ01 ./tests/TSTMAJ01.cob MACPT.so MAHIS.so MADEV.so MAOPE.so
     - name: Ls
       run: ls
+    - name: compile - MFMAJCPT
+      run: |
+        cobc -m -fdebugging-line MFMAJCPT.cob
+    - name: Ls
+      run: ls
+    - name: compile - GKMAJ001
+      run: |
+        cobc -x -o GKMAJ001 GKMAJ001.cob MFMAJCPT.so MACPT.so MAHIS.so MADEV.so MAOPE.so
     - name: Env
       run: cobcrun --runtime-config
     - name: Compiler info
       run: cobc --info
-    - name: Run tests
+    - name: Run tests - GKCTRL01
       run: |
         ./TSTTRL01
+        if [[ $? -eq 0 ]]; then
+          echo "Tests Succeed"
+          exit 0
+        fi
+    - name: Run tests - GKMAJ001
+      run: |
+        ./TSTMAJ01
         if [[ $? -eq 0 ]]; then
           echo "Tests Succeed"
           exit 0
