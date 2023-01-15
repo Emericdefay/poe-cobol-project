@@ -29,6 +29,9 @@
        COPY "./Copybooks/CTBOPE.cpy".
       *  Accessors auth
        01 AUTH-QUERY           PIC 9(02) VALUE 0.
+
+      ******************************************************************
+       LINKAGE SECTION.
       *  Actions
        COPY "./Copybooks/ZFMAJCPT.cpy".
 
@@ -55,9 +58,8 @@
       *    - Dxxx : Displays
       *    - Cxxx : Calls
       ******************************************************************
-       PROCEDURE DIVISION.
-      *                   USING 
-      *                         BY REFERENCE ZF-CODRET.
+       PROCEDURE DIVISION USING BY REFERENCE ZF-MAJCPT,
+                                BY REFERENCE ZF-RETOUR.
            PERFORM 1000-Main.
            GOBACK.
 
