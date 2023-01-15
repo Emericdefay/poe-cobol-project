@@ -136,7 +136,7 @@
            INITIALIZE AUTH-QUERY
            MOVE "SEL" TO FONCTION
            CALL "MACPT" USING ZCMA, AUTH-QUERY
-           IF AUTH-QUERY > 0 THEN
+           IF AUTH-QUERY = 0 THEN
                DISPLAY '    TEST CPT-01 PASSED.'
            ELSE
                DISPLAY '    TEST CPT-01 FAILED.'
@@ -295,7 +295,7 @@
            INITIALIZE AUTH-QUERY
            MOVE "SEL" TO FONCTION
            CALL "MADEV" USING ZCMA, AUTH-QUERY
-           IF AUTH-QUERY > 0 THEN
+           IF AUTH-QUERY = 0 THEN
                DISPLAY '    TEST DEV-01 PASSED.'
            ELSE
                DISPLAY '    TEST DEV-01 FAILED.'

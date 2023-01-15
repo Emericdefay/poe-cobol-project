@@ -29,7 +29,7 @@
        DATA DIVISION.
        WORKING-STORAGE SECTION.
        01 AUTHORIZATION-QUERIES-TYPE.
-           10 SELECT-CPT  PIC X  VALUE "X".
+           10 SELECT-CPT  PIC X  VALUE "O".
            10 SELECT-AUTH PIC X     VALUE "O".
            10 INSERT-CPT  PIC X  VALUE "O".
            10 INSERT-AUTH PIC X     VALUE "O".
@@ -168,7 +168,28 @@
        8100-SELECT.
       ******************************************************************EDEFAY 
       *  Code for SELECT operation
-           DISPLAY "SELECT NOT ALLOWED."
+           MOVE ZACPT-DONNEES TO DCLTBCPT
+           EXEC SQL
+             SELECT
+                 COMPTE ,
+                 NOM    ,
+                 SOLDE  ,
+                 DDMVT  ,
+                 DDMAJ  ,
+                 HDMAJ  
+             INTO
+                :HC-COMPTE ,
+                :HC-NOM    ,
+                :HC-SOLDE  ,
+                :HC-DDMVT  ,
+                :HC-DDMAJ  ,
+                :HC-HDMAJ  
+             FROM TBCPT
+             WHERE COMPTE=:HC-COMPTE
+           END-EXEC
+           IF SQLCODE = ZERO
+              MOVE DCLTBCPT TO ZACPT-DONNEES
+           END-IF
            .
 
        8400-INSERT.
