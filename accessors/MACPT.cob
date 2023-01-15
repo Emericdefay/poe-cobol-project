@@ -51,7 +51,7 @@
 
        LINKAGE SECTION.
        01 AUTH-QUERY PIC 9(2).
-       COPY "./Copybooks/CTBCPT.cpy"
+       COPY "./Copybooks/CTBCPT.cpy".
       ******************************************************************
       *  Program : Setup, run main routine and exit.
       *    

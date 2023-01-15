@@ -63,9 +63,9 @@ jobs:
     - name: compile - TSTMAJ01
       run: |
         cobc -x -o TSTMAJ01 ./tests/TSTMAJ01.cob MACPT.so MAHIS.so MADEV.so MAOPE.so
-    - name: compile - TSTMAJ01
+    - name: compile - MFMAJ001
       run: |
-        cobc -x -o TSTMAJ01 ./tests/MFMAJ001.cob MACPT.so MAHIS.so MADEV.so MAOPE.so
+        cobc -x -o MFMAJ001 ./tests/MFMAJ001.cob MACPT.so MAHIS.so MADEV.so MAOPE.so
     - name: Ls
       run: ls
     - name: Env
