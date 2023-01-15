@@ -47,11 +47,11 @@
            05 ZF-DATOPE          PIC X(10).
            05 ZF-MNTOPE          PIC S9(11)V99 COMP-3.
            05 ZF-CODDEV          PIC X(03).
-       01 WS-RETOUR.
-            05 WS-CODRET         PIC X(02).
+       01 ZF-RETOUR.
+            05 ZF-CODRET         PIC X(02).
                88 CODRET-OK      VALUE "00".
-            05 WS-SQLCODE        PIC S9(3) COMP-3.
-            05 WS-LIBRET         PIC X(30).
+            05 ZF-SQLCODE        PIC S9(3) COMP-3.
+            05 ZF-LIBRET         PIC X(30).
       ******************************************************************
       *  Program : Setup, run main routine and exit.
       *    
@@ -103,46 +103,44 @@
            ELSE
                CALL "ABEND PGM"
            END-IF
-
-           MOVE WS-RETOUR TO ZF-RETOUR
            GOBACK
            .
 
        VERIF-CODOPE.
       ******************************************************************EDEFAY
       *  Verify if CODOPE exist
-           MOVE ZF-CODOPE TO OPE-COPE
-           MOVE "SEL" TO OPE-FONCTION
+           MOVE ZF-CODOPE TO ZAOPE-COPE
+           MOVE "SEL" TO ZAOPE-FONCTION
            CALL "MAOPE" USING ZAOPE-ZCMA, AUTH-QUERY
-           MOVE OPE-RETOUR TO ZF-RETOUR
+           MOVE ZAOPE-RETOUR TO ZF-RETOUR
            .
 
        VERIF-CODDEV.
       ******************************************************************EDEFAY
       *  Verify if CODDEV exist
-           MOVE ZF-CODDEV TO DEV-CDEV
-           MOVE "SEL" TO DEV-FONCTION
+           MOVE ZF-CODDEV TO ZADEV-CDEV
+           MOVE "SEL" TO ZADEV-FONCTION
            CALL "MADEV" USING ZADEV-ZCMA, AUTH-QUERY
-           MOVE DEV-RETOUR TO ZF-RETOUR
+           MOVE ZADEV-RETOUR TO ZF-RETOUR
            .
 
        VERIF-COMPTE.
       ******************************************************************EDEFAY
       *  verify if account exist
-           MOVE ZF-COMPTE TO CPT-COMPTE
-           MOVE "SEL" TO CPT-FONCTION
+           MOVE ZF-COMPTE TO ZACPT-COMPTE
+           MOVE "SEL" TO ZACPT-FONCTION
            CALL "MACPT" USING ZACPT-ZCMA, AUTH-QUERY
-           MOVE CPT-RETOUR TO ZF-RETOUR
+           MOVE ZACPT-RETOUR TO ZF-RETOUR
            .
 
        TRAITEMENT.
       ******************************************************************EDEFAY
       *  Check what kind of operation is it, then update account & hist
            IF IS-SUB-OPE THEN
-               SOLDE = SOLDE - ( DEV-MTACHAT * ZF-MNTOPE ) 
+               ZACPT-SOLDE = ZACPT-SOLDE - ( ZADEV-MTACHAT * ZF-MNTOPE ) 
            END-IF
            IF IS-ADD-OPE THEN
-               SOLDE = SOLDE + ( DEV-MTACHAT * ZF-MNTOPE )
+               ZACPT-SOLDE = ZACPT-SOLDE + ( ZADEV-MTACHAT * ZF-MNTOPE )
            END-IF
            PERFORM MAJ-SOLDE
            IF ZF-CODRET = "00" 
@@ -153,15 +151,15 @@
        MAJ-SOLDE.
       ******************************************************************EDEFAY
       *  Update the account
-           MOVE "UPD" TO CPT-FONCTION
-           CALL "MACPT" USING ZF-MAJCPT, AUTH-QUERY
-           MOVE CPT-RETOUR TO ZF-RETOUR
+           MOVE "UPD" TO ZACPT-FONCTION
+           CALL "MACPT" USING ZACPT-ZCMA, AUTH-QUERY
+           MOVE ZACPT-RETOUR TO ZF-RETOUR
            . 
 
        MAJ-HISTORIQUE.
       ******************************************************************EDEFAY
       *  Add the operation to the history 
-           MOVE "INS" TO CPT-FONCTION
-           CALL "MAHIS" USING ZF-MAJCPT, AUTH-QUERY
-           MOVE CPT-RETOUR TO ZF-RETOUR
+           MOVE "INS" TO ZAHIS-FONCTION
+           CALL "MAHIS" USING ZAHIS-ZCMA, AUTH-QUERY
+           MOVE ZAHIS-RETOUR TO ZF-RETOUR
            . 
