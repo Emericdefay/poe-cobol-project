@@ -23,10 +23,10 @@
        DATA DIVISION.
        WORKING-STORAGE SECTION.
       *  Copies
-       COPY "./Copybooks/CTBCPT.cpy"
-       COPY "./Copybooks/CTBHIS.cpy"
-       COPY "./Copybooks/CTBDEV.cpy"
-       COPY "./Copybooks/CTBOPE.cpy"
+       COPY "./Copybooks/CTBCPT.cpy".
+       COPY "./Copybooks/CTBHIS.cpy".
+       COPY "./Copybooks/CTBDEV.cpy".
+       COPY "./Copybooks/CTBOPE.cpy".
       *  Accessors auth
        01 AUTH-QUERY           PIC 9(02) VALUE 0.
       *  Actions
