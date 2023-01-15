@@ -75,14 +75,16 @@
       *    - Dxxx : Displays
       *    - Cxxx : Calls
       ******************************************************************
-       PROCEDURE DIVISION USING BY REFERENCE ZF-CODRET.
+       PROCEDURE DIVISION.
+      *                   USING 
+      *                         BY REFERENCE ZF-CODRET.
            PERFORM 1000-Main.
            EXIT PROGRAM MFMAJCPT.
 
        1000-Main.
       ******************************************************************EDEFAY
       *  This routine should follow the logic of the program purpose.
-           INITIALIZE WS-RETOUR
+           INITIALIZE ZF-RETOUR
       *    Verify CODOPE
            PERFORM VERIF-CODOPE
       *    Verify CODDEV
@@ -137,10 +139,12 @@
       ******************************************************************EDEFAY
       *  Check what kind of operation is it, then update account & hist
            IF IS-SUB-OPE THEN
-               ZACPT-SOLDE = ZACPT-SOLDE - ( ZADEV-MTACHAT * ZF-MNTOPE ) 
+               COMPUTE ZACPT-SOLDE = 
+                       ZACPT-SOLDE - ( ZADEV-MTACHAT * ZF-MNTOPE ) 
            END-IF
            IF IS-ADD-OPE THEN
-               ZACPT-SOLDE = ZACPT-SOLDE + ( ZADEV-MTACHAT * ZF-MNTOPE )
+               COMPUTE ZACPT-SOLDE = 
+                       ZACPT-SOLDE + ( ZADEV-MTACHAT * ZF-MNTOPE )
            END-IF
            PERFORM MAJ-SOLDE
            IF ZF-CODRET = "00" 
