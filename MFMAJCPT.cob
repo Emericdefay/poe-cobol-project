@@ -140,11 +140,11 @@
       *  Check what kind of operation is it, then update account & hist
            IF IS-SUB-OPE THEN
                COMPUTE ZACPT-SOLDE = 
-                       ZACPT-SOLDE - ( ZADEV-MTACHAT * ZF-MNTOPE ) 
+                       ZACPT-SOLDE - ( ZADEV-ACHAT * ZF-MNTOPE ) 
            END-IF
            IF IS-ADD-OPE THEN
                COMPUTE ZACPT-SOLDE = 
-                       ZACPT-SOLDE + ( ZADEV-MTACHAT * ZF-MNTOPE )
+                       ZACPT-SOLDE + ( ZADEV-ACHAT * ZF-MNTOPE )
            END-IF
            PERFORM MAJ-SOLDE
            IF ZF-CODRET = "00" 
