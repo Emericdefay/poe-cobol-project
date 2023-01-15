@@ -63,11 +63,16 @@ jobs:
     - name: compile - TSTMAJ01
       run: |
         cobc -x -o TSTMAJ01 ./tests/TSTMAJ01.cob MACPT.so MAHIS.so MADEV.so MAOPE.so
-    - name: compile - MFMAJCPT
-      run: |
-        cobc -x -o MFMAJCPT MFMAJCPT.cob MACPT.so MAHIS.so MADEV.so MAOPE.so
     - name: Ls
       run: ls
+    - name: compile - MFMAJCPT
+      run: |
+        cobc -m MFMAJCPT.cob MACPT.so MAHIS.so MADEV.so MAOPE.so
+    - name: Ls
+      run: ls
+    - name: compile - GKMAJ001
+      run: |
+        cobc -x -o GKMAJ001 GKMAJ001.cob MFMAJCPT.so
     - name: Env
       run: cobcrun --runtime-config
     - name: Compiler info
