@@ -47,7 +47,7 @@
       ******************************************************************
        WORKING-STORAGE SECTION.
       *   Status file
-       01 WS-EOF PIC X(1) VALUE 'N'.
+       01  WS-EOF PIC X(1) VALUE 'N'.
       *   Copybooks
        COPY "./Copybooks/ZFMAJCPT.cpy".
       ******************************************************************
@@ -92,7 +92,7 @@
       ******************************************************************EDEFAY
       *  This routine should read FILEIN file.
             READ FLUX-FILE
-                AT END SET WS-EOF TO 'Y'
+                AT END MOVE 'Y' TO WS-EOF
             END-READ
            .
 
