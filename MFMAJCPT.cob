@@ -3,13 +3,15 @@
       * Program name   : MFMAJCPT                               
       * Original author: DEFAY E.                                
       *
-      * Description    : 
+      * Description    : This routine reads actions to perform on
+      *                  accounts. The updates it.
       *
       *                ---------------------------------                
       * Maintenance Log                                              
       * Date      Author        Maintenance Requirement               
       * --------- ------------  --------------------------------------- 
       * 11/01/23  EDEFAY        Create first version       
+      * 13/01/23  EDEFAY        Documentation     
       *                                                               
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -69,23 +71,23 @@
            INITIALIZE ZF-RETOUR
       *    Verify CODOPE
            PERFORM VERIF-CODOPE
-      *    Verify CODDEV
            IF CODRET-OK
+      *        Verify CODDEV
                PERFORM VERIF-CODDEV
            ELSE
-               CALL "ABEND PGM"
+               CALL "ABENDOPE"
            END-IF
-      *    Verify COMPTE
            IF CODRET-OK
+      *        Verify COMPTE
                PERFORM VERIF-COMPTE
            ELSE
-               CALL "ABEND PGM"
+               CALL "ABENDDEV"
            END-IF           
-      *    All checks passed
            IF CODRET-OK
+      *        All checks passed
                PERFORM TRAITEMENT
            ELSE
-               CALL "ABEND PGM"
+               CALL "ABENDCPT"
            END-IF
            GOBACK
            .
@@ -110,7 +112,7 @@
 
        VERIF-COMPTE.
       ******************************************************************EDEFAY
-      *  verify if account exist
+      *  Verify if account exist
            MOVE ZF-COMPTE TO ZACPT-COMPTE
            MOVE "SEL" TO ZACPT-FONCTION
            CALL "MACPT" USING ZACPT-ZCMA, AUTH-QUERY
