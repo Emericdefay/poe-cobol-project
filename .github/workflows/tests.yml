@@ -71,7 +71,7 @@ jobs:
         cobc -x -o GKMAJ001 GKMAJ001.cob MFMAJCPT.so MACPT.so MAHIS.so MADEV.so MAOPE.so
     - name: compile - TSTMAIN
       run: |
-        cobc -x -o TSTMAIN ./tests/TSTMAIN.cob GKMAJ001.so
+        cobc -x -o TSTMAIN ./tests/TSTMAIN.cob
     - name: Env
       run: cobcrun --runtime-config
     - name: Compiler info
