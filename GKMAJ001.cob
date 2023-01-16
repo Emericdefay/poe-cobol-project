@@ -35,6 +35,7 @@
            SELECT REJETS-FILE
            ASSIGN TO './REJETS.txt'
            ORGANIZATION IS LINE SEQUENTIAL.
+
       ******************************************************************
        DATA DIVISION.
       ******************************************************************
@@ -48,14 +49,13 @@
                05 R-10-F1     PIC X(80).
                05 R-MOTIF     PIC X(30).
                05 R-SQLCODE   PIC S9(3) COMP-3.
+
       ******************************************************************
        WORKING-STORAGE SECTION.
       *   Status file
        01  WS-EOF PIC X(1) VALUE 'N'.
       *   Copybooks
        COPY "./Copybooks/ZFMAJCPT.cpy".
-      ******************************************************************
-       LINKAGE SECTION.
 
       ******************************************************************
       *  Program : Setup, run main routine and exit.
