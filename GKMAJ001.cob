@@ -3,13 +3,17 @@
       * Program name   : GKMAJ001                               
       * Original author: DEFAY E.                                
       *
-      * Description    : 
+      * Description    : This routine read file line by line to 
+      *                  feed a data struct. Then call another routine
+      *                  to update account with actions interpreted on
+      *                  those lines.
       *
       *                ---------------------------------                
       * Maintenance Log                                              
       * Date      Author        Maintenance Requirement               
       * --------- ------------  --------------------------------------- 
       * 11/01/23  EDEFAY        Create first version       
+      * 13/01/23  EDEFAY        Documentation      
       *                                                               
       ******************************************************************
        IDENTIFICATION DIVISION.

@@ -3,13 +3,15 @@
       * Program name   : MFMAJCPT                               
       * Original author: DEFAY E.                                
       *
-      * Description    : 
+      * Description    : This routine reads actions to perform on
+      *                  accounts. The updates it.
       *
       *                ---------------------------------                
       * Maintenance Log                                              
       * Date      Author        Maintenance Requirement               
       * --------- ------------  --------------------------------------- 
       * 11/01/23  EDEFAY        Create first version       
+      * 13/01/23  EDEFAY        Documentation     
       *                                                               
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -68,56 +70,29 @@
       *  This routine should follow the logic of the program purpose.
            INITIALIZE ZF-RETOUR
       *    Verify CODOPE
-           PERFORM VERIF-CODOPE
-      *    Verify CODDEV
+           PERFORM 2001-VERIF-CODOPE
            IF CODRET-OK
-               PERFORM VERIF-CODDEV
+      *        Verify CODDEV
+               PERFORM 2002-VERIF-CODDEV
            ELSE
-               CALL "ABEND PGM"
+               CALL "ABENDOPE"
            END-IF
-      *    Verify COMPTE
            IF CODRET-OK
-               PERFORM VERIF-COMPTE
+      *        Verify COMPTE
+               PERFORM 2003-VERIF-COMPTE
            ELSE
-               CALL "ABEND PGM"
+               CALL "ABENDDEV"
            END-IF           
-      *    All checks passed
            IF CODRET-OK
-               PERFORM TRAITEMENT
+      *        All checks passed
+               PERFORM 1500-TRAITEMENT
            ELSE
-               CALL "ABEND PGM"
+               CALL "ABENDCPT"
            END-IF
            GOBACK
            .
 
-       VERIF-CODOPE.
-      ******************************************************************EDEFAY
-      *  Verify if CODOPE exist
-           MOVE ZF-CODOPE TO ZAOPE-COPE
-           MOVE "SEL" TO ZAOPE-FONCTION
-           CALL "MAOPE" USING ZAOPE-ZCMA, AUTH-QUERY
-           MOVE ZAOPE-RETOUR TO ZF-RETOUR
-           .
-
-       VERIF-CODDEV.
-      ******************************************************************EDEFAY
-      *  Verify if CODDEV exist
-           MOVE ZF-CODDEV TO ZADEV-CDEV
-           MOVE "SEL" TO ZADEV-FONCTION
-           CALL "MADEV" USING ZADEV-ZCMA, AUTH-QUERY
-           MOVE ZADEV-RETOUR TO ZF-RETOUR
-           .
-
-       VERIF-COMPTE.
-      ******************************************************************EDEFAY
-      *  verify if account exist
-           MOVE ZF-COMPTE TO ZACPT-COMPTE
-           MOVE "SEL" TO ZACPT-FONCTION
-           CALL "MACPT" USING ZACPT-ZCMA, AUTH-QUERY
-           MOVE ZACPT-RETOUR TO ZF-RETOUR
-           .
-
-       TRAITEMENT.
+       1500-TRAITEMENT.
       ******************************************************************EDEFAY
       *  Check what kind of operation is it, then update account & hist
            IF IS-SUB-OPE THEN
@@ -128,13 +103,13 @@
                COMPUTE ZACPT-SOLDE = 
                        ZACPT-SOLDE + ( ZADEV-ACHAT * ZF-MNTOPE )
            END-IF
-           PERFORM MAJ-SOLDE
+           PERFORM 1701-MAJ-SOLDE
            IF ZF-CODRET = "00" 
-               PERFORM MAJ-HISTORIQUE
+               PERFORM 1702-MAJ-HISTORIQUE
            END-IF
            .
 
-       MAJ-SOLDE.
+       1701-MAJ-SOLDE.
       ******************************************************************EDEFAY
       *  Update the account
            MOVE "UPD" TO ZACPT-FONCTION
@@ -142,10 +117,37 @@
            MOVE ZACPT-RETOUR TO ZF-RETOUR
            . 
 
-       MAJ-HISTORIQUE.
+       1702-MAJ-HISTORIQUE.
       ******************************************************************EDEFAY
       *  Add the operation to the history 
            MOVE "INS" TO ZAHIS-FONCTION
            CALL "MAHIS" USING ZAHIS-ZCMA, AUTH-QUERY
            MOVE ZAHIS-RETOUR TO ZF-RETOUR
            . 
+
+       2001-VERIF-CODOPE.
+      ******************************************************************EDEFAY
+      *  Verify if CODOPE exist
+           MOVE ZF-CODOPE TO ZAOPE-COPE
+           MOVE "SEL" TO ZAOPE-FONCTION
+           CALL "MAOPE" USING ZAOPE-ZCMA, AUTH-QUERY
+           MOVE ZAOPE-RETOUR TO ZF-RETOUR
+           .
+
+       2002-VERIF-CODDEV.
+      ******************************************************************EDEFAY
+      *  Verify if CODDEV exist
+           MOVE ZF-CODDEV TO ZADEV-CDEV
+           MOVE "SEL" TO ZADEV-FONCTION
+           CALL "MADEV" USING ZADEV-ZCMA, AUTH-QUERY
+           MOVE ZADEV-RETOUR TO ZF-RETOUR
+           .
+
+       2003-VERIF-COMPTE.
+      ******************************************************************EDEFAY
+      *  Verify if account exist
+           MOVE ZF-COMPTE TO ZACPT-COMPTE
+           MOVE "SEL" TO ZACPT-FONCTION
+           CALL "MACPT" USING ZACPT-ZCMA, AUTH-QUERY
+           MOVE ZACPT-RETOUR TO ZF-RETOUR
+           .
