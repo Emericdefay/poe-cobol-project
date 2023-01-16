@@ -71,22 +71,25 @@
            INITIALIZE ZF-RETOUR
       *    Verify CODOPE
            PERFORM 2001-VERIF-CODOPE
-           IF ZF-CODRET = '00'
+           IF ZF-CODRET = '00' THEN
       *        Verify CODDEV
                PERFORM 2002-VERIF-CODDEV
            ELSE
+               DISPLAY ZF-CODRET
                CALL "ABENDOPE"
            END-IF
-           IF ZF-CODRET = '00'
+           IF ZF-CODRET = '00' THEN
       *        Verify COMPTE
                PERFORM 2003-VERIF-COMPTE
            ELSE
+               DISPLAY ZF-CODRET
                CALL "ABENDDEV"
            END-IF           
-           IF ZF-CODRET = '00'
+           IF ZF-CODRET = '00' THEN
       *        All checks passed
                PERFORM 1500-TRAITEMENT
            ELSE
+               DISPLAY ZF-CODRET
                CALL "ABENDCPT"
            END-IF
            GOBACK
