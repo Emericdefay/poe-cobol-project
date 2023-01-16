@@ -134,7 +134,7 @@
            MOVE 0 TO ZAHIS-CODRET
            MOVE "SPACE" TO ZAHIS-LIBRET
            MOVE 0 TO ZAHIS-SQLCODE
-           
+
            IF SQLCODE NOT = 0 THEN
                EVALUATE SQLCODE ALSO ZAHIS-FONCTION
                    WHEN -803    ALSO 'INS'
@@ -147,11 +147,13 @@
                        MOVE SQLCODE TO ZAHIS-SQLCODE
                    WHEN +100    ALSO 'UPD'
                        MOVE 40 TO ZAHIS-CODRET
-                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZAHIS-LIBRET
+                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE"
+                           TO ZAHIS-LIBRET
                        MOVE SQLCODE TO ZAHIS-SQLCODE
                    WHEN +100    ALSO 'DEL'
                        MOVE 50 TO ZAHIS-CODRET
-                       MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZAHIS-LIBRET
+                       MOVE "DELETE D'UNE LIGNE INEXISTANTE"
+                           TO ZAHIS-LIBRET
                        MOVE SQLCODE TO ZAHIS-SQLCODE
                    WHEN OTHER
                        MOVE 90 TO ZAHIS-CODRET

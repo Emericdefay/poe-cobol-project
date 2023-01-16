@@ -148,11 +148,13 @@
                        MOVE SQLCODE TO ZAOPE-SQLCODE
                    WHEN +100    ALSO 'UPD'
                        MOVE 40 TO ZAOPE-CODRET
-                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZAOPE-LIBRET
+                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE"
+                           TO ZAOPE-LIBRET
                        MOVE SQLCODE TO ZAOPE-SQLCODE
                    WHEN +100    ALSO 'DEL'
                        MOVE 50 TO ZAOPE-CODRET
-                       MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZAOPE-LIBRET
+                       MOVE "DELETE D'UNE LIGNE INEXISTANTE"
+                           TO ZAOPE-LIBRET
                        MOVE SQLCODE TO ZAOPE-SQLCODE
                    WHEN OTHER
                        MOVE 90 TO ZAOPE-CODRET

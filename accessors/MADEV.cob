@@ -147,11 +147,13 @@
                        MOVE SQLCODE TO ZADEV-SQLCODE
                    WHEN +100    ALSO 'UPD'
                        MOVE 40 TO ZADEV-CODRET
-                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZADEV-LIBRET
+                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE"
+                           TO ZADEV-LIBRET
                        MOVE SQLCODE TO ZADEV-SQLCODE
                    WHEN +100    ALSO 'DEL'
                        MOVE 50 TO ZADEV-CODRET
-                       MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZADEV-LIBRET
+                       MOVE "DELETE D'UNE LIGNE INEXISTANTE"
+                           TO ZADEV-LIBRET
                        MOVE SQLCODE TO ZADEV-SQLCODE
                    WHEN OTHER
                        MOVE 90 TO ZADEV-CODRET

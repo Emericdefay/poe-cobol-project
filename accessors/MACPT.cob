@@ -147,11 +147,13 @@
                        MOVE SQLCODE TO ZACPT-SQLCODE
                    WHEN +100    ALSO 'UPD'
                        MOVE 40 TO ZACPT-CODRET
-                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZACPT-LIBRET
+                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE"
+                           TO ZACPT-LIBRET
                        MOVE SQLCODE TO ZACPT-SQLCODE
                    WHEN +100    ALSO 'DEL'
                        MOVE 50 TO ZACPT-CODRET
-                       MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZACPT-LIBRET
+                       MOVE "DELETE D'UNE LIGNE INEXISTANTE"
+                           TO ZACPT-LIBRET
                        MOVE SQLCODE TO ZACPT-SQLCODE
                    WHEN OTHER
                        MOVE 90 TO ZACPT-CODRET
