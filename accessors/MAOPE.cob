@@ -136,28 +136,30 @@
            MOVE "SPACE" TO ZAOPE-LIBRET
            MOVE 0 TO ZAOPE-SQLCODE
 
-           EVALUATE SQLCODE ALSO ZAOPE-FONCTION
-               WHEN -803    ALSO 'INS'
-                   MOVE 20 TO ZAOPE-CODRET
-                   MOVE "LIGNE EN DOUBLE" TO ZAOPE-LIBRET
-                   MOVE SQLCODE TO ZAOPE-SQLCODE
-               WHEN +100    ALSO 'SEL'
-                   MOVE 30 TO ZAOPE-CODRET
-                   MOVE "OPE" TO ZAOPE-LIBRET
-                   MOVE SQLCODE TO ZAOPE-SQLCODE
-               WHEN +100    ALSO 'UPD'
-                   MOVE 40 TO ZAOPE-CODRET
-                   MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZAOPE-LIBRET
-                   MOVE SQLCODE TO ZAOPE-SQLCODE
-               WHEN +100    ALSO 'DEL'
-                   MOVE 50 TO ZAOPE-CODRET
-                   MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZAOPE-LIBRET
-                   MOVE SQLCODE TO ZAOPE-SQLCODE
-               WHEN OTHER
-                   MOVE 90 TO ZAOPE-CODRET
-                   MOVE "SQLCA" TO ZAOPE-LIBRET
-                   MOVE SQLCODE TO ZAOPE-SQLCODE
-           END-EVALUATE
+           IF SQLCODE NOT = 0 THEN
+               EVALUATE SQLCODE ALSO ZAOPE-FONCTION
+                   WHEN -803    ALSO 'INS'
+                       MOVE 20 TO ZAOPE-CODRET
+                       MOVE "LIGNE EN DOUBLE" TO ZAOPE-LIBRET
+                       MOVE SQLCODE TO ZAOPE-SQLCODE
+                   WHEN +100    ALSO 'SEL'
+                       MOVE 30 TO ZAOPE-CODRET
+                       MOVE "OPE" TO ZAOPE-LIBRET
+                       MOVE SQLCODE TO ZAOPE-SQLCODE
+                   WHEN +100    ALSO 'UPD'
+                       MOVE 40 TO ZAOPE-CODRET
+                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZAOPE-LIBRET
+                       MOVE SQLCODE TO ZAOPE-SQLCODE
+                   WHEN +100    ALSO 'DEL'
+                       MOVE 50 TO ZAOPE-CODRET
+                       MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZAOPE-LIBRET
+                       MOVE SQLCODE TO ZAOPE-SQLCODE
+                   WHEN OTHER
+                       MOVE 90 TO ZAOPE-CODRET
+                       MOVE "SQLCA" TO ZAOPE-LIBRET
+                       MOVE SQLCODE TO ZAOPE-SQLCODE
+               END-EVALUATE
+           END-IF
            .
 
        7777-UNAUTHORIZED-QUERY-TYPE.

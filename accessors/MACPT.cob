@@ -135,28 +135,30 @@
            MOVE "SPACE" TO ZACPT-LIBRET
            MOVE 0 TO ZACPT-SQLCODE
 
-           EVALUATE SQLCODE ALSO ZACPT-FONCTION
-               WHEN -803    ALSO 'INS'
-                   MOVE 20 TO ZACPT-CODRET
-                   MOVE "LIGNE EN DOUBLE" TO ZACPT-LIBRET
-                   MOVE SQLCODE TO ZACPT-SQLCODE
-               WHEN +100    ALSO 'SEL'
-                   MOVE 30 TO ZACPT-CODRET
-                   MOVE "CPT" TO ZACPT-LIBRET
-                   MOVE SQLCODE TO ZACPT-SQLCODE
-               WHEN +100    ALSO 'UPD'
-                   MOVE 40 TO ZACPT-CODRET
-                   MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZACPT-LIBRET
-                   MOVE SQLCODE TO ZACPT-SQLCODE
-               WHEN +100    ALSO 'DEL'
-                   MOVE 50 TO ZACPT-CODRET
-                   MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZACPT-LIBRET
-                   MOVE SQLCODE TO ZACPT-SQLCODE
-               WHEN OTHER
-                   MOVE 90 TO ZACPT-CODRET
-                   MOVE "SQLCA" TO ZACPT-LIBRET
-                   MOVE SQLCODE TO ZACPT-SQLCODE
-           END-EVALUATE
+           IF SQLCODE NOT = 0 THEN
+               EVALUATE SQLCODE ALSO ZACPT-FONCTION
+                   WHEN -803    ALSO 'INS'
+                       MOVE 20 TO ZACPT-CODRET
+                       MOVE "LIGNE EN DOUBLE" TO ZACPT-LIBRET
+                       MOVE SQLCODE TO ZACPT-SQLCODE
+                   WHEN +100    ALSO 'SEL'
+                       MOVE 30 TO ZACPT-CODRET
+                       MOVE "CPT" TO ZACPT-LIBRET
+                       MOVE SQLCODE TO ZACPT-SQLCODE
+                   WHEN +100    ALSO 'UPD'
+                       MOVE 40 TO ZACPT-CODRET
+                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZACPT-LIBRET
+                       MOVE SQLCODE TO ZACPT-SQLCODE
+                   WHEN +100    ALSO 'DEL'
+                       MOVE 50 TO ZACPT-CODRET
+                       MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZACPT-LIBRET
+                       MOVE SQLCODE TO ZACPT-SQLCODE
+                   WHEN OTHER
+                       MOVE 90 TO ZACPT-CODRET
+                       MOVE "SQLCA" TO ZACPT-LIBRET
+                       MOVE SQLCODE TO ZACPT-SQLCODE
+               END-EVALUATE
+           END-IF
            .
 
        7777-UNAUTHORIZED-QUERY-TYPE.

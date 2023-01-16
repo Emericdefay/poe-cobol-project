@@ -135,28 +135,30 @@
            MOVE "SPACE" TO ZADEV-LIBRET
            MOVE 0 TO ZADEV-SQLCODE
 
-           EVALUATE SQLCODE ALSO ZADEV-FONCTION
-               WHEN -803    ALSO 'INS'
-                   MOVE 20 TO ZADEV-CODRET
-                   MOVE "LIGNE EN DOUBLE" TO ZADEV-LIBRET
-                   MOVE SQLCODE TO ZADEV-SQLCODE
-               WHEN +100    ALSO 'SEL'
-                   MOVE 30 TO ZADEV-CODRET
-                   MOVE "DEV" TO ZADEV-LIBRET
-                   MOVE SQLCODE TO ZADEV-SQLCODE
-               WHEN +100    ALSO 'UPD'
-                   MOVE 40 TO ZADEV-CODRET
-                   MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZADEV-LIBRET
-                   MOVE SQLCODE TO ZADEV-SQLCODE
-               WHEN +100    ALSO 'DEL'
-                   MOVE 50 TO ZADEV-CODRET
-                   MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZADEV-LIBRET
-                   MOVE SQLCODE TO ZADEV-SQLCODE
-               WHEN OTHER
-                   MOVE 90 TO ZADEV-CODRET
-                   MOVE "SQLCA" TO ZADEV-LIBRET
-                   MOVE SQLCODE TO ZADEV-SQLCODE
-           END-EVALUATE
+           IF SQLCODE NOT = 0 THEN
+               EVALUATE SQLCODE ALSO ZADEV-FONCTION
+                   WHEN -803    ALSO 'INS'
+                       MOVE 20 TO ZADEV-CODRET
+                       MOVE "LIGNE EN DOUBLE" TO ZADEV-LIBRET
+                       MOVE SQLCODE TO ZADEV-SQLCODE
+                   WHEN +100    ALSO 'SEL'
+                       MOVE 30 TO ZADEV-CODRET
+                       MOVE "DEV" TO ZADEV-LIBRET
+                       MOVE SQLCODE TO ZADEV-SQLCODE
+                   WHEN +100    ALSO 'UPD'
+                       MOVE 40 TO ZADEV-CODRET
+                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZADEV-LIBRET
+                       MOVE SQLCODE TO ZADEV-SQLCODE
+                   WHEN +100    ALSO 'DEL'
+                       MOVE 50 TO ZADEV-CODRET
+                       MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZADEV-LIBRET
+                       MOVE SQLCODE TO ZADEV-SQLCODE
+                   WHEN OTHER
+                       MOVE 90 TO ZADEV-CODRET
+                       MOVE "SQLCA" TO ZADEV-LIBRET
+                       MOVE SQLCODE TO ZADEV-SQLCODE
+               END-EVALUATE
+           END-IF
            .
 
        7777-UNAUTHORIZED-QUERY-TYPE.
