@@ -131,7 +131,7 @@
        2501-CHECK-SQLCODE.
       ******************************************************************EDEFAY 
       *  Verify SQLCODE, returning Error code and message if SQLCODE<>0
-           MOVE 0 TO ZADEV-CODRET
+           MOVE "00" TO ZADEV-CODRET
            MOVE "SPACE" TO ZADEV-LIBRET
            MOVE 0 TO ZADEV-SQLCODE
 

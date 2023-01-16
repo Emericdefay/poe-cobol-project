@@ -131,7 +131,7 @@
        2501-CHECK-SQLCODE.
       ******************************************************************EDEFAY 
       *  Verify SQLCODE, returning Error code and message if SQLCODE<>0
-           MOVE 0 TO ZACPT-CODRET
+           MOVE "00" TO ZACPT-CODRET
            MOVE "SPACE" TO ZACPT-LIBRET
            MOVE 0 TO ZACPT-SQLCODE
 
