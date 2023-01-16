@@ -73,6 +73,9 @@ jobs:
     - name: compile - GKMAJ001
       run: |
         cobc -x -o GKMAJ001 GKMAJ001.cob MFMAJCPT.so MACPT.so MAHIS.so MADEV.so MAOPE.so
+    - name: compile - TSTMAIN
+      run: |
+        cobc -x -o TSTMAIN ./tests/TSTMAIN.cob 
     - name: Env
       run: cobcrun --runtime-config
     - name: Compiler info
@@ -87,6 +90,13 @@ jobs:
     - name: Run tests - GKMAJ001
       run: |
         ./TSTMAJ01
+        if [[ $? -eq 0 ]]; then
+          echo "Tests Succeed"
+          exit 0
+        fi
+    - name: Run tests - TSTMAIN
+      run: |
+        ./TSTMAIN
         if [[ $? -eq 0 ]]; then
           echo "Tests Succeed"
           exit 0
