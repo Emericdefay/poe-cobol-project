@@ -72,9 +72,10 @@
       ******************************************************************EDEFAY
       *  This routine should follow the logic of the program purpose
            DISPLAY "Executing tests :"
-           DISPLAY "  Functionnal test :"
+           DISPLAY "  File input check :"
            PERFORM CT00-FILE-OK
            PERFORM 2500-CHECK-NO-ERROR
+           DISPLAY "  Functionnal test :"
            PERFORM CT00-FUNCTIONNAL-OK
            DISPLAY "Ending tests."
            .
@@ -112,7 +113,7 @@
                PERFORM 1200-INC-ERROR
            END-IF
            .
-       
+
        CT00-FUNCTIONNAL-OK.
       ******************************************************************EDEFAY
       *  This routine should return no error.

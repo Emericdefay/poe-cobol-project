@@ -71,19 +71,19 @@
            INITIALIZE ZF-RETOUR
       *    Verify CODOPE
            PERFORM 2001-VERIF-CODOPE
-           IF CODRET-OK
+           IF ZF-CODRET = '00'
       *        Verify CODDEV
                PERFORM 2002-VERIF-CODDEV
            ELSE
                CALL "ABENDOPE"
            END-IF
-           IF CODRET-OK
+           IF ZF-CODRET = '00'
       *        Verify COMPTE
                PERFORM 2003-VERIF-COMPTE
            ELSE
                CALL "ABENDDEV"
            END-IF           
-           IF CODRET-OK
+           IF ZF-CODRET = '00'
       *        All checks passed
                PERFORM 1500-TRAITEMENT
            ELSE
@@ -95,11 +95,19 @@
        1500-TRAITEMENT.
       ******************************************************************EDEFAY
       *  Check what kind of operation is it, then update account & hist
-           IF IS-SUB-OPE THEN
+           IF ZF-CODOPE = "VER" OR
+                          "VRD" OR
+                          "INT" OR
+                          "VVF" THEN
                COMPUTE ZACPT-SOLDE = 
                        ZACPT-SOLDE - ( ZADEV-ACHAT * ZF-MNTOPE ) 
            END-IF
-           IF IS-ADD-OPE THEN
+           IF ZF-CODOPE = "PRL" OR
+                          "RMB" OR 
+                          "VIR" OR 
+                          "RET" OR 
+                          "RTD" OR 
+                          "AGI" THEN
                COMPUTE ZACPT-SOLDE = 
                        ZACPT-SOLDE + ( ZADEV-ACHAT * ZF-MNTOPE )
            END-IF
