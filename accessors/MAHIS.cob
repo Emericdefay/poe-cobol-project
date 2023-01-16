@@ -177,12 +177,12 @@
                MOVE ZAHIS-DONNEES TO DCLTBHIS
                EXEC SQL
                     INSERT INTO TBHIS VALUES
-                   (:HH-COMPTE  ,
-                    :HH-REFOPE  ,
-                    :HH-CODOPE  ,
-                    :HH-LIBOPE  ,
-                    :HH-DTOPER  ,
-                    :HH-MNTOPE  )
+                   (:ZAHIS-COMPTE  ,
+                    :ZAHIS-REFOPE  ,
+                    :ZAHIS-CODOPE  ,
+                    :ZAHIS-LIBOPE  ,
+                    :ZAHIS-DTOPER  ,
+                    :ZAHIS-MNTOPE  )
                END-EXEC
            .
 

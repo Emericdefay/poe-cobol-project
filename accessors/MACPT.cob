@@ -178,14 +178,14 @@
                  DDMAJ  ,
                  HDMAJ  
              INTO
-                :HC-COMPTE ,
-                :HC-NOM    ,
-                :HC-SOLDE  ,
-                :HC-DDMVT  ,
-                :HC-DDMAJ  ,
-                :HC-HDMAJ  
+                :ZACPT-COMPTE ,
+                :ZACPT-NOM    ,
+                :ZACPT-SOLDE  ,
+                :ZACPT-DDMVT  ,
+                :ZACPT-DDMAJ  ,
+                :ZACPT-HDMAJ  
              FROM TBCPT
-             WHERE COMPTE=:HC-COMPTE
+             WHERE COMPTE=:ZACPT-COMPTE
            END-EXEC
            IF SQLCODE = ZERO
               MOVE DCLTBCPT TO ZACPT-DONNEES
@@ -198,12 +198,12 @@
                MOVE ZACPT-DONNEES TO DCLTBCPT
                EXEC SQL
                     INSERT INTO TBCPT VALUES
-                   (:HC-COMPTE  ,
-                    :HC-NOM     ,
-                    :HC-SOLDE   ,
-                    :HC-DDMVT   ,
-                    :HC-DDMAJ   ,
-                    :HC-HDMAJ   )
+                   (:ZACPT-COMPTE  ,
+                    :ZACPT-NOM     ,
+                    :ZACPT-SOLDE   ,
+                    :ZACPT-DDMVT   ,
+                    :ZACPT-DDMAJ   ,
+                    :ZACPT-HDMAJ   )
                END-EXEC
            .
 
@@ -213,13 +213,13 @@
            MOVE ZACPT-DONNEES TO DCLTBCPT
            EXEC SQL
                 UPDATE TBCPT
-           SET   COMPTE =:HC-COMPTE ,
-                 NOM    =:HC-NOM    ,
-                 SOLDE  =:HC-SOLDE  ,
-                 DDMVT  =:HC-DDMVT  ,
-                 DDMAJ  =:HC-DDMAJ  ,
-                 HDMAJ  =:HC-HDMAJ  ,
-           WHERE COMPTE =:HC-COMPTE
+           SET   COMPTE =:ZACPT-COMPTE ,
+                 NOM    =:ZACPT-NOM    ,
+                 SOLDE  =:ZACPT-SOLDE  ,
+                 DDMVT  =:ZACPT-DDMVT  ,
+                 DDMAJ  =:ZACPT-DDMAJ  ,
+                 HDMAJ  =:ZACPT-HDMAJ  ,
+           WHERE COMPTE =:ZACPT-COMPTE
            END-EXEC
            .
 
@@ -229,6 +229,6 @@
            MOVE ZACPT-DONNEES TO DCLTBCPT
            EXEC SQL
              DELETE FROM TBCPT
-           WHERE COMPTE=:HC-COMPTE
+           WHERE COMPTE=:ZACPT-COMPTE
            END-EXEC
            .

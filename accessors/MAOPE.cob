@@ -177,12 +177,12 @@
                  MNTMIN ,
                  MNTMAX 
              INTO
-                :HO-COPE   ,
-                :HO-LOPE   ,
-                :HO-MNTMIN ,
-                :HO-MNTMAX 
+                :ZAOPE-COPE   ,
+                :ZAOPE-LOPE   ,
+                :ZAOPE-MNTMIN ,
+                :ZAOPE-MNTMAX 
              FROM TBOPE
-             WHERE COPE=:HO-COPE
+             WHERE COPE=:ZAOPE-COPE
            END-EXEC
            IF SQLCODE = ZERO
               MOVE DCLTBOPE TO ZAOPE-DONNEES

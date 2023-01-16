@@ -176,12 +176,12 @@
                  ACHAT ,
                  VENTE 
              INTO
-                :HD-CDEV  ,
-                :HD-CPAYS ,
-                :HD-ACHAT ,
-                :HD-VENTE 
+                :ZADEV-CDEV  ,
+                :ZADEV-CPAYS ,
+                :ZADEV-ACHAT ,
+                :ZADEV-VENTE 
              FROM TBDEV
-             WHERE CDEV=:HD-CDEV
+             WHERE CDEV=:ZADEV-CDEV
            END-EXEC
            IF SQLCODE = ZERO
               MOVE DCLTBDEV TO ZADEV-DONNEES
@@ -194,10 +194,10 @@
            MOVE ZADEV-DONNEES TO DCLTBDEV
            EXEC SQL
                 INSERT INTO TBDEV VALUES
-               (:HD-CDEV   ,
-                :HD-CPAYS  ,
-                :HD-ACHAT  ,
-                :HD-VENTE )
+               (:ZADEV-CDEV   ,
+                :ZADEV-CPAYS  ,
+                :ZADEV-ACHAT  ,
+                :ZADEV-VENTE )
            END-EXEC
            .
 
@@ -207,11 +207,11 @@
            MOVE ZADEV-DONNEES TO DCLTBDEV
            EXEC SQL
                 UPDATE TBDEV
-           SET   CDEV  =:HD-CDEV  ,
-                 CPAYS =:HD-CPAYS ,
-                 ACHAT =:HD-ACHAT ,
-                 VENTE =:HD-VENTE ,
-           WHERE CDEV  =:HD-CDEV
+           SET   CDEV  =:ZADEV-CDEV  ,
+                 CPAYS =:ZADEV-CPAYS ,
+                 ACHAT =:ZADEV-ACHAT ,
+                 VENTE =:ZADEV-VENTE ,
+           WHERE CDEV  =:ZADEV-CDEV
            END-EXEC
            .
 
@@ -221,6 +221,6 @@
            MOVE ZADEV-DONNEES TO DCLTBDEV
            EXEC SQL
              DELETE FROM TBDEV
-           WHERE CDEV  =:HD-CDEV
+           WHERE CDEV  =:ZADEV-CDEV
            END-EXEC
            .
