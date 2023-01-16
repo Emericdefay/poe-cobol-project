@@ -26,6 +26,10 @@
 - [🎈 Explanations ](#-explanations-)
   - [1. GKCTRL01](#1-gkctrl01)
   - [1t. TSTTRL01](#1t-tsttrl01)
+  - [2. MAXXX](#2-maxxx)
+  - [2t. TSTMAJ01](#2t-tstmaj01)
+  - [3. MFMAJCPT](#3-mfmajcpt)
+  - [4. GKMAJ001](#4-gkmaj001)
 - [✍️ Authors ](#️-authors-)
 
 ## 🧐 About <a name = "about"></a>
@@ -51,6 +55,30 @@ Otherwise it gives :
 
 Its purpose is to test all cases of GKCTRL01, to be sure that at any stage
 of the project, GKCTRL01 will assure its goal.
+
+### 2. MAXXX
+
+MAxxx are accessors routines that handle SQL request.
+`xxx` is replaced by :
+- CPT : Accessing ACCOUNT   table
+- DEV : Accessing DEVISE    table
+- HIS : Accessing HISTORY   table
+- OPE : Accessing OPERATION table
+
+Each accessor has authorisations to do particular requests :  
+You can find out those authorisation here : [METHODS allowed](https://github.com/Emericdefay/poe-cobol-project/pull/2)
+
+### 2t. TSTMAJ01
+
+Its purpose is to check accessors' authorisations according to the check list above.
+
+### 3. MFMAJCPT
+
+This routine check if everything in the action is OK, then update the account
+
+### 4. GKMAJ001
+
+This routine read file line by line to feed a data struct. Then call another MFMAJCPT to update account with actions interpreted on those lines.
 
 ## ✍️ Authors <a name = "authors"></a>
 
