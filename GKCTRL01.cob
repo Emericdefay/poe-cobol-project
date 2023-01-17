@@ -78,7 +78,7 @@
       /  Operations
            05  WS-MT-GLOBAL   PIC 9(11)V99.
       /  Copybook
-       COPY 'CFLUX.cpy'.
+       COPY './Copybooks/CFLUX.cpy'.
 
       ******************************************************************
        LINKAGE SECTION.

@@ -131,32 +131,36 @@
        2501-CHECK-SQLCODE.
       ******************************************************************EDEFAY 
       *  Verify SQLCODE, returning Error code and message if SQLCODE<>0
-           MOVE 0 TO ZACPT-CODRET
+           MOVE "00" TO ZACPT-CODRET
            MOVE "SPACE" TO ZACPT-LIBRET
            MOVE 0 TO ZACPT-SQLCODE
 
-           EVALUATE SQLCODE ALSO ZACPT-FONCTION
-               WHEN -803    ALSO 'INS'
-                   MOVE 20 TO ZACPT-CODRET
-                   MOVE "LIGNE EN DOUBLE" TO ZACPT-LIBRET
-                   MOVE SQLCODE TO ZACPT-SQLCODE
-               WHEN +100    ALSO 'SEL'
-                   MOVE 30 TO ZACPT-CODRET
-                   MOVE "CPT" TO ZACPT-LIBRET
-                   MOVE SQLCODE TO ZACPT-SQLCODE
-               WHEN +100    ALSO 'UPD'
-                   MOVE 40 TO ZACPT-CODRET
-                   MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZACPT-LIBRET
-                   MOVE SQLCODE TO ZACPT-SQLCODE
-               WHEN +100    ALSO 'DEL'
-                   MOVE 50 TO ZACPT-CODRET
-                   MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZACPT-LIBRET
-                   MOVE SQLCODE TO ZACPT-SQLCODE
-               WHEN OTHER
-                   MOVE 90 TO ZACPT-CODRET
-                   MOVE "SQLCA" TO ZACPT-LIBRET
-                   MOVE SQLCODE TO ZACPT-SQLCODE
-           END-EVALUATE
+           IF SQLCODE NOT = 0 THEN
+               EVALUATE SQLCODE ALSO ZACPT-FONCTION
+                   WHEN -803    ALSO 'INS'
+                       MOVE 20 TO ZACPT-CODRET
+                       MOVE "LIGNE EN DOUBLE" TO ZACPT-LIBRET
+                       MOVE SQLCODE TO ZACPT-SQLCODE
+                   WHEN +100    ALSO 'SEL'
+                       MOVE 30 TO ZACPT-CODRET
+                       MOVE "CPT" TO ZACPT-LIBRET
+                       MOVE SQLCODE TO ZACPT-SQLCODE
+                   WHEN +100    ALSO 'UPD'
+                       MOVE 40 TO ZACPT-CODRET
+                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE"
+                           TO ZACPT-LIBRET
+                       MOVE SQLCODE TO ZACPT-SQLCODE
+                   WHEN +100    ALSO 'DEL'
+                       MOVE 50 TO ZACPT-CODRET
+                       MOVE "DELETE D'UNE LIGNE INEXISTANTE"
+                           TO ZACPT-LIBRET
+                       MOVE SQLCODE TO ZACPT-SQLCODE
+                   WHEN OTHER
+                       MOVE 90 TO ZACPT-CODRET
+                       MOVE "SQLCA" TO ZACPT-LIBRET
+                       MOVE SQLCODE TO ZACPT-SQLCODE
+               END-EVALUATE
+           END-IF
            .
 
        7777-UNAUTHORIZED-QUERY-TYPE.
@@ -178,14 +182,14 @@
                  DDMAJ  ,
                  HDMAJ  
              INTO
-                :HC-COMPTE ,
-                :HC-NOM    ,
-                :HC-SOLDE  ,
-                :HC-DDMVT  ,
-                :HC-DDMAJ  ,
-                :HC-HDMAJ  
+                :ZACPT-COMPTE ,
+                :ZACPT-NOM    ,
+                :ZACPT-SOLDE  ,
+                :ZACPT-DDMVT  ,
+                :ZACPT-DDMAJ  ,
+                :ZACPT-HDMAJ  
              FROM TBCPT
-             WHERE COMPTE=:HC-COMPTE
+             WHERE COMPTE=:ZACPT-COMPTE
            END-EXEC
            IF SQLCODE = ZERO
               MOVE DCLTBCPT TO ZACPT-DONNEES
@@ -198,12 +202,12 @@
                MOVE ZACPT-DONNEES TO DCLTBCPT
                EXEC SQL
                     INSERT INTO TBCPT VALUES
-                   (:HC-COMPTE  ,
-                    :HC-NOM     ,
-                    :HC-SOLDE   ,
-                    :HC-DDMVT   ,
-                    :HC-DDMAJ   ,
-                    :HC-HDMAJ   )
+                   (:ZACPT-COMPTE  ,
+                    :ZACPT-NOM     ,
+                    :ZACPT-SOLDE   ,
+                    :ZACPT-DDMVT   ,
+                    :ZACPT-DDMAJ   ,
+                    :ZACPT-HDMAJ   )
                END-EXEC
            .
 
@@ -213,13 +217,13 @@
            MOVE ZACPT-DONNEES TO DCLTBCPT
            EXEC SQL
                 UPDATE TBCPT
-           SET   COMPTE =:HC-COMPTE ,
-                 NOM    =:HC-NOM    ,
-                 SOLDE  =:HC-SOLDE  ,
-                 DDMVT  =:HC-DDMVT  ,
-                 DDMAJ  =:HC-DDMAJ  ,
-                 HDMAJ  =:HC-HDMAJ  ,
-           WHERE COMPTE =:HC-COMPTE
+           SET   COMPTE =:ZACPT-COMPTE ,
+                 NOM    =:ZACPT-NOM    ,
+                 SOLDE  =:ZACPT-SOLDE  ,
+                 DDMVT  =:ZACPT-DDMVT  ,
+                 DDMAJ  =:ZACPT-DDMAJ  ,
+                 HDMAJ  =:ZACPT-HDMAJ  ,
+           WHERE COMPTE =:ZACPT-COMPTE
            END-EXEC
            .
 
@@ -229,6 +233,6 @@
            MOVE ZACPT-DONNEES TO DCLTBCPT
            EXEC SQL
              DELETE FROM TBCPT
-           WHERE COMPTE=:HC-COMPTE
+           WHERE COMPTE=:ZACPT-COMPTE
            END-EXEC
            .

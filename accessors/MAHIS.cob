@@ -131,32 +131,36 @@
        2501-CHECK-SQLCODE.
       ******************************************************************EDEFAY 
       *  Verify SQLCODE, returning Error code and message if SQLCODE<>0
-           MOVE 0 TO ZAHIS-CODRET
+           MOVE "00" TO ZAHIS-CODRET
            MOVE "SPACE" TO ZAHIS-LIBRET
            MOVE 0 TO ZAHIS-SQLCODE
 
-           EVALUATE SQLCODE ALSO ZAHIS-FONCTION
-               WHEN -803    ALSO 'INS'
-                   MOVE 20 TO ZAHIS-CODRET
-                   MOVE "LIGNE EN DOUBLE" TO ZAHIS-LIBRET
-                   MOVE SQLCODE TO ZAHIS-SQLCODE
-               WHEN +100    ALSO 'SEL'
-                   MOVE 30 TO ZAHIS-CODRET
-                   MOVE "HIS" TO ZAHIS-LIBRET
-                   MOVE SQLCODE TO ZAHIS-SQLCODE
-               WHEN +100    ALSO 'UPD'
-                   MOVE 40 TO ZAHIS-CODRET
-                   MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZAHIS-LIBRET
-                   MOVE SQLCODE TO ZAHIS-SQLCODE
-               WHEN +100    ALSO 'DEL'
-                   MOVE 50 TO ZAHIS-CODRET
-                   MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZAHIS-LIBRET
-                   MOVE SQLCODE TO ZAHIS-SQLCODE
-               WHEN OTHER
-                   MOVE 90 TO ZAHIS-CODRET
-                   MOVE "SQLCA" TO ZAHIS-LIBRET
-                   MOVE SQLCODE TO ZAHIS-SQLCODE
-           END-EVALUATE
+           IF SQLCODE NOT = 0 THEN
+               EVALUATE SQLCODE ALSO ZAHIS-FONCTION
+                   WHEN -803    ALSO 'INS'
+                       MOVE 20 TO ZAHIS-CODRET
+                       MOVE "LIGNE EN DOUBLE" TO ZAHIS-LIBRET
+                       MOVE SQLCODE TO ZAHIS-SQLCODE
+                   WHEN +100    ALSO 'SEL'
+                       MOVE 30 TO ZAHIS-CODRET
+                       MOVE "HIS" TO ZAHIS-LIBRET
+                       MOVE SQLCODE TO ZAHIS-SQLCODE
+                   WHEN +100    ALSO 'UPD'
+                       MOVE 40 TO ZAHIS-CODRET
+                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE"
+                           TO ZAHIS-LIBRET
+                       MOVE SQLCODE TO ZAHIS-SQLCODE
+                   WHEN +100    ALSO 'DEL'
+                       MOVE 50 TO ZAHIS-CODRET
+                       MOVE "DELETE D'UNE LIGNE INEXISTANTE"
+                           TO ZAHIS-LIBRET
+                       MOVE SQLCODE TO ZAHIS-SQLCODE
+                   WHEN OTHER
+                       MOVE 90 TO ZAHIS-CODRET
+                       MOVE "SQLCA" TO ZAHIS-LIBRET
+                       MOVE SQLCODE TO ZAHIS-SQLCODE
+               END-EVALUATE
+           END-IF
            .
 
        7777-UNAUTHORIZED-QUERY-TYPE.
@@ -177,12 +181,12 @@
                MOVE ZAHIS-DONNEES TO DCLTBHIS
                EXEC SQL
                     INSERT INTO TBHIS VALUES
-                   (:HH-COMPTE  ,
-                    :HH-REFOPE  ,
-                    :HH-CODOPE  ,
-                    :HH-LIBOPE  ,
-                    :HH-DTOPER  ,
-                    :HH-MNTOPE  )
+                   (:ZAHIS-COMPTE  ,
+                    :ZAHIS-REFOPE  ,
+                    :ZAHIS-CODOPE  ,
+                    :ZAHIS-LIBOPE  ,
+                    :ZAHIS-DTOPER  ,
+                    :ZAHIS-MNTOPE  )
                END-EXEC
            .
 

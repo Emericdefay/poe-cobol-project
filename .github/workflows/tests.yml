@@ -63,20 +63,24 @@ jobs:
     - name: compile - TSTMAJ01
       run: |
         cobc -x -o TSTMAJ01 ./tests/TSTMAJ01.cob MACPT.so MAHIS.so MADEV.so MAOPE.so
-    - name: Ls
-      run: ls
     - name: compile - MFMAJCPT
       run: |
         cobc -m -fdebugging-line MFMAJCPT.cob
-    - name: Ls
-      run: ls
     - name: compile - GKMAJ001
       run: |
         cobc -x -o GKMAJ001 GKMAJ001.cob MFMAJCPT.so MACPT.so MAHIS.so MADEV.so MAOPE.so
+    - name: compile - GKMAJ001.so
+      run: |
+        cobc -m -fdebugging-line GKMAJ001.cob
+    - name: compile - TSTMAIN
+      run: |
+        cobc -x -o TSTMAIN ./tests/TSTMAIN.cob GKMAJ001.so
     - name: Env
       run: cobcrun --runtime-config
     - name: Compiler info
       run: cobc --info
+    - name: Ls
+      run: ls
     - name: Run tests - GKCTRL01
       run: |
         ./TSTTRL01
@@ -87,6 +91,13 @@ jobs:
     - name: Run tests - GKMAJ001
       run: |
         ./TSTMAJ01
+        if [[ $? -eq 0 ]]; then
+          echo "Tests Succeed"
+          exit 0
+        fi
+    - name: Run tests - TSTMAIN
+      run: |
+        ./TSTMAIN
         if [[ $? -eq 0 ]]; then
           echo "Tests Succeed"
           exit 0

@@ -131,32 +131,36 @@
        2501-CHECK-SQLCODE.
       ******************************************************************EDEFAY 
       *  Verify SQLCODE, returning Error code and message if SQLCODE<>0
-           MOVE 0 TO ZADEV-CODRET
+           MOVE "00" TO ZADEV-CODRET
            MOVE "SPACE" TO ZADEV-LIBRET
            MOVE 0 TO ZADEV-SQLCODE
 
-           EVALUATE SQLCODE ALSO ZADEV-FONCTION
-               WHEN -803    ALSO 'INS'
-                   MOVE 20 TO ZADEV-CODRET
-                   MOVE "LIGNE EN DOUBLE" TO ZADEV-LIBRET
-                   MOVE SQLCODE TO ZADEV-SQLCODE
-               WHEN +100    ALSO 'SEL'
-                   MOVE 30 TO ZADEV-CODRET
-                   MOVE "DEV" TO ZADEV-LIBRET
-                   MOVE SQLCODE TO ZADEV-SQLCODE
-               WHEN +100    ALSO 'UPD'
-                   MOVE 40 TO ZADEV-CODRET
-                   MOVE "UPDATE D'UNE LIGNE INEXISTANTE" TO ZADEV-LIBRET
-                   MOVE SQLCODE TO ZADEV-SQLCODE
-               WHEN +100    ALSO 'DEL'
-                   MOVE 50 TO ZADEV-CODRET
-                   MOVE "DELETE D'UNE LIGNE INEXISTANTE" TO ZADEV-LIBRET
-                   MOVE SQLCODE TO ZADEV-SQLCODE
-               WHEN OTHER
-                   MOVE 90 TO ZADEV-CODRET
-                   MOVE "SQLCA" TO ZADEV-LIBRET
-                   MOVE SQLCODE TO ZADEV-SQLCODE
-           END-EVALUATE
+           IF SQLCODE NOT = 0 THEN
+               EVALUATE SQLCODE ALSO ZADEV-FONCTION
+                   WHEN -803    ALSO 'INS'
+                       MOVE 20 TO ZADEV-CODRET
+                       MOVE "LIGNE EN DOUBLE" TO ZADEV-LIBRET
+                       MOVE SQLCODE TO ZADEV-SQLCODE
+                   WHEN +100    ALSO 'SEL'
+                       MOVE 30 TO ZADEV-CODRET
+                       MOVE "DEV" TO ZADEV-LIBRET
+                       MOVE SQLCODE TO ZADEV-SQLCODE
+                   WHEN +100    ALSO 'UPD'
+                       MOVE 40 TO ZADEV-CODRET
+                       MOVE "UPDATE D'UNE LIGNE INEXISTANTE"
+                           TO ZADEV-LIBRET
+                       MOVE SQLCODE TO ZADEV-SQLCODE
+                   WHEN +100    ALSO 'DEL'
+                       MOVE 50 TO ZADEV-CODRET
+                       MOVE "DELETE D'UNE LIGNE INEXISTANTE"
+                           TO ZADEV-LIBRET
+                       MOVE SQLCODE TO ZADEV-SQLCODE
+                   WHEN OTHER
+                       MOVE 90 TO ZADEV-CODRET
+                       MOVE "SQLCA" TO ZADEV-LIBRET
+                       MOVE SQLCODE TO ZADEV-SQLCODE
+               END-EVALUATE
+           END-IF
            .
 
        7777-UNAUTHORIZED-QUERY-TYPE.
@@ -176,12 +180,12 @@
                  ACHAT ,
                  VENTE 
              INTO
-                :HD-CDEV  ,
-                :HD-CPAYS ,
-                :HD-ACHAT ,
-                :HD-VENTE 
+                :ZADEV-CDEV  ,
+                :ZADEV-CPAYS ,
+                :ZADEV-ACHAT ,
+                :ZADEV-VENTE 
              FROM TBDEV
-             WHERE CDEV=:HD-CDEV
+             WHERE CDEV=:ZADEV-CDEV
            END-EXEC
            IF SQLCODE = ZERO
               MOVE DCLTBDEV TO ZADEV-DONNEES
@@ -194,10 +198,10 @@
            MOVE ZADEV-DONNEES TO DCLTBDEV
            EXEC SQL
                 INSERT INTO TBDEV VALUES
-               (:HD-CDEV   ,
-                :HD-CPAYS  ,
-                :HD-ACHAT  ,
-                :HD-VENTE )
+               (:ZADEV-CDEV   ,
+                :ZADEV-CPAYS  ,
+                :ZADEV-ACHAT  ,
+                :ZADEV-VENTE )
            END-EXEC
            .
 
@@ -207,11 +211,11 @@
            MOVE ZADEV-DONNEES TO DCLTBDEV
            EXEC SQL
                 UPDATE TBDEV
-           SET   CDEV  =:HD-CDEV  ,
-                 CPAYS =:HD-CPAYS ,
-                 ACHAT =:HD-ACHAT ,
-                 VENTE =:HD-VENTE ,
-           WHERE CDEV  =:HD-CDEV
+           SET   CDEV  =:ZADEV-CDEV  ,
+                 CPAYS =:ZADEV-CPAYS ,
+                 ACHAT =:ZADEV-ACHAT ,
+                 VENTE =:ZADEV-VENTE ,
+           WHERE CDEV  =:ZADEV-CDEV
            END-EXEC
            .
 
@@ -221,6 +225,6 @@
            MOVE ZADEV-DONNEES TO DCLTBDEV
            EXEC SQL
              DELETE FROM TBDEV
-           WHERE CDEV  =:HD-CDEV
+           WHERE CDEV  =:ZADEV-CDEV
            END-EXEC
            .
