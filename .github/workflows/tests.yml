@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
 
 env:
   COB_LIBRARY_PATH: /home/runner/work/poe-cobol-project/poe-cobol-project
@@ -12,38 +12,92 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        include:
+          - operating-system: ubuntu-latest
+            python-version: '3.6'
+            label: linux-64-py-3-6
+            prefix: /usr/share/miniconda3/envs/my-env
     steps:
     - uses: actions/checkout@v2
     - name: Install COBOL compiler
       run: |
         sudo apt-get update
-        sudo apt-get install -y gnucobol libsqlite3-dev
+        sudo apt-get install -y gnucobol
+        echo "sudo apt-get install -y libsqlite3-dev"
     - name: Get amalgamation source code SQLITE
       run: |
-        mkdir sqlite_folder
-        tar -xvf ./sqlite/sqlite-snapshot.tar.gz -C sqlite_folder --strip-components 1
-        cp ./sqlite_folder/sqlite3.c ./sqlite3.c
+        echo "mkdir sqlite_folder"
+        echo "tar -xvf ./sqlite/sqlite-snapshot.tar.gz -C sqlite_folder --strip-components 1"
+        echo "cp ./sqlite_folder/sqlite3.c ./sqlite3.c"
     - name: Initialize database from .tests/SQL.txt
       run: |
-        echo "DUMMY - Initialize DB..."
+        echo "sqlite3 DBMAJCPT.db < ./SQL/SQL-GEN.sql"
+    - name: compil - GKCTRL01
+      run: cobc -m -fdebugging-line GKCTRL01.cob
+    - name: compil - TSTTRL01
+      run: |
+        cobc -x -o TSTTRL01 ./tests/TSTTRL01.cob GKCTRL01.so
     - name: Compile the C code SQLITE
       run: |
-        cobc -c -lsqlit3 sqlite3.c
-    - name: compil - MAIN
-      run: echo "DUMMY - cobc -m -fdebugging-line MAIN.cob -lsqlite3"
-    - name: compil - TEST-MAIN
+        echo "cobc -c -lsqlit3 sqlite3.c"
+    - name: compil - PGM
       run: |
-        echo "DUMMY - cobc -x -o test_sum TEST-MAIN.cob sqlite3.o MAIN.so -lsqlite3"
-    - name: Ls
-      run: ls
+        echo "cobc -x -o PGM ./tests/PGM.cob GKCTRL01.so -lsqlite3"
+    - name: precompilation MAXXXs - ignoring SQL CALLS
+      run: |
+        python ./workflows/precompiler.py ./accessors/MACPT.cob MACPT.cob
+        python ./workflows/precompiler.py ./accessors/MAHIS.cob MAHIS.cob
+        python ./workflows/precompiler.py ./accessors/MADEV.cob MADEV.cob
+        python ./workflows/precompiler.py ./accessors/MAOPE.cob MAOPE.cob
+    - name: See precompile code
+      run: echo "$(cat MACPT.cob)"
+    - name: compil - MAXXXs
+      run: |
+        cobc -m -fdebugging-line MACPT.cob
+        cobc -m -fdebugging-line MAHIS.cob
+        cobc -m -fdebugging-line MADEV.cob
+        cobc -m -fdebugging-line MAOPE.cob
+    - name: compile - TSTMAJ01
+      run: |
+        cobc -x -o TSTMAJ01 ./tests/TSTMAJ01.cob MACPT.so MAHIS.so MADEV.so MAOPE.so
+    - name: compile - MFMAJCPT
+      run: |
+        cobc -m -fdebugging-line MFMAJCPT.cob
+    - name: compile - GKMAJ001
+      run: |
+        cobc -x -o GKMAJ001 GKMAJ001.cob MFMAJCPT.so MACPT.so MAHIS.so MADEV.so MAOPE.so
+    - name: compile - GKMAJ001.so
+      run: |
+        cobc -m -fdebugging-line GKMAJ001.cob
+    - name: compile - TSTMAIN
+      run: |
+        cobc -x -o TSTMAIN ./tests/TSTMAIN.cob GKMAJ001.so
     - name: Env
       run: cobcrun --runtime-config
     - name: Compiler info
       run: cobc --info
-    - name: Run tests
+    - name: Ls
+      run: ls
+    - name: Run tests - GKCTRL01
       run: |
-        echo "DUMMY - ./test_sum"
+        ./TSTTRL01
+        if [[ $? -eq 0 ]]; then
+          echo "Tests Succeed"
+          exit 0
+        fi
+    - name: Run tests - GKMAJ001
+      run: |
+        ./TSTMAJ01
+        if [[ $? -eq 0 ]]; then
+          echo "Tests Succeed"
+          exit 0
+        fi
+    - name: Run tests - TSTMAIN
+      run: |
+        ./TSTMAIN
         if [[ $? -eq 0 ]]; then
           echo "Tests Succeed"
           exit 0
